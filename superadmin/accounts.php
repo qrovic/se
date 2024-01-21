@@ -56,7 +56,7 @@
     
 
     <div class="addstore">
-        <button type="button" class="btn btn-primary" id="add-store" data-toggle="modal" data-target="#addMemberModal">
+        <button type="button" class="btn btn-primary" id="add-store" data-toggle="modal" data-target="#addMemberModal" onclick="window.location.href='addstore.php'">
             Add Store
         </button>
     </div>
