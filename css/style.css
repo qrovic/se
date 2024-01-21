@@ -1,0 +1,369 @@
+*{
+    box-sizing: border-box;
+    font-family:Arial, Helvetica, sans-serif !important;
+}
+body{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100vh;
+}
+.active{
+    font-weight: bold !important;
+}
+div.left{
+    background-color: #02BF63;
+    height: 100vh;
+    width: 300px;
+    justify-content: center;
+    display: flex;
+    align-items: flex-end;
+}
+
+ul.options{
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+li.logout{
+    margin-top: 100px;
+    margin-bottom: 50px !important;
+}
+li.options{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+li.options>a{
+    text-decoration: none;
+    color: white;
+
+    
+    font-size: 1.5em;
+    font-weight:500;
+}
+ul{
+    list-style: none;
+}
+div.right{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+div.addstore{
+    display: flex;
+    flex-direction: row;
+    
+}
+/*Login*/
+div.login-left{
+    background-color: white;
+    width: 50%;
+    height: 100lvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+div.login-right{
+    background-color: #02BF63;
+    width: 50%;
+    height: 100lvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#login-input, #login-submit{
+    border-radius: 15px !important;
+    outline-color: white;
+}
+label.login-label{
+    padding-left: 10px;
+    margin-bottom: 5px;
+    color: white;
+    font-weight:600;
+    margin-bottom: 2px;
+    margin-top: 15px;
+}
+#login-submit{
+    font-weight:800 !important;
+    color: #02BF63 !important;
+}
+
+.login-left img {
+    width: 300px; 
+}
+.login-text{
+    color: #02BF63;
+    font-weight:900 !important;
+}
+/*Super admin*/
+.superadminstorelogo{
+    
+   
+    width: 35lvh;
+    position: absolute;
+    top: 7lvh;
+    left: 80px;
+    right: 0;
+    bottom: 0;
+}
+.storetable{
+    margin-left: 100px;
+}
+
+/*overview superadmin*/
+.storestat{
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    flex-direction: column;
+    margin-right: 100px;
+    margin-top: 50px;
+}
+.stores{
+    display: flex;
+    flex-direction: row;
+}
+.storenumber{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0px;
+    margin-right: 15px;
+    color:#FF914D;
+    font-size: 4rem;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif !important;
+    
+}
+.storestext p{
+    margin: 0px;
+    line-height: 1.2;
+    font-size: 1.5rem;
+    color:#007F41;
+    font-weight: 700;
+    
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;  
+}
+.storestext{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+/*Account*/
+#rightaccount{
+    padding-left: 15% !important;
+    padding-right: 5% !important;
+}
+.accountstext{
+    color: #02BF63;
+    font-weight: 800;
+    font-size: 2em;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 1lvh;
+}
+
+.accountsdiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    height: 70lvh;
+    padding-right: 20px;
+    
+}
+.acoountdiv{
+    display: flex;
+    flex-direction: row;
+    
+    align-items: center;
+    width: 40%;
+    height: 25%;
+    background-color: #02BF63;
+    border-radius: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 4px rgba(58, 72, 70, 0.1), 0 8px 16px 0px #03412260;
+}
+
+.accountlogo{
+    width: 40%;
+    height: 14lvh;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    margin-left: 5%;
+}
+.accountname{
+    color: white;
+    font-size: 2em;
+    font-weight: 700;
+    text-wrap: nowrap;
+    margin-bottom: 0 !important;
+}
+.storename
+{
+    width: 100%;
+    text-align: center;
+}
+.addstore{
+    position:absolute;
+    bottom: 30px;
+    right: 0px;
+   
+}#add-store{
+    background-color: #02BF63;
+    border-color: #02BF63;
+    width: 15lvw;
+    height:8lvh;
+    border-radius: 30px 0 0 30px;
+    font-size: 2.1lvh;
+    font-weight: 800;
+}
+/*Kiosk*/
+/*store*/
+.storebody{
+    display: flex;
+    flex-direction: column;
+}
+.header{
+    background-color:#02BF63;
+    width: 100%;
+}
+.kioskstorelogo{
+    width: 11lvh;
+  
+    margin: 10px 0 10px 30px;
+   
+}
+.down{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.kioskstores{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    height: 50vh;
+    padding-right: 20px;
+    width: 90%;
+}
+.kioskstore{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 22%;
+    height: 30%;
+    background-color: #02BF63;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(58, 72, 70, 0.1), 0 8px 16px 0px #03412260;
+}
+.storelogo{
+    
+    height: 10lvh;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    margin-left: 5%;
+}
+#storestext{
+    width: 100%;
+    display: flex;
+    color: rgb(43, 43, 43);
+    font-weight: 800;
+    font-size: 2em;
+    align-items: flex-start;
+    margin-top: 40px;
+    margin-bottom: 10px;
+    padding-left: 5%;
+}
+.storename p{
+    font-size: 2vw;
+}
+input.searchstores{
+    min-width: 90lvw;
+    min-height: 8lvh;
+    border-radius: 20px;
+    background-color: rgba(207, 207, 207, 0.452);
+    border-color: white;
+    padding-left: 20px;
+}
+.kiosksearch{
+    margin-top: 4lvh;
+    
+}
+.kiosksearch form{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    border: none;
+}
+.kioskstore:hover{
+    cursor: pointer;
+}
+/*menu*/
+.storeheader{
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(58, 72, 70, 0.1), 0 8px 16px 0px #77777760;
+}
+.menustorename p{
+    font-weight:800;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 5lvh;
+}
+.menustorename{
+    margin: 3lvh 0px 0px 2lvw;
+}
+.menusearch{
+
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+}
+.menusearch form{
+    display: flex;
+    justify-content: start;
+    flex-direction: row;
+    border: none;
+}
+input.menusearch{
+    min-width: 30lvw;
+    min-height: 5lvh;
+    border-radius: 20px;
+    background-color: rgba(207, 207, 207, 0.452);
+    border-color: white;
+    padding-left: 20px;
+    margin-left: 2lvw;
+    margin-bottom: 15px;
+}
+.categories{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: end;
+}
+.categories p{
+    margin: 0 2lvw;
+    line-height: 50px;
+    margin-bottom: 5px;
+    font-size: 3lvh;
+    font-weight: 700;
+    color: #02BF63;
+}
+.active{
+    border: 0;
+    border-bottom: 8px #02BF63;
+    margin-bottom: 0px !important;
+    border-style:solid ;
+    line-height: 45px !important;
+}
