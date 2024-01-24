@@ -19,16 +19,21 @@ div.left{
     width: 300px;
     justify-content: center;
     display: flex;
-    align-items: flex-end;
+    
+    flex-direction: column;
+    align-items: center;
 }
-
+div.options{
+    width: 100%;
+    margin-top: 5lvh;
+}
 ul.options{
     text-align: center;
     padding: 0;
     margin: 0;
 }
 li.logout{
-    margin-top: 100px;
+    margin-top: 50px;
     margin-bottom: 50px !important;
 }
 li.options{
@@ -41,7 +46,7 @@ li.options>a{
     color: white;
 
     
-    font-size: 1.5em;
+    font-size: 4lvh;
     font-weight:500;
 }
 ul{
@@ -104,12 +109,8 @@ label.login-label{
 .superadminstorelogo{
     
    
-    width: 35lvh;
-    position: absolute;
-    top: 7lvh;
-    left: 80px;
-    right: 0;
-    bottom: 0;
+    width: 30lvh;
+    
 }
 .storetable{
     margin-left: 100px;
@@ -158,8 +159,12 @@ label.login-label{
 
 /*Account*/
 #rightaccount{
-    padding-left: 15% !important;
-    padding-right: 5% !important;
+    
+    
+}
+.accountsdiv{
+    margin-left: 5lvw;
+    
 }
 .accountstext{
     color: #02BF63;
@@ -177,7 +182,7 @@ label.login-label{
     flex-wrap: wrap;
     overflow-y: scroll;
     height: 70lvh;
-    padding-right: 20px;
+    padding-right: 5lvw;
     
 }
 .acoountdiv{
@@ -186,7 +191,7 @@ label.login-label{
     
     align-items: center;
     width: 40%;
-    height: 25%;
+    min-height: 30%;
     background-color: #02BF63;
     border-radius: 30px;
     margin-bottom: 30px;
@@ -194,8 +199,8 @@ label.login-label{
 }
 
 .accountlogo{
-    width: 40%;
-    height: 14lvh;
+    width: lvh;
+    height: 16lvh;
     aspect-ratio: 1;
     border-radius: 50%;
     margin-left: 5%;
@@ -206,6 +211,8 @@ label.login-label{
     font-weight: 700;
     text-wrap: nowrap;
     margin-bottom: 0 !important;
+    white-space: normal;
+    
 }
 .storename
 {
@@ -366,4 +373,24 @@ input.menusearch{
     margin-bottom: 0px !important;
     border-style:solid ;
     line-height: 45px !important;
+}
+/*store*/
+/*add item*/
+.itemsize{
+    display:flex;
+    flex-direction: row;
+}
+.addsizebtn{
+    margin-left: 50px;
+}
+.sizecontainer{
+    display: flex;
+    flex-direction: row;
+}
+addvariant{
+    margin-bottom: 50px;
+}
+.itemsizee{
+    display:flex;
+    flex-direction: row;
 }
