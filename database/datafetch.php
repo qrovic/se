@@ -1,10 +1,8 @@
 <?php
-require_once('config.php');
+require_once("config.php");
 
 #stores
-$sqlstores = "SELECT * from STORE";
+$sqlstores = "SELECT * FROM store";
 $resultstores = $pdo->query($sqlstores);
 $stores = $resultstores->fetchAll();
-
-
 ?>
