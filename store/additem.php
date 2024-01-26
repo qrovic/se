@@ -25,7 +25,6 @@
                     <a href="overview.php">Logout</a>
                 </li>
             </ul>
-            
         </div>
     </div>
     <div class="right">

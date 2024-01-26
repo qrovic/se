@@ -20,8 +20,8 @@
             <input class="menusearch" type="text" name="search" id="" placeholder="Search for stores and menu">
             </form>
             <div class="categories">
+                <p class="active">POpular</p>
                 <p class="active">Drinks</p>
-                
                 <p>Meals</p>
                 <p>Snacks</p>
                 <p>Desserts</p>
@@ -31,7 +31,7 @@
         
     </div>
     <div class="storemenus">
-        <!--<div class="kioskstores" onclick="examplemodal">
+        <div class="kioskstores" onclick="examplemodal">
             <?php
             if ($stores) {
                 foreach ($stores as $store) {
@@ -46,7 +46,7 @@
                 }
             }
             ?>
-        </div>-->
+        </div>
     </div>
 </body>
 </html>
