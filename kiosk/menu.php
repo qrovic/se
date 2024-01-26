@@ -31,16 +31,21 @@
         
     </div>
     <div class="storemenus">
-        <div class="kioskstores" onclick="examplemodal">
+        <div class="menustorename">
+            <p>Drinks</p>
+        </div>
+        <div class="storeitems" onclick="examplemodal">
             <?php
-            if ($stores) {
-                foreach ($stores as $store) {
+            if ($drinks) {
+                foreach ($drinks as $drink) {
                     ?>
-                    <div class="kioskstore">
-                        <img class="storelogo" src="<?php echo "../resources/" . $store['pic']; ?>" alt="Store Logo">
-                        <div class="storename">
-                            <p class="accountname"><?php echo $store['name'] ?></p>
+                    <div class="storeitem">
+                        <div class="itemdetails">
+                            <p class="itemname"><?php echo $drink['name'] ?></p>
+                            <p class="itemprice">from <?php echo rand(50, 199);?></p>
                         </div>
+                        <img class="storelogo" src="<?php echo "../resources/" . $drink['pic']; ?>" alt="Store Logo">
+                        
                     </div>
                     <?php 
                 }

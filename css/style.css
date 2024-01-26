@@ -191,7 +191,8 @@ label.login-label{
     
     align-items: center;
     width: 40%;
-    max-height: 30%;
+    max-height: 35%;
+    height: 30%;
     background-color: #02BF63;
     border-radius: 30px;
     margin-bottom: 30px;
@@ -487,6 +488,49 @@ input.menusearch{
     border-style:solid ;
     line-height: 45px !important;
 }
+.storeitems{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    height: 50vh;
+    padding-right: 20px;
+    width: 100%;
+    padding-left: 30px;
+}
+.storeitem{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 22%;
+    height: 30%;
+    background-color: white;
+    border: 1px rgba(194, 194, 194, 0.555) solid;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 2px rgba(197, 197, 197, 0.007), 0 8px 16px 0px #5757572a;
+}
+.itemname{
+    font-size: 3.5lvh;
+    margin-bottom: 0px !important;
+    margin-top: 5px !important;
+}
+.itemprice{
+    margin-bottom: 5px !important;
+}
+.kioskstore{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.itemdetails{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+}
 /*store*/
 /*add item*/
 .itemsize{
@@ -500,7 +544,7 @@ input.menusearch{
     display: flex;
     flex-direction: row;
 }
-addvariant{
+a.ddvariant{
     margin-bottom: 50px;
 }
 .itemsizee{

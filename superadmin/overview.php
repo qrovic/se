@@ -4,6 +4,7 @@
 <?php
     require_once ("../include/head.php");
     require_once('../include/js.php');
+    require_once('../database/datafetch.php');
 ?>
 <body>
     <div class="left">
@@ -14,7 +15,7 @@
                     <a class="active" href="overview.php">Overview</a>
                 </li>
                 <li class="options">
-                    <a href="overview.php">Accounts</a>
+                    <a href="accounts.php">Accounts</a>
                 </li>
                 <li class="options">
                     <a href="overview.php">Sales</a>
@@ -23,7 +24,7 @@
                     <a href="overview.php">Settings</a>
                 </li>
                 <li class="options logout">
-                    <a href="overview.php">Logout</a>
+                    <a href="../login/login.php">Logout</a>
                 </li>
             </ul>
             
@@ -32,7 +33,7 @@
     <div class="right">
         <div class="storestat">
             <div class="stores">
-                <p class="storenumber">5</p>
+                <p class="storenumber"><?php if($totalstorescount){ echo $onlinestorescount;}?></p>
                 <div class="storestext">
                     <p>STORES</p>
                     <p>OPEN</p>
@@ -40,7 +41,7 @@
                 
             </div>
             <div class="stores">
-                <p class="storenumber">68</p>
+                <p class="storenumber"><?php if($totalstorescount){ echo $totalstorescount;}?></p>
                 <div class="storestext">
                     <p>TOTAL</p>
                     <p>STORES</p>

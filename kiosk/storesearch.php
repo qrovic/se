@@ -21,12 +21,12 @@
         </form>
         </div>
         <div class="accountstext" id="storestext">
-            <p>All stores</p>
+            <p>We found <?php if($filteredstorescount){ echo $filteredstorescount;} else{echo "0";}?> <?php if(($filteredstorescount)>1){ echo "results";}else{echo "result";}?> for "<?php if ($_GET['search']){ echo $_GET['search'];}?>"</p>
         </div>
         <div class="kioskstores" onclick="examplemodal">
             <?php
-            if ($stores) {
-                foreach ($stores as $store) {
+            if ($filteredstores) {
+                foreach ($filteredstores as $store) {
                     ?>
                     <div class="kioskstore" onclick="window.location.href='menu.php?storename=<?php echo $store['name'];?>'">
                         <img class="storelogo" src="<?php echo "../resources/" . $store['pic']; ?>" alt="Store Logo">
