@@ -15,9 +15,9 @@
     </div>
     <div class="down">
         <div class="kiosksearch">
-            <form action="storesearch.php" method="POST">
+            <form action="storesearch.php" method="POST"  id="searchforms">
             <input class="searchstores" type="text" name="search" id="" placeholder="Search for stores and menu">
-            <input type="text" name=storename hidden value=<?php echo $_POST['storename'];?>>
+            <input type="text" name=storename hidden value=<?php if (isset($_POST['storename'])){echo $_POST['storename'];}?>>
           
         </form>
         </div>
@@ -46,6 +46,14 @@
         </div>
     </div>
     
+    <script>
+    document.getElementById('searchforms').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            this.submit(); 
+        }
+    });
+    </script>
 
     
     

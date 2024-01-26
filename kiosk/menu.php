@@ -16,13 +16,14 @@
             <p><?php if (isset($_POST['storename'])) { echo $_POST['storename']; } ?></p>
         </div>
         <div class="menusearch">
-        <form action="menusearch.php" method="POST" id="searchform">
+        <form action="menusearch.php" method="POST" id="searchforms">
             <input class="menusearch" type="text" name="itemsearch" id="" placeholder="Search for stores and menu">
             <input type="text" class="" hidden name="storename" value="<?php echo $_POST['storename'];?>">
+            
             </form>
             <div class="categories">
                 <ul>
-                    <li><a href="#<?php echo $category['category'];?>" ><?php echo $category['category'];?></a></li>
+                    
                     <?php if ($categories) {
                         foreach ($categories as $category) {
                         ?>
@@ -96,7 +97,7 @@
 
 </script>
 <script>
-    document.getElementById('searchform').addEventListener('keypress', function (e) {
+    document.getElementById('searchforms').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             e.preventDefault();
             this.submit(); 

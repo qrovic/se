@@ -489,7 +489,7 @@ input.menusearch{
 }
 .categories>ul>li>a{
     margin: 0 1.5lvw !important;
-    line-height: 35px !important;
+    line-height: 4lvh !important;
     margin-bottom: 0px !important;
     font-size: 3lvh;
     font-weight: 700;
@@ -497,7 +497,7 @@ input.menusearch{
 }
 .active{
     border: 0;
-    border-bottom: 8px #02BF63;
+    border-bottom: 5px #02BF63;
     margin-bottom: 0px !important;
     border-style:solid ;
     line-height: 40px !important;

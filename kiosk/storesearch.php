@@ -23,15 +23,20 @@
         <div class="accountstext" id="storestext">
             <p>We found <?php if($filteredstorescount){ echo $filteredstorescount;} else{echo "0";}?> <?php if(($filteredstorescount)>1){ echo "results";}else{echo "result";}?> for "<?php if ($_POST['search']){ echo $_POST['search'];}?>"</p>
         </div>
-        <div class="kioskstores" onclick="examplemodal">
+        <div class="kioskstores">
             <?php
             if ($filteredstores) {
                 foreach ($filteredstores as $store) {
                     ?>
-                    <div class="kioskstore" onclick="window.location.href='menu.php?storename=<?php echo $store['name'];?>'">
-                        <img class="storelogo" src="<?php echo "../resources/" . $store['pic']; ?>" alt="Store Logo">
+                    <form id="" action="menu.php" method="POST" hidden>
+                        <input type="text" id="storename" name="storename" value="<?php echo $store['store_name'];?>" hidden>
+                        <button type="submit" id="<?php echo $store['store_name'];?>" style="display:none;"></button>
+                    </form>
+                    <div class="kioskstore" onclick="document.getElementById('<?php echo $store['store_name'];?>').click()">
+
+                        <img class="storelogo" src="<?php echo "../resources/" . $store['store_pic']; ?>" alt="Store Logo">
                         <div class="storename">
-                            <p class="accountname"><?php echo $store['name'] ?></p>
+                            <p class="accountname"><?php echo $store['store_name'] ?></p>
                         </div>
                     </div>
                     <?php 

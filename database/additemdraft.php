@@ -29,7 +29,7 @@ try {
     $stmt->execute();
     $lastInsertedId = $pdo->lastInsertId();
 
-    header('location: ../kiosk/stores.php');
+    header('location: ../store/additemdraft.php');
 } catch(PDOException $e) {
     echo "Error: " . $e->getMessage();
 }

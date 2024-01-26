@@ -29,10 +29,9 @@ if (isset($_FILES["storepic"]) && $_FILES["storepic"]["error"] == 0) {
 
 
 try {
-    $stmt = $pdo->prepare("INSERT INTO store (name, description, status, pic) VALUES (:storename, :storedescription, :storestatus, :storepic)");
+    $stmt = $pdo->prepare("INSERT INTO store (name, description, pic) VALUES (:storename, :storedescription, :storepic)");
     $stmt->bindParam(':storename', $storename);
     $stmt->bindParam(':storedescription', $storedescription);
-    $stmt->bindParam(':storestatus', $storestatus);
     $stmt->bindParam(':storepic', $storepic);
     $stmt->execute();
     $lastInsertedId = $pdo->lastInsertId();

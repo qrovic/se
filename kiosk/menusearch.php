@@ -48,6 +48,7 @@
                     <?php
                     foreach ($filteredstoremenu as $storemenusearch) {
                     ?>
+                    
                         <div class="storeitem">
                             <div class="itemdetails">
                                 <p class="itemname"><?php echo $storemenusearch['item_name'] ?></p>

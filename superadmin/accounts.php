@@ -37,8 +37,8 @@
         
         <div class="accountsdiv" onclick="examplemodal">
             <?php
-            if ($stores) {
-                foreach ($stores as $store) {
+            if ($allstores) {
+                foreach ($allstores as $store) {
                     ?>
                     <div class="acoountdiv">
                         <img class="accountlogo" src="<?php echo "../resources/" . $store['pic']; ?>" onerror="this.src='../resources/noimg.png'";>

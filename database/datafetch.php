@@ -19,17 +19,17 @@ $sqlonlinestorescount = "SELECT COUNT(*) FROM store WHERE status='online'";
 $resultonlinestorescount = $pdo->query($sqlonlinestorescount);
 $onlinestorescount = $resultonlinestorescount->fetchColumn();
 
-# Store filter based on search term
+# Store filter based on item search term
 if (isset($_POST['search'])) {
     $searchterm = $_POST['search'];
 
-    $sqlstorefilter = "SELECT * FROM store WHERE name LIKE :searchterm";
+    $sqlstorefilter = "SELECT store.name AS store_name, store.pic AS store_pic FROM store JOIN item ON item.storeid = store.id WHERE item.name LIKE :searchterm OR store.name LIKE :searchterm";
     $stmt = $pdo->prepare($sqlstorefilter);
     $stmt->bindParam(':searchterm', $searchterm, PDO::PARAM_STR);
     $stmt->execute();
     $filteredstores = $stmt->fetchAll();
 
-    $sqlstorefiltercount = "SELECT COUNT(*) FROM store WHERE name LIKE :searchterm";
+    $sqlstorefiltercount = "SELECT COUNT(*) FROM store JOIN item ON item.storeid = store.id WHERE item.name LIKE :searchterm OR store.name LIKE :searchterm";
     $stmt = $pdo->prepare($sqlstorefiltercount);
     $stmt->bindParam(':searchterm', $searchterm, PDO::PARAM_STR);
     $stmt->execute();

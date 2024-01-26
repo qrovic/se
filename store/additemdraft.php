@@ -57,7 +57,7 @@
                             <option value="Meals">Meals</option>
                             <option value="Snacks">Snacks</option>
                             <option value="Desserts">Desserts</option>
-                            <option value="Items">Items</option>  
+                            <option value="Combos">Combos</option>  
                         </select>
                     </div>
                     <div class="addstoreinput">
