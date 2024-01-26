@@ -41,7 +41,7 @@
                 foreach ($stores as $store) {
                     ?>
                     <div class="acoountdiv">
-                        <img class="accountlogo" src="<?php echo "../resources/" . $store['pic']; ?>" alt="Store Logo">
+                        <img class="accountlogo" src="<?php echo "../resources/" . $store['pic']; ?>" onerror="this.onerror=null; this.src='../resources/noimg.png';">
                         <div class="storename">
                             <p class="accountname"><?php echo $store['name'] ?></p>
                         </div>
@@ -55,9 +55,90 @@
     
 
     <div class="addstore">
-        <button type="button" class="btn btn-primary" id="add-store" data-toggle="modal" data-target="#addMemberModal" onclick="window.location.href='addstore.php'">
+        <button type="button" class="btn btn-primary" id="add-store" data-bs-toggle="modal" data-bs-target="#addstoremodal" >
             Add Store
         </button>
+    </div>
+    
+
+    <!-- Modal -->
+    <div class="modal fade" id="addstoremodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+            
+        <div class="modal-content">
+        
+        <div class="modal-body">
+            <div class="modaltitle">
+                <h5 class="modal-title" id="exampleModalLabel">Add Store</h5>
+            </div>
+                
+            
+            <form action="../database/addstore.php" method="POST" enctype="multipart/form-data">
+                <div class="upperaddacc">
+                    
+                    <div class="addacclogo">
+                        
+                        <label for="file" class="btn uploadbtn"><i class='bx bx-upload'></i>Upload</label>
+                        <input id="file" name="storepic" hidden type="file">
+                        
+                    </div>
+                    <div class="storeinfo">
+                    <h4 class="ownerdetailstext">Store Details</h4>
+                        <div class="storeinforow">
+                            <div class="labelinput">
+                                <label for="" class="form-label">Store Name</label>
+                                <input type="text" class="form-control" name="storename" id="" placeholder="">
+                            </div>
+                            <div>
+                                <label for="" class="form-label">Contact</label>
+                                <input type="number" name="ownercontact" class="form-control ownercontact" id="" placeholder="">
+                            </div>
+                        </div>
+                        <div class="storeinfodescription">
+                            <label for="" class="form-label">Description/Tagline</label>
+                            <input type="text" name="storedescription" class="form-control" id="" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <div class="addstorebelow">
+                    <h4 class="ownerdetailstext">Owner Details</h4>
+                    <div class="storeinforow">
+                        
+                        <div class="labelinput">
+                            <label for="" class="form-label">First Name</label>
+                            <input type="text" name="ownerfname" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="labelinput">
+                            <label for="" class="form-label">Middle Name</label>
+                            <input type="text" name="ownermname" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="labelinput labelinputright">
+                            <label for="" class="form-label">Last Name</label>
+                            <input type="text" name="ownerlname" class="form-control" id="" placeholder="">
+                        </div>
+                        
+                    </div>
+                    <div class="storeinforow">
+                        
+                        <div class="labelinput">
+                            <label for="" class="form-label">Email</label>
+                            <input type="email" name="owneremail" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="labelinput labelinputright">
+                            <label for="" class="form-label">Password</label>
+                            <input type="password" name="ownerpassword"class="form-control" id="" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary greenbtn">Add Store</button>
+                </div>
+            </form>
+        </div>
+        
+        </div>
+    </div>
     </div>
     
 

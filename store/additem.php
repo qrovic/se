@@ -26,6 +26,7 @@
                 </li>
             </ul>
         </div>
+        
     </div>
     <div class="right">
         <h1>Add Store</h1>

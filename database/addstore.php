@@ -11,7 +11,8 @@ $ownermname = trim($_POST['ownermname']);
 $ownerlname = trim($_POST['ownerlname']); 
 $ownercontact = trim($_POST['ownercontact']); 
 $owneremail = trim($_POST['owneremail']); 
-$owneraddress = trim($_POST['owneraddress']); 
+
+$ownerpassword = trim($_POST['ownerpassword']);
 
 if (isset($_FILES["storepic"]) && $_FILES["storepic"]["error"] == 0) {
     $destinationFolder = "../resources/";
@@ -37,17 +38,17 @@ try {
     $lastInsertedId = $pdo->lastInsertId();
 
     
-    $stmt = $pdo->prepare("INSERT INTO staff (storeid, fname, lname, mname, contactno, email, address, role) VALUES (:storeid, :ownerfname, :ownerlname, :ownermname, :ownercontact, :owneremail, :owneraddress, 'Owner')");
+    $stmt = $pdo->prepare("INSERT INTO staff (storeid, fname, lname, mname, contactno, email, password, role) VALUES (:storeid, :ownerfname, :ownerlname, :ownermname, :ownercontact, :owneremail, :ownerpassword, 'Owner')");
     $stmt->bindParam(':storeid', $lastInsertedId);
     $stmt->bindParam(':ownerfname', $storedescription);
     $stmt->bindParam(':ownerlname', $ownerlname);
     $stmt->bindParam(':ownermname', $ownermname);
     $stmt->bindParam(':ownercontact', $ownercontact);
     $stmt->bindParam(':owneremail', $owneremail);
-    $stmt->bindParam(':owneraddress', $owneraddress);
+    $stmt->bindParam(':ownerpassword', $ownerpassword);
     $stmt->execute();
 
-    header('location: ../superadmin/store.php');
+    header('location: ../superadmin/accounts.php');
 } catch(PDOException $e) {
     echo "Error: " . $e->getMessage();
 }

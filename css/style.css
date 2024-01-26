@@ -191,7 +191,7 @@ label.login-label{
     
     align-items: center;
     width: 40%;
-    min-height: 30%;
+    max-height: 30%;
     background-color: #02BF63;
     border-radius: 30px;
     margin-bottom: 30px;
@@ -232,6 +232,119 @@ label.login-label{
     border-radius: 30px 0 0 30px;
     font-size: 2.1lvh;
     font-weight: 800;
+}
+.modal-dialog {
+    max-width: 60% !important;
+    
+}
+.modal-content{
+    border-radius: 20px !important;
+}
+.form-label{
+    margin: 0;
+    font-weight: bold;
+}
+.form-control{
+    border-radius: 10px !important;
+    border-color: rgba(109, 109, 109, 0.562)
+}
+/*add account modal*/
+.upperaddacc{
+    display: flex;
+    flex-direction: row;
+}
+.storeinfo{
+    display: flex;
+    flex-direction: column;
+    
+}
+.labelinput{
+    width: 100%;
+    margin-right: 3lvh;
+}
+.labelinputright{
+    margin-right: 0 !important;
+}
+.storeinforow{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    margin-bottom: 10px;
+}
+.exitbtn{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+.modaltitle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:#007F41;
+    margin-bottom: 30px;
+}
+.modaltitle>h5{
+    font-size: 5lvh;
+    font-weight: bold;
+}
+
+.modal-content{
+    padding: 2lvh 5lvw;
+}
+.footer{
+    width: 100%;
+    margin-top: 50px !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px !important;
+}
+.footer>button{
+    width: 45%;
+    border-radius: 20px;
+}
+.addacclogo{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border: 1px black solid;
+    min-height: 25lvh;
+    min-width: 25%;
+    border-radius: 10px;
+    margin-right: 2lvw;
+}
+label{
+    width: 100%;
+}
+.upperaddacc{
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+}
+.addstorebelow{
+    margin-top: 20px;
+}
+.greenbtn{
+    background-color:#02BF63 !important;
+    border-color: #02BF63 !important;
+}
+.uploadbtn{
+    display: flex;
+    flex-direction: column;
+
+}
+.uploadbtn>i{
+    font-size: 10lvh;
+}
+.ownerdetailstext{
+    font-weight: bold;
+    
+}
+.ownercontact{
+    min-width: 130px !important; 
+    
 }
 /*Kiosk*/
 /*store*/
