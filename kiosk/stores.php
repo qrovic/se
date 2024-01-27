@@ -15,8 +15,9 @@
     </div>
     <div class="down">
         <div class="kiosksearch">
-            <form action="storesearch.php" method="get">
+            <form action="storesearch.php" method="POST">
             <input class="searchstores" type="text" name="search" id="" placeholder="Search for stores and menu">
+            <input type="text" name=storename hidden value=<?php echo $_POST['storename'];?>>
           
         </form>
         </div>
@@ -28,8 +29,12 @@
             if ($stores) {
                 foreach ($stores as $store) {
                     ?>
-                    <div class="kioskstore" onclick="window.location.href='menu.php?storename=<?php echo $store['name'];?>'">
-                        <img class="storelogo" src="<?php echo "../resources/" . $store['pic']; ?>" alt="Store Logo">
+                    <form id="" action="menu.php" method="POST" hidden>
+                        <input type="text" id="storename" name="storename" value="<?php echo $store['name'];?>" hidden>
+                        <button type="submit" id="<?php echo $store['name'];?>" style="display:none;"></button>
+                    </form>
+                    <div class="kioskstore" onclick="document.getElementById('<?php echo $store['name'];?>').click()">
+                    <img class="storelogo" src="<?php echo "../resources/" . $store['pic']; ?>" onerror="this.src='../resources/noimg.png'";>
                         <div class="storename">
                             <p class="accountname"><?php echo $store['name'] ?></p>
                         </div>
@@ -40,6 +45,9 @@
             ?>
         </div>
     </div>
+    
+
+    
     
     
 

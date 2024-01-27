@@ -15,13 +15,13 @@
     </div>
     <div class="down">
         <div class="kiosksearch">
-            <form action="storesearch.php" method="get">
+            <form action="storesearch.php" method="POST">
             <input class="searchstores" type="text" name="search" id="" placeholder="Search for stores and menu">
           
         </form>
         </div>
         <div class="accountstext" id="storestext">
-            <p>We found <?php if($filteredstorescount){ echo $filteredstorescount;} else{echo "0";}?> <?php if(($filteredstorescount)>1){ echo "results";}else{echo "result";}?> for "<?php if ($_GET['search']){ echo $_GET['search'];}?>"</p>
+            <p>We found <?php if($filteredstorescount){ echo $filteredstorescount;} else{echo "0";}?> <?php if(($filteredstorescount)>1){ echo "results";}else{echo "result";}?> for "<?php if ($_POST['search']){ echo $_POST['search'];}?>"</p>
         </div>
         <div class="kioskstores" onclick="examplemodal">
             <?php

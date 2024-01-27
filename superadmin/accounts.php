@@ -41,7 +41,7 @@
                 foreach ($stores as $store) {
                     ?>
                     <div class="acoountdiv">
-                        <img class="accountlogo" src="<?php echo "../resources/" . $store['pic']; ?>">
+                        <img class="accountlogo" src="<?php echo "../resources/" . $store['pic']; ?>" onerror="this.src='../resources/noimg.png'";>
                         <div class="storename">
                             <p class="accountname"><?php echo $store['name'] ?></p>
                         </div>

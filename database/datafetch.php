@@ -1,11 +1,12 @@
 <?php
 require_once("config.php");
 
-# Fetch all stores
-$sqlstores = "SELECT * FROM store";
-$stmt = $pdo->prepare($sqlstores);
-$stmt->execute();  // Add this line to execute the prepared statement
-$stores = $stmt->fetchAll();
+#fetch all stores
+$sqlsalltores = "SELECT * FROM store";
+$stmt = $pdo->prepare($sqlsalltores); 
+$stmt->execute();  
+$allstores = $stmt->fetchAll();
+
 
 
 # Fetch total count of stores
@@ -19,8 +20,8 @@ $resultonlinestorescount = $pdo->query($sqlonlinestorescount);
 $onlinestorescount = $resultonlinestorescount->fetchColumn();
 
 # Store filter based on search term
-if (isset($_GET['search'])) {
-    $searchterm = $_GET['search'];
+if (isset($_POST['search'])) {
+    $searchterm = $_POST['search'];
 
     $sqlstorefilter = "SELECT * FROM store WHERE name LIKE :searchterm";
     $stmt = $pdo->prepare($sqlstorefilter);
@@ -37,26 +38,76 @@ if (isset($_GET['search'])) {
 }
 
 #fetch drinks items 
-if (isset($_GET['storename'])) {
+if (isset($_POST['storename'])) {
+    $storename = $_POST['storename'];
 
-    $sqldrinks = "SELECT * FROM item WHERE category='drinks';";
-    $stmt = $pdo->prepare($sqldrinks);
-    $stmt->execute();
-    $drinks = $stmt->fetchAll();
-    
+    #fetch categories
+    $sqlcategories = "SELECT DISTINCT category FROM item LEFT JOIN store ON item.storeid=store.id WHERE store.name=:storename";
+    $stmtcategories = $pdo->prepare($sqlcategories);
+    $stmtcategories->bindParam(':storename', $storename, PDO::PARAM_STR);
+    $stmtcategories->execute();
+    $categories = $stmtcategories->fetchAll();
+
+    $sqldrinks = "SELECT item.name AS item_name, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN store ON item.storeid = store.id WHERE category='Drinks' AND store.name=:storename";
+    $stmtdrinks = $pdo->prepare($sqldrinks);
+    $stmtdrinks->bindParam(':storename', $storename, PDO::PARAM_STR);
+    $stmtdrinks->execute();
+    $Drinks = $stmtdrinks->fetchAll();
+
+    $sqlmeals = "SELECT item.name AS item_name, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN store ON item.storeid = store.id WHERE category='Meals' AND store.name=:storename";
+    $stmtmeals = $pdo->prepare($sqlmeals);
+    $stmtmeals->bindParam(':storename', $storename, PDO::PARAM_STR);
+    $stmtmeals->execute();
+    $Meals = $stmtmeals->fetchAll();
+
+    $sqlsnacks = "SELECT item.name AS item_name, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN store ON item.storeid = store.id WHERE category='Snacks' AND store.name=:storename";
+    $stmtsnacks = $pdo->prepare($sqlsnacks);
+    $stmtsnacks->bindParam(':storename', $storename, PDO::PARAM_STR);
+    $stmtsnacks->execute();
+    $Snacks = $stmtsnacks->fetchAll();
+
+    $sqldesserts = "SELECT item.name AS item_name, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN store ON item.storeid = store.id WHERE category='Desserts' AND store.name=:storename";
+    $stmtdesserts = $pdo->prepare($sqldesserts);
+    $stmtdesserts->bindParam(':storename', $storename, PDO::PARAM_STR);
+    $stmtdesserts->execute();
+    $Desserts = $stmtdesserts->fetchAll();
+
+    $sqlcombos = "SELECT item.name AS item_name, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN store ON item.storeid = store.id WHERE category='Combos' AND store.name=:storename";
+    $stmtcombos = $pdo->prepare($sqlcombos);
+    $stmtcombos->bindParam(':storename', $storename, PDO::PARAM_STR);
+    $stmtcombos->execute();
+    $Combos = $stmtcombos->fetchAll();
 }
 
+#fetch all stores with items and are active
+$sqlstores = "SELECT store.*, COUNT(item.category) AS category_count FROM store LEFT JOIN item ON store.id = item.storeid WHERE store.status = 'Online' GROUP BY store.id HAVING category_count >= 1;";
+$stmt = $pdo->prepare($sqlstores); 
+$stmt->execute();  
+$stores = $stmt->fetchAll();
 
-if (isset($_GET['storename']) && isset($_GET['itemsearch'])) {
-    $storename = $_GET['storename'];
-    $itemsearch = $_GET['itemsearch'];
+if (isset($_POST['storename']) && isset($_POST['itemsearch'])) {
+    try {
+    $storename = $_POST['storename'];
+    $itemsearch = '%'.$_POST['itemsearch'].'%';
 
-    $sqlstorefilter = "SELECT * FROM store WHERE category='drinks' AND name LIKE :searchterm AND store_name = :storename";
-    $stmt = $pdo->prepare($sqlstorefilter);
-    $stmt->bindParam(':searchterm', '%' . $itemsearch . '%', PDO::PARAM_STR);
+    $sqlstoremenufilter = "SELECT item.name AS item_name, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item LEFT JOIN store ON item.storeid = store.id WHERE item.name LIKE :searchterm AND store.name = :storename";
+    $stmt = $pdo->prepare($sqlstoremenufilter);
+    $stmt->bindParam(':searchterm', $itemsearch, PDO::PARAM_STR);
     $stmt->bindParam(':storename', $storename, PDO::PARAM_STR);
     $stmt->execute();
-    $filteredstores = $stmt->fetchAll();
+    $filteredstoremenu = $stmt->fetchAll();
+
+    $sqlstoremenufiltercount = "SELECT COUNT(*) FROM item LEFT JOIN store ON item.storeid=store.id WHERE item.name LIKE :searchterm AND store.name = :storename";
+    $stmt = $pdo->prepare($sqlstoremenufiltercount);
+    $stmt->bindParam(':searchterm', $itemsearch , PDO::PARAM_STR);
+    $stmt->bindParam(':storename', $storename, PDO::PARAM_STR);
+    $stmt->execute();
+    $filteredstoremenucount = $stmt->fetchColumn();
+ 
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+    
 }
 ?>
 
