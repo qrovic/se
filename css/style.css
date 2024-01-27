@@ -117,7 +117,10 @@ label.login-label{
 .storetable{
     margin-left: 100px;
 }
-
+/*edit store modal*/
+.editinput{
+    background-color: rgb(228, 228, 228) !important;
+}
 /*overview superadmin*/
 .storestat{
     display: flex;
@@ -190,7 +193,7 @@ label.login-label{
 .acoountdiv{
     display: flex;
     flex-direction: row;
-    
+    cursor: pointer;
     align-items: center;
     width: 40%;
     max-height: 35%;
@@ -310,9 +313,20 @@ label.login-label{
     align-items: center;
     margin-bottom: 15px !important;
 }
+.editstorefooter{
+    display: flex;
+    flex-direction: row-reverse;
+}
 .footer>button{
     width: 45%;
-    border-radius: 20px;
+    border-radius: 20px !important;
+}
+.editstorefooter>form>button{
+    width: 100%;
+    border-radius: 20px !important;
+}
+.editstorefooter>form{
+    width: 45%;
 }
 .addacclogo{
     display: flex;

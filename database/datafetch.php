@@ -7,6 +7,12 @@ $stmt = $pdo->prepare($sqlsalltores);
 $stmt->execute();  
 $allstores = $stmt->fetchAll();
 
+#fetch store w/ owner
+$sqlstorewowner = "SELECT * FROM store JOIN staff ON store.id=staff.storeid WHERE role='Owner'";
+$stmt = $pdo->prepare($sqlstorewowner); 
+$stmt->execute();  
+$storewowner = $stmt->fetchAll();
+
 
 
 # Fetch total count of stores
