@@ -48,7 +48,7 @@
                     ?>
                     <div class="categoryitem">
                     
-                        <section id="<?php echo $category['category']; ?>"></section>
+                        <section id="<?php echo $category['category']; ?>">
                         <div class="categoryname">
                             <p><?php echo $category['category']; ?></p>
                         </div>
@@ -70,6 +70,7 @@
                         ?>
                         </div>
                     </div>
+                    </section>
                 <?php
                 }
             }
@@ -79,23 +80,42 @@
 
 </body>
 <script>
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
+        // Add event listeners for click events on anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
 
-        document.querySelectorAll('a[href^="#"]').forEach(a => {
-            a.classList.remove('active');
+                document.querySelectorAll('a[href^="#"]').forEach(a => {
+                    a.classList.remove('active');
+                });
+
+                this.classList.add('active');
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
         });
 
-        this.classList.add('active');
+        // Use Intersection Observer to handle scroll events
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                const id = entry.target.getAttribute('id');
+                const link = document.querySelector(`a[href="#${id}"]`);
 
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
+                if (entry.isIntersecting) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }, { threshold: 0.5 }); // Adjust the threshold as needed
+
+        // Observe each section
+        document.querySelectorAll('section[id]').forEach(section => {
+            observer.observe(section);
         });
-    });
-});
-
-</script>
+    </script>
 <script>
     document.getElementById('searchforms').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
@@ -104,4 +124,5 @@
         }
     });
 </script>
+
 </html>

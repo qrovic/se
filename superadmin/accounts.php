@@ -40,14 +40,14 @@
             if ($storewowner) {
                 foreach ($storewowner as $storewowners) {
                     ?>
-                    <div class="acoountdiv" data-bs-toggle="modal" data-bs-target="#<?php echo $storewowners['name'];?>">
+                    <div class="acoountdiv" data-bs-toggle="modal" data-bs-target="#<?php echo str_replace(' ', '', $storewowners['name']); ?>">
                         <img class="accountlogo" src="<?php echo "../resources/" . $storewowners['pic']; ?>" onerror="this.src='../resources/noimg.png'";>
                         <div class="storename">
                             <p class="accountname"><?php echo $storewowners['name'];?></p>
                         </div>
                     </div>
                     <!-- Modal -->
-                    <div class="modal fade" id="<?php echo $storewowners['name'] ?>" tabindex="-1" aria-labelledby="" aria-hidden="true">
+                    <div class="modal fade" id="<?php echo str_replace(' ', '', $storewowners['name']); ?>" tabindex="-1" aria-labelledby="" aria-hidden="true">
                         <div class="modal-dialog">
                                 
                             <div class="modal-content">
@@ -61,12 +61,11 @@
                                 <form action="../database/updatestore.php" method="POST" enctype="multipart/form-data">
                                     <div class="upperaddacc">
                                         
-                                        <div class="addacclogo">
-                                            
-                                            <label for="file" class="btn uploadbtn"><i class='bx bx-upload'></i>Upload</label>
-                                            <input id="file" name="storepic" hidden type="file">
-                                            
-                                        </div>
+                                    <div class="addacclogo" style="background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('<?php echo "../resources/" . $storewowners['pic']; ?>'); background-position: center; background-size: cover;">
+                                        <label for="file" class="btn uploadbtn"><i class='bx bx-upload'></i>Upload</label>
+                                        <input id="file" name="storepic" hidden type="file" onchange="previewimg(this);">
+                                    </div>
+
                                         <div class="storeinfo">
                                         <h4 class="ownerdetailstext">Store Details</h4>
                                             <div class="storeinforow">
@@ -160,10 +159,10 @@
                 <form action="../database/addstore.php" method="POST" enctype="multipart/form-data">
                     <div class="upperaddacc">
                         
-                        <div class="addacclogo">
+                    <div class="addacclogo" style="background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(''); background-position: center; background-size: cover;">
                             
                             <label for="file" class="btn uploadbtn"><i class='bx bx-upload'></i>Upload</label>
-                            <input id="file" name="storepic" hidden type="file">
+                            <input id="file" name="storepic" hidden type="file" onchange="previewimg(this);">
                             
                         </div>
                         <div class="storeinfo">
@@ -227,4 +226,36 @@
     
 
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var previewContainers = document.querySelectorAll('.addacclogo');
+        previewContainers.forEach(function (previewContainer) {
+            previewContainer.dataset.defaultBg = getComputedStyle(previewContainer).backgroundImage;
+        });
+    });
+
+    function previewimg(input) {
+        var fileInput = input;
+        var previewContainers = document.querySelectorAll('.addacclogo');
+        
+        previewContainers.forEach(function (previewContainer) {
+            var defaultBg = previewContainer.dataset.defaultBg;
+            var file = fileInput.files[0];
+
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    previewContainer.style.backgroundImage = "linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('" + e.target.result + "')";
+                    previewContainer.style.backgroundPosition = "center";
+                    previewContainer.style.backgroundSize = "cover";
+                }
+                reader.readAsDataURL(file);
+            } else {
+                previewContainer.style.backgroundImage = defaultBg; 
+            }
+        });
+    }
+</script>
+
+
 </html>

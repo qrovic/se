@@ -233,11 +233,9 @@ label.login-label{
     
 }
 .addstore{
-    position:absolute;
-    bottom: 30px;
-    right: 0px;
-   
-}#add-store{
+    
+}
+#add-store{
     background-color: #02BF63;
     border-color: #02BF63;
     width: 15lvw;
@@ -337,8 +335,20 @@ label.login-label{
     min-height: 25lvh;
     min-width: 25%;
     border-radius: 10px;
-    margin-right: 2lvw;
+    margin-right: 2lvw; 
 }
+.editacclogo{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border: 1px black solid;
+    min-height: 25lvh;
+    min-width: 25%;
+    border-radius: 10px;
+    margin-right: 2lvw; 
+}
+
 label{
     width: 100%;
 }
@@ -503,7 +513,7 @@ input.menusearch{
 }
 .categories>ul>li>a{
     margin: 0 1.5lvw !important;
-    line-height: 4lvh !important;
+    line-height: 5lvh !important;
     margin-bottom: 0px !important;
     font-size: 3lvh;
     font-weight: 700;
@@ -511,10 +521,11 @@ input.menusearch{
 }
 .active{
     border: 0;
-    border-bottom: 5px #02BF63;
+    border-bottom: 7px #02BF63;
     margin-bottom: 0px !important;
     border-style:solid ;
-    line-height: 40px !important;
+    line-height: 50px !important;
+    transition: width 0.3s all; /* Add a transition for the color property */
 }
 .storeitems{
     display: flex;
@@ -635,5 +646,31 @@ a.ddvariant{
 }
 .itemsizee{
     display:flex;
+    flex-direction: row;
+}
+#size-container{
+    display: flex;
+    flex-direction: row;
+    margin-left: 50px;
+}
+.additem{
+    display: flex;
+    flex-direction: column !important;
+}
+#varietyOption, .size-option{
+    display: flex;
+    flex-direction: row;
+}
+#varietyOption label, .size-option label{
+    margin-left: 5px;
+}
+.additem2formheader{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.sizedetails{
+    display: flex;
+    justify-content: space-between;
     flex-direction: row;
 }
