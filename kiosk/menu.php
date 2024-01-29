@@ -159,7 +159,6 @@
     
 
     <script>
-    // Function to increase the quantity
     function increaseQuantity() {
         var quantityInputs = document.getElementsByClassName('quantityInput');
         for (var i = 0; i < quantityInputs.length; i++) {
@@ -167,14 +166,10 @@
             quantityInputs[i].value = currentQuantity + 1;
         }
     }
-
-    // Function to decrease the quantity
     function decreaseQuantity() {
         var quantityInputs = document.getElementsByClassName('quantityInput');
         for (var i = 0; i < quantityInputs.length; i++) {
             var currentQuantity = parseInt(quantityInputs[i].value, 10);
-
-            // Make sure quantity doesn't go below 0
             if (currentQuantity > 1) {
                 quantityInputs[i].value = currentQuantity - 1;
             }
