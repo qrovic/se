@@ -19,7 +19,7 @@
         <a class="canceltxt" href="./cancel.php"><?php echo "Cancel order";?></a>
     </div>
     <?php
-    if ($_SESSION['totalcartcount;']<1) {
+    if ($totalcartcount<1) {
         ?>
         <div class="nocart">
             <p class="receipttext">You haven't added anything yet in your cart</p>
@@ -29,7 +29,7 @@
         <?php
     }?>
     <?php
-    if ($_SESSION['totalcartcount;']>0) {
+    if ($totalcartcount>0) {
         ?>
         <p class="receipttext">Receipt</p>
         <?php
@@ -117,7 +117,7 @@
             }
         ?>  
             <?php
-            if ($_SESSION['totalcartcount;']>0) {
+            if ($totalcartcount>0) {
             ?>
             <div class="cartfooter">
             <button type="button" class="cancelbtn btn btn-primary cartfooterbtn" onclick="window.location.href='../kiosk/menu.php'">Order more</button>
