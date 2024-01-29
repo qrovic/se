@@ -5,11 +5,15 @@
     require_once ("../include/head.php");
     require_once('../include/js.php');
     require_once('../database/datafetch.php');
-       
+    session_start();
+    if(!isset($_SESSION['orderid'])){
+        $_SESSION['orderid']=$lastcustomerid;
+    }
 ?>
 <body class="storebody">
     <div class="header">
         <img class="kioskstorelogo" src="../resources/foodparklogo.png" alt="hhee">
+        <?php echo 'Order No.:' . $_SESSION['orderid'];?>
     </div>
     
     </div>
@@ -31,6 +35,7 @@
                     ?>
                     <form id="" action="menu.php" method="POST" hidden>
                         <input type="text" id="storename" name="storename" value="<?php echo $store['name'];?>" hidden>
+                        <input type="text" id="storeid" name="storeid" value="<?php echo $store['id'];?>" hidden>
                         <button type="submit" id="<?php echo $store['name'];?>" style="display:none;"></button>
                     </form>
                     <div class="kioskstore" onclick="document.getElementById('<?php echo $store['name'];?>').click()">

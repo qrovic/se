@@ -3,11 +3,10 @@ require_once("config.php");
 
 $storeid = ($_POST['storeid']);
 $itemname = $_POST['itemname'];
+$itemsizes = ($_POST['itemsizes2']);
+$itemvariants = ($_POST['itemvariants2']); 
 $itemcategory = trim($_POST['itemcategory']);
 $itempic = $_FILES['itempic']['name'];
-
-$itemsizes = ($_POST['itemsizes2']); 
-$itemvariants = ($_POST['itemvariants2']); 
 $itemstocks = ($_POST['itemstocks']); 
 $itemprices = ($_POST['itemprices']); 
 
@@ -36,13 +35,15 @@ try {
     $lastInsertedId = $pdo->lastInsertId();
 
     foreach ($itemvariants as $variant) {
-        foreach ($itemsizes as $size) {
+        foreach ($itemsizes as $i => $size) {
+            $itemprice=$itemprices[$i];
+            $itemstock=$itemstocks[$i];
             $stmt = $pdo->prepare("INSERT INTO itemprice (itemid, variant, size, price, stock) VALUES (:itemid, :variant, :size, :price, :stock)");
             $stmt->bindParam(':itemid', $lastInsertedId);
             $stmt->bindParam(':variant', $variant);
             $stmt->bindParam(':size', $size); 
-            $stmt->bindParam(':price', $itemprices); 
-            $stmt->bindParam(':stock', $itemstocks); 
+            $stmt->bindParam(':price', $itemprice); 
+            $stmt->bindParam(':stock', $itemstock); 
             $stmt->execute();
         }
     }
