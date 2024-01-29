@@ -58,6 +58,23 @@ if (isset($_POST['search'])) {
     $filteredstorescount = $stmt->fetchColumn();
     
 }
+#fetch cart details 
+if (isset($_SESSION['orderid'])) {
+    $orderid = $_SESSION['orderid'];
+    #fetch categories
+    $sqlcategories = "SELECT DISTINCT category FROM cart LEFT JOIN store ON item.storeid=store.id WHERE store.name=:storename";
+    $stmtcategories = $pdo->prepare($sqlcategories);
+    $stmtcategories->bindParam(':storename', $storename, PDO::PARAM_STR);
+    $stmtcategories->execute();
+    $categories = $stmtcategories->fetchAll();
+
+    #fetch cart details
+    $sqlcartdetails = "SELECT cart.customerid AS customerid, itemprice.size AS itemsize, itemprice.variant AS itemvariant, itemprice.price AS itemprice, item.category AS itemcategory, item.name AS itemname, quantity AS quantity FROM cart JOIN itemprice ON itemprice.id=cart.itempriceid JOIN item ON itemprice.itemid=item.id WHERE cart.customerid = :orderid";
+    $stmt = $pdo->prepare($sqlcartdetails);
+    $stmt->bindParam(':orderid', $orderid, PDO::PARAM_STR);
+    $stmt->execute();
+    $cartdetails = $stmt->fetchAll();
+}
 
 #fetch drinks items 
 if (isset($_SESSION['storename'])) {

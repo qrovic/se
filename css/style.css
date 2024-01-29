@@ -400,10 +400,14 @@ label{
     font-size: 1.5rem;
     align-items: center;
     color: white;
-    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: 600 !important;
+}
+#text{
+    font-weight: 600 !important;
 }
 .bx-shopping-bag{
-    font-size: 1.5rem;
+    font-size: 2rem !important;
     color: white;
    
 }
@@ -873,4 +877,11 @@ a.ddvariant{
     display: flex;
     justify-content: space-between;
     flex-direction: row;
+}
+.orderid{
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-top: 20px;
 }
