@@ -14,8 +14,17 @@
 <body class="storebody">
     <div class="header">
         <img class="kioskstorelogo" src="../resources/foodparklogo.png" alt="hhee" onclick="window.location.href='stores.php'">
-        <?php echo 'Order No.:' . $_SESSION['orderid'];?>
-        <i class='bx bx-shopping-bag'><?php echo $totalcartcount;?></i>
+        <p class="orderidtxt"><?php echo 'Order Number: ' . $_SESSION['orderid'];?></p>
+        <div class="cartbag" onclick="window.location.href='../kiosk/cart.php'">
+            <div class="bx-shopping-bag-container">
+                <i class='bx bx-shopping-bag'></i>
+                <div class="cart-count">
+                    <span class=""><?php echo $totalcartcount; ?></span>
+                </div>
+                
+            </div>
+        </div>
+        
         
     </div>
     <div class="storeheader">
@@ -155,7 +164,7 @@
             ?>
         </div>
     </div>
-    
+   
     
 
     <script>

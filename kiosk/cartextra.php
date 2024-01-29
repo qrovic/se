@@ -16,35 +16,16 @@
 <body class="storebody">
     <div class="header">
         <img class="kioskstorelogo" src="../resources/foodparklogo.png" alt="hhee" onclick="window.location.href='stores.php'">
-        <a class="canceltxt" href="./cancel.php"><?php echo "Cancel order";?></a>
-    </div>
-    <?php
-    if ($_SESSION['totalcartcount;']<1) {
-        ?>
-        <div class="nocart">
-            <p class="receipttext">You haven't added anything yet in your cart</p>
-            <button type="button" class="nocartbtn cancelbtn btn btn-primary cartfooterbtn" onclick="window.location.href='../kiosk/menu.php'">Browse</button>
-
-        </div>
-        <?php
-    }?>
-    <?php
-    if ($_SESSION['totalcartcount;']>0) {
-        ?>
-        <p class="receipttext">Receipt</p>
-        <?php
-    }?>
-    <div class="storemenus">
+        <?php echo 'Order No.:' . $_SESSION['orderid'];?>
+        <i class='bx bx-shopping-bag'><?php echo $totalcartcount;?></i>
         
+    </div>
+    <div class="storemenus">
+        <p class="orderid"> Order ID: <?php echo $_SESSION['orderid'];?></p>
         <form action="../database/confirmedorder.php" method="POST">
-        <?php
-            
-            foreach($cartstores AS $cartstore){
-                include('../database/datafetch.php');
-                ?>
-                <div class="container mt-4">
+        <div class="container mt-4">
             <table class="table">
-                <thead><p class="cartstorename"><?php echo $cartstore['cartstorename']; ?></p>
+                <thead>
                     <tr>
                         <th>Item</th>
                         <th>Price</th>
@@ -56,27 +37,26 @@
                 </thead>
                 <tbody>
                     <?php 
-                    
+                    foreach($cartstores AS $cartstore){
+                        echo $cartstore['storeid'];  
+                    }
                     foreach($cartdetails AS $cartdetail){
                         $cartstoreids = $cartdetail['cartstoreid'];
                         
                         
                         include('../database/datafetch.php');
-                        
                     ?>
-                    
-                    <tr>    <input type="number" name="storeid[]" id="" value="<?php echo $cartstoreids;?>" hidden>
+                    <tr>
                             <input type="number" name="orderid" id="" value="<?php echo $_SESSION['orderid'];?>" hidden>
-                            
-                            <td class="itemnamecart">
+                            <td>
                                 <input type="text" name="itempriceid[]" value="<?php echo $cartdetail['itempriceid'];?>" id="" hidden>
-                                <?php echo $cartdetail['itemname'];?>
+                                <?php echo $cartdetail['itempriceid'];?>
                             </td>
-                            <td class="itemprice">
+                            <td>
                                 <input type="text" name="itemprice[]" value="<?php echo $cartdetail['itemprice'];?>" id="" hidden>
-                                <?php echo "₱" . $cartdetail['itemprice'];?>
+                                <?php echo $cartdetail['itemprice'];?>
                             </td>
-                            <td class="itemvariant">
+                            <td>
                                 
                                 <select name="itemvariant[]" id="">
                                     
@@ -87,9 +67,9 @@
                                         <?php
                                     }
                                     ?> 
-                                </select>                 
+                                </select>                      
                             </td>
-                            <td class="cartitemsize">
+                            <td>
                                 <select name="itemsize[]" id="">
                                     
                                     <?php foreach($itemsizes AS $itemsize){
@@ -101,11 +81,11 @@
                                     ?> 
                                 </select>     
                             </td>
-                            <td class="itemquantity">
+                            <td>
                                 <input type="text" name="quantity[]" value="<?php echo $cartdetail['quantity'];?>" id="">
                                 
                             </td>
-                            <td class="total"><?php echo "₱".($cartdetail['quantity']*$cartdetail['itemprice']);?></td>
+                            <td><?php echo ($cartdetail['quantity']*$cartdetail['itemprice']);?></td>
                                         </tr>
                     <?php
                     }
@@ -113,32 +93,11 @@
                 </tbody>
             </table>
         </div>
-        <?php
-            }
-        ?>  
-            <?php
-            if ($_SESSION['totalcartcount;']>0) {
-            ?>
-            <div class="cartfooter">
-            <button type="button" class="cancelbtn btn btn-primary cartfooterbtn" onclick="window.location.href='../kiosk/menu.php'">Order more</button>
-            <button type="submit" class="btn btn-primary cartfooterbtn">Checkout</button>
-            </div>
-            <?php
-            }
-            ?>
+            <button type="submit">Submit</button>
         </form>
     </div>
-    <div id="loading-overlay">
-        <div id="loading-spinner"></div>
-    </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById("loading-overlay").style.visibility = "visible";
-            setTimeout(function () {
-                document.getElementById("loading-overlay").style.visibility = "hidden";
-            }, 2000);
-        });
-    </script>
+    
+    
 
     <script>
     

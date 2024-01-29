@@ -391,24 +391,27 @@ label{
 .storebody{
     display: flex;
     flex-direction: column;
+    
 }
 .header{
     background-color:#02BF63;
     width: 100%;
     display: flex;
     justify-content:space-between;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     align-items: center;
-    color: white;
+    color: rgb(255, 255, 255);
     padding-right: 20px;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
 }
 #text{
     font-weight: 600 !important;
 }
 .bx-shopping-bag{
     font-size: 2rem !important;
+    margin-left: 5px;
     color: white;
+    width: 36px;
    
 }
 .kioskstorelogo{
@@ -546,7 +549,7 @@ input.menusearch{
     margin-bottom: 0px !important;
     border-style:solid ;
     line-height: 50px !important;
-    transition: width 0.3s all; /* Add a transition for the color property */
+    transition: width 0.3s all;
 }
 .storeitems{
     display: flex;
@@ -555,7 +558,7 @@ input.menusearch{
     justify-content: space-between;
     flex-wrap: nowrap;
     overflow-y: scroll;
-    height: 68lvh;
+    max-height: calc(100lvh - 53px - 100px - 45px);
     padding-right: 20px;
     width: 100%;
     max-width: 100lvw;
@@ -637,6 +640,7 @@ a{
 }
 .storemenus{
     max-width: 100lvw;
+    
 }
 .storeitem:nth-child(3n) {
     margin-right: 0;
@@ -708,6 +712,7 @@ a{
     border-radius: 5px;
     
 }
+
 .radioholder:hover label{
 
     color:#007F41;
@@ -721,15 +726,15 @@ a{
     text-align: center;
     margin-bottom: 0px !important;
     font-weight: 400 !important;
-    /*font-family:Verdana, Geneva, Tahoma, sans-serif !important;*/
+    
 }
 .storeitem {
-    /* Your default styles */
-    transition: transform 0.1s ease; /* Add transition for smooth scaling */
+   
+    transition: transform 0.1s ease; 
 }
 
 .storeitem:hover {
-    transform: scale(1.03); /* Increase the scale factor for a bigger size */
+    transform: scale(1.03); 
     background-color:#29da5e15;
 }
 .quantityInput{
@@ -785,12 +790,12 @@ a{
     border-radius: 10px;
 }
 input[type="radio"] {
-    /* Hide the default radio button */
+   
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     
-    /* Create a custom radio button style */
+   
     width: 15px;
     height: 15px;
     border-radius: 50%;
@@ -800,7 +805,6 @@ input[type="radio"] {
     
 }
 
-/* Animation for checked state */
 @keyframes checkedAnimation {
     50% {
         background-color: #007F41;
@@ -816,7 +820,9 @@ input[type="radio"]:checked {
     animation: checkedAnimation 0.3s; /* Adjust the duration as needed */
     border-width: 4px;
 }
-
+input[type="radio"]:checked .radioholder{
+    background-color: red !important;
+}
 .radioholder:hover input[type="radio"]:checked {
     border-width: 4px;
 }
@@ -831,6 +837,11 @@ input[type="radio"]:checked {
 .radio{
     margin-right: 10px;
     
+}
+.cartbag{
+    position: relative;
+    bottom: 0;
+    right:0;
 }
 /*store*/
 /*add item*/
@@ -878,10 +889,169 @@ a.ddvariant{
     justify-content: space-between;
     flex-direction: row;
 }
-.orderid{
+.receipttext{
     width: 100%;
     text-align: center;
     font-size: 2rem;
+    font-weight: 700;
+    margin-top: 30px;
+    color:#007F41;
+    margin-bottom: 0px;
+}
+
+/*cart*/
+.cartstorename{
     font-weight: 600;
+    font-size: 1.8rem;
+    margin-bottom: 5px !important;
+    margin-top: 5px !important;
+}
+table td>input{
+    
+}
+.table>:not(caption)>*>* {
+    padding: 0rem !important;
+}
+.table>tbody{
+    vertical-align:unset;
+}
+td>select{
+    border:none;
+    background-color:white !important;
+}
+
+select>option{
+    background-color: lightgray !important;
+}
+select:focus > option:checked { 
+    background:gray !important;
+    color: white !important;
+}
+td>input{
+    border: 0px;
+    outline: none;
+}
+.mt-4{
+    margin-top: 1rem !important;
+}
+
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+    transition: visibility 0.5s;
+}
+
+#loading-spinner {
+    border: 8px solid #f3f3f3; 
+    border-top: 8px solid #02BF63; 
+    border-radius: 50%;
+    background-image: url('../resources/foodparklogo.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 200px;
+    height: 200px;
+    animation: spin 1s linear infinite;
+}
+
+/*spin animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.cartfooter{
+    width: 100%;
+    padding: 0px 7lvw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position:fixed;
+    bottom: 40px !important;
+}
+.cartfooterbtn{
+    width: 35%;
+    border-radius: 20px;
+    height: 50px !important;
+    background-color: #02BF63 !important;
+    border-color: #02BF63 !important;
+    font-size: 1rem;
+    font-weight: 700 !important;
+}
+.cancelbtn{
+    background-color: gray !important;
+    border-color: gray !important;
+}
+.iscancelled{
+    margin-top: 0px;
+}
+.countdown-message{
+    margin-top: 10px;
+    text-align: center;
+}
+.cancelbody{
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.canceltxt{
+    text-decoration: none;
+    color: white !important;
+    font-size: 1rem;
+}
+.orderidtxt{
+    color: white;
+    margin-bottom: 0px !important;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+.totalcartcount p{
+    color: white !important;
+    position: fixed;
+    top: 20px;
+    right:20px;
+}
+.cart-count{
+   
+    position:absolute;
+    top: 18px;
+    width: 20px;
+    height: 20px;
+    right: 0px;
+    font-size: 1rem;
+    background-color:white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 50%;
+}
+.cart-count>span{
+    color: #007F41 !important;
+}
+.cart-count>span{
+    min-width: 20px;
+}
+.nocart{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+}
+.nocartbtn{
+    width: 30% !important;
     margin-top: 20px;
 }

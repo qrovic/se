@@ -129,10 +129,8 @@ var_dump($itemsizes); ?>
 
     <script>
     $(document).on('input', '.addvariant .samesize', function () {
-    // Get the value of the changed input
     var newValue = $(this).val();
 
-    // Get the last class of the closest div with '.size'
     var closestSizeDiv = $(this).closest('.size');
     var closestSizeClass = closestSizeDiv.attr('class');
     var lastClass = closestSizeClass.split(' ').pop();
@@ -140,10 +138,8 @@ var_dump($itemsizes); ?>
     console.log('Changed input value:', newValue);
     console.log('Last class of the closest div with .size:', lastClass);
 
-    // Update only the 'samesize' input with the new value
     $('.addvariant .' + lastClass + ' .addsizeinput .samesize').val(newValue);
 
-    // Log the value for verification
     console.log('Updated value (Size):', $('.addvariant .' + lastClass + ' .addsizeinput .samesize').val());
 });
 
@@ -155,32 +151,20 @@ var_dump($itemsizes); ?>
         function addVariant() {
             var variantContainer = $('.addvariant:first').clone();
 
-            // Clear input values in the cloned variant container
             variantContainer.find('input').val('');
-
-            
-
-            // Append the cloned variant container to the document
             $('.addvariant:last').after(variantContainer);
         }
 
         function addSize(button) {
-    // Find all '.addvariant' elements
             var variantContainers = $('.addvariant');
 
-            // Iterate through each variant container
             variantContainers.each(function() {
-                // Find the last '.size-container' relative to the current variant container
                 var sizeContainer = $(this).find('.size-container:last');
-
-                // Clone the size container
                 var newSize = sizeContainer.clone();
 
-                // Add a class with an incremented number to the cloned size container
                 var index = $(this).find('.size-container').length;
                 newSize.addClass('size-container-' + index);
 
-                // Append the cloned size container to the current variant container
                 sizeContainer.after(newSize);
             });
         }
@@ -188,16 +172,14 @@ var_dump($itemsizes); ?>
 
 
         function deleteSize(button) {
-    // Find the closest '.size' relative to the clicked button
+    
     var sizeElement = $(button).closest('.size');
 
-    // Get the last inputted class of the .size element
     var lastClass = sizeElement.attr('class').split(' ').pop();
 
-    // Alert the class name before deletion
     alert('Deleting elements with last class: ' + lastClass);
 
-    // Remove all elements with the same last class outside the current .size scope
+   
     $('.' + lastClass).not(sizeElement).remove();
 }
 
@@ -207,10 +189,9 @@ var_dump($itemsizes); ?>
 
 
         function deleteVariant(button) {
-            // Find the closest '.addvariant' relative to the clicked button
+            
             var variantContainer = $(button).closest('.addvariant');
 
-            // Remove the current variant container
             variantContainer.remove();
         }
 

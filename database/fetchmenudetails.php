@@ -44,18 +44,13 @@ if(isset($_POST['variety'])){
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
         if ($result) {
-            // Return the price as a response
             echo $result['price'];
         } else {
-            // Handle the case when no price is found
             echo "0";
         }
     } catch (PDOException $e) {
-        // Handle database query error
         echo 'Error: ' . $e->getMessage();
     }
-    
-    // Close the database connection
     $pdo = null;
 }
 

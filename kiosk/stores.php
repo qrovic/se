@@ -13,7 +13,7 @@
 <body class="storebody">
     <div class="header">
         <img class="kioskstorelogo" src="../resources/foodparklogo.png" alt="hhee">
-        <?php echo 'Order No.:' . $_SESSION['orderid'];?>
+        <p class="orderidtxt"><?php echo 'Order Number: ' . $_SESSION['orderid'];?></p>
     </div>
     
     </div>

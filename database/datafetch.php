@@ -14,6 +14,7 @@ $sqlstorewowner = "SELECT * FROM store JOIN staff ON store.id=staff.storeid WHER
 $stmt = $pdo->prepare($sqlstorewowner); 
 $stmt->execute();  
 $storewowner = $stmt->fetchAll();
+
 #get customerid
 $sqllastcustomerid = "SELECT max(id) FROM customer";
 $stmt = $pdo->prepare($sqllastcustomerid); 
@@ -27,9 +28,8 @@ if (isset($_SESSION['orderid'])){
     $stmt->bindParam(':orderid', $_SESSION['orderid'], PDO::PARAM_INT);
     $stmt->execute();
     $totalcartcount = $stmt->fetchColumn();
+    
 }
-
-
 
 # Fetch total count of stores
 $sqltotalstorescount = "SELECT COUNT(*) FROM store";
@@ -58,22 +58,65 @@ if (isset($_POST['search'])) {
     $filteredstorescount = $stmt->fetchColumn();
     
 }
-#fetch cart details 
-if (isset($_SESSION['orderid'])) {
-    $orderid = $_SESSION['orderid'];
-    #fetch categories
-    $sqlcategories = "SELECT DISTINCT category FROM cart LEFT JOIN store ON item.storeid=store.id WHERE store.name=:storename";
-    $stmtcategories = $pdo->prepare($sqlcategories);
-    $stmtcategories->bindParam(':storename', $storename, PDO::PARAM_STR);
-    $stmtcategories->execute();
-    $categories = $stmtcategories->fetchAll();
 
-    #fetch cart details
-    $sqlcartdetails = "SELECT cart.customerid AS customerid, itemprice.size AS itemsize, itemprice.variant AS itemvariant, itemprice.price AS itemprice, item.category AS itemcategory, item.name AS itemname, quantity AS quantity FROM cart JOIN itemprice ON itemprice.id=cart.itempriceid JOIN item ON itemprice.itemid=item.id WHERE cart.customerid = :orderid";
-    $stmt = $pdo->prepare($sqlcartdetails);
-    $stmt->bindParam(':orderid', $orderid, PDO::PARAM_STR);
-    $stmt->execute();
-    $cartdetails = $stmt->fetchAll();
+try {
+    // fetch cart details 
+    if (isset($_SESSION['orderid'])) {
+        $orderid = $_SESSION['orderid'];
+        $itemname=$cartdetail['itemname'];
+        $cartstoreids=$cartstore['cartstoreid'];
+        // fetch categories
+        $sqlcategories = "SELECT DISTINCT category FROM cart LEFT JOIN itemprice ON itemprice.id=cart.itempriceid JOIN item ON item.id=itemprice.itemid JOIN store ON item.storeid=store.id WHERE store.name=:storename";
+        $stmtcategories = $pdo->prepare($sqlcategories);
+        $stmtcategories->bindParam(':storename', $storename, PDO::PARAM_STR);
+        $stmtcategories->execute();
+        $categories = $stmtcategories->fetchAll();
+
+        $sqlitemvariants = "SELECT DISTINCT itemprice.variant
+        FROM itemprice JOIN item ON item.id=itemprice.itemid
+        WHERE item.id IN (
+            SELECT item.id
+            FROM item
+            JOIN itemprice ON item.id = itemprice.itemid
+            JOIN cart ON itemprice.id = cart.itempriceid
+            WHERE cart.customerid = :orderid AND item.name=:itemname);";
+        $stmtvariant = $pdo->prepare($sqlitemvariants);
+        $stmtvariant->bindParam(':orderid', $orderid, PDO::PARAM_STR);
+        $stmtvariant->bindParam(':itemname', $itemname, PDO::PARAM_STR);
+        $stmtvariant->execute();
+        $itemvariants = $stmtvariant->fetchAll();
+
+        $sqlitemsizes = "SELECT DISTINCT itemprice.size
+        FROM itemprice JOIN item ON item.id=itemprice.itemid
+        WHERE item.id IN (
+            SELECT item.id
+            FROM item
+            JOIN itemprice ON item.id = itemprice.itemid
+            JOIN cart ON itemprice.id = cart.itempriceid
+            WHERE cart.customerid = :orderid AND item.name=:itemname);";
+        $stmtsize = $pdo->prepare($sqlitemsizes);
+        $stmtsize->bindParam(':orderid', $orderid, PDO::PARAM_STR);
+        $stmtsize->bindParam(':itemname', $itemname, PDO::PARAM_STR);
+        $stmtsize->execute();
+        $itemsizes = $stmtsize->fetchAll();
+        
+        // fetch cart details
+        $sqlcartdetails = "SELECT cart.customerid AS customerid, itemprice.id AS itempriceid, itemprice.size AS itemsize, itemprice.variant AS itemvariant, itemprice.price AS itemprice, item.category AS itemcategory, item.name AS itemname, quantity AS quantity FROM cart JOIN itemprice ON itemprice.id=cart.itempriceid JOIN item ON itemprice.itemid=item.id WHERE cart.customerid = :orderid AND item.storeid= :cartstoreid";
+        $stmt = $pdo->prepare($sqlcartdetails);
+        $stmt->bindParam(':orderid', $orderid, PDO::PARAM_STR);
+        $stmt->bindParam(':cartstoreid', $cartstoreids, PDO::PARAM_STR);
+        $stmt->execute();
+        $cartdetails = $stmt->fetchAll();
+        
+        // fetch cart details
+        $sqlcartstore = "SELECT DISTINCT item.storeid AS cartstoreid, store.name AS cartstorename FROM cart JOIN itemprice ON itemprice.id=cart.itempriceid JOIN item ON itemprice.itemid=item.id JOIN store ON store.id=item.storeid WHERE cart.customerid = :orderid";
+        $stmt = $pdo->prepare($sqlcartstore);
+        $stmt->bindParam(':orderid', $orderid, PDO::PARAM_STR);
+        $stmt->execute();
+        $cartstores = $stmt->fetchAll();
+    }
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
 }
 
 #fetch drinks items 
