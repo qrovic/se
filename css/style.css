@@ -954,11 +954,12 @@ td>input{
     border: 8px solid #f3f3f3; 
     border-top: 8px solid #02BF63; 
     border-radius: 50%;
-    background-image: url('../resources/foodparklogo.png');
+    background-image: url('../resources/banner3.jpeg');
     background-repeat: no-repeat;
-    background-size: contain;
-    width: 200px;
-    height: 200px;
+    background-size: cover;
+    background-position: center;
+    width: 300px;
+    height: 300px;
     animation: spin 1s linear infinite;
 }
 
@@ -1054,4 +1055,8 @@ td>input{
 .nocartbtn{
     width: 30% !important;
     margin-top: 20px;
+}
+.cartdiv{
+    max-height: 60lvh !important;
+    overflow-y: scroll;
 }

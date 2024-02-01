@@ -33,12 +33,14 @@ if(isset($_POST['variety'])){
     $selectedSize = $_POST['size'];
     $storeid=$_POST['storeid'];
     $menuid=$_POST['menuid'];
+    $quantity=$_POST['quantity'];
 
     $query = "SELECT price FROM itemprice WHERE variant = :variety AND size = :size AND itemid = :menuid";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':variety', $selectedVariety);
     $stmt->bindParam(':size', $selectedSize);
     $stmt->bindParam(':menuid', $menuid);
+
     try {
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -46,7 +48,7 @@ if(isset($_POST['variety'])){
         if ($result) {
             echo $result['price'];
         } else {
-            echo "0";
+            echo "Price not available";
         }
     } catch (PDOException $e) {
         echo 'Error: ' . $e->getMessage();

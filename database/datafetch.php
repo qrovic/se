@@ -19,7 +19,7 @@ $storewowner = $stmt->fetchAll();
 $sqllastcustomerid = "SELECT max(id) FROM customer";
 $stmt = $pdo->prepare($sqllastcustomerid); 
 $stmt->execute();  
-$lastcustomerid = $stmt->fetchColumn()+1;
+$lastcustomerid = $stmt->fetchColumn();
 
 #cartcount
 if (isset($_SESSION['orderid'])){
@@ -101,7 +101,7 @@ try {
         $itemsizes = $stmtsize->fetchAll();
         
         // fetch cart details
-        $sqlcartdetails = "SELECT cart.customerid AS customerid, itemprice.id AS itempriceid, itemprice.size AS itemsize, itemprice.variant AS itemvariant, itemprice.price AS itemprice, item.category AS itemcategory, item.name AS itemname, quantity AS quantity FROM cart JOIN itemprice ON itemprice.id=cart.itempriceid JOIN item ON itemprice.itemid=item.id WHERE cart.customerid = :orderid AND item.storeid= :cartstoreid";
+        $sqlcartdetails = "SELECT cart.customerid AS customerid, itemprice.id AS itempriceid, itemprice.size AS itemsize, itemprice.variant AS itemvariant, itemprice.price AS itemprice, item.category AS itemcategory, item.name AS itemname, itemprice.itemid AS itemid, quantity AS quantity FROM cart JOIN itemprice ON itemprice.id=cart.itempriceid JOIN item ON itemprice.itemid=item.id WHERE cart.customerid = :orderid AND item.storeid= :cartstoreid";
         $stmt = $pdo->prepare($sqlcartdetails);
         $stmt->bindParam(':orderid', $orderid, PDO::PARAM_STR);
         $stmt->bindParam(':cartstoreid', $cartstoreids, PDO::PARAM_STR);

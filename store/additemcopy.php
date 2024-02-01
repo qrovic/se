@@ -108,7 +108,6 @@
 var_dump($_POST['storeid']);
 var_dump($_POST['itemvariants']);
 var_dump($_POST['itemsizes']);
-var_dump($_POST['itemvariants']);
 ?>
 
 

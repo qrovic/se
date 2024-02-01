@@ -35,20 +35,24 @@ try {
     $lastInsertedId = $pdo->lastInsertId();
 
     foreach ($itemvariants as $variant) {
+        
         foreach ($itemsizes as $i => $size) {
+            echo $size."";
             $itemprice=$itemprices[$i];
             $itemstock=$itemstocks[$i];
-            $stmt = $pdo->prepare("INSERT INTO itemprice (itemid, variant, size, price, stock) VALUES (:itemid, :variant, :size, :price, :stock)");
+            /*$stmt = $pdo->prepare("INSERT INTO itemprice (itemid, variant, size, price, stock) VALUES (:itemid, :variant, :size, :price, :stock)");
             $stmt->bindParam(':itemid', $lastInsertedId);
             $stmt->bindParam(':variant', $variant);
             $stmt->bindParam(':size', $size); 
             $stmt->bindParam(':price', $itemprice); 
             $stmt->bindParam(':stock', $itemstock); 
-            $stmt->execute();
+            $stmt->execute();*/
+            echo "price: ".$itemprice." stock: ".$itemstock;
+            
         }
     }
 
-    header('location: ../superadmin/store.php');
+    //header('location: ../superadmin/store.php');
 } catch(PDOException $e) {
     echo "Error: " . $e->getMessage();
 }

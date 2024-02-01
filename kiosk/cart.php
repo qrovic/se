@@ -34,7 +34,7 @@
         <p class="receipttext">Receipt</p>
         <?php
     }?>
-    <div class="storemenus">
+    <div class="storemenus cartdiv">
         
         <form action="../database/confirmedorder.php" method="POST">
         <?php
@@ -47,9 +47,9 @@
                 <thead><p class="cartstorename"><?php echo $cartstore['cartstorename']; ?></p>
                     <tr>
                         <th>Item</th>
-                        <th>Price</th>
-                        <th>Variety</th>
                         <th>Size</th>
+                        <th>Variety</th>
+                        <th>Price</th>
                         <th>Quantity</th>
                         <th>Total</th>
                     </tr>
@@ -65,48 +65,52 @@
                         
                     ?>
                     
-                    <tr>    <input type="number" name="storeid[]" id="" value="<?php echo $cartstoreids;?>" hidden>
-                            <input type="number" name="orderid" id="" value="<?php echo $_SESSION['orderid'];?>" hidden>
+                    <tr class="item-row" data-itemid="<?php echo $cartdetail['itemid']; ?>" data-itempriceid="<?php echo $cartdetail['itempriceid']; ?>">
+                        
+                        <input type="number" name="storeid[]" id="" value="<?php echo $cartstoreids;?>" hidden>
+                        <input type="number" name="orderid" id="" value="<?php echo $_SESSION['orderid'];?>" hidden>
+                        
+                        <td class="itemnamecart">
+                        <input type="text" class="itemid" name="itemid[]" value="<?php echo $cartdetail['itemid'];?>" id="" hidden>
+                            <input type="text" class="itempriceid" name="itempriceid[]" value="<?php echo $cartdetail['itempriceid'];?>" id="" hidden>
+                            <?php echo $cartdetail['itemname'];?>
+                        </td>
+                        
+                        <td class="itemvariant">    
                             
-                            <td class="itemnamecart">
-                                <input type="text" name="itempriceid[]" value="<?php echo $cartdetail['itempriceid'];?>" id="" hidden>
-                                <?php echo $cartdetail['itemname'];?>
-                            </td>
-                            <td class="itemprice">
-                                <input type="text" name="itemprice[]" value="<?php echo $cartdetail['itemprice'];?>" id="" hidden>
-                                <?php echo "₱" . $cartdetail['itemprice'];?>
-                            </td>
-                            <td class="itemvariant">
+                            <select name="itemvariant[]" class="item-variant" id="">
                                 
-                                <select name="itemvariant[]" id="">
+                                <?php foreach($itemvariants AS $itemvariant){
                                     
-                                    <?php foreach($itemvariants AS $itemvariant){
-                                        
-                                        ?>
-                                        <option value="<?php echo $itemvariant['variant']; ?>" <?php if ($itemvariant['variant'] == $cartdetail['itemvariant']) { echo 'selected'; } ?>><?php echo $itemvariant['variant']; ?></option>
-                                        <?php
-                                    }
-                                    ?> 
-                                </select>                 
-                            </td>
-                            <td class="cartitemsize">
-                                <select name="itemsize[]" id="">
-                                    
-                                    <?php foreach($itemsizes AS $itemsize){
-                                        
-                                        ?>
-                                        <option value="<?php echo $itemsize['size']; ?>" <?php if ($itemsize['size'] == $cartdetail['itemsize']) { echo 'selected'; } ?>><?php echo $itemsize['size']; ?></option>
-                                        <?php
-                                    }
-                                    ?> 
-                                </select>     
-                            </td>
-                            <td class="itemquantity">
-                                <input type="text" name="quantity[]" value="<?php echo $cartdetail['quantity'];?>" id="">
+                                    ?>
+                                    <option value="<?php echo $itemvariant['variant']; ?>" <?php if ($itemvariant['variant'] == $cartdetail['itemvariant']) { echo 'selected'; } ?>><?php echo $itemvariant['variant']; ?></option>
+                                    <?php
+                                }
+                                ?> 
+                            </select>                 
+                        </td>
+                        <td class="cartitemsize">
+                            <select name="itemsize[]" class="item-size" id="">
                                 
-                            </td>
-                            <td class="total"><?php echo "₱".($cartdetail['quantity']*$cartdetail['itemprice']);?></td>
-                                        </tr>
+                                <?php foreach($itemsizes AS $itemsize){
+                                    
+                                    ?>
+                                    <option value="<?php echo $itemsize['size']; ?>" <?php if ($itemsize['size'] == $cartdetail['itemsize']) { echo 'selected'; } ?>><?php echo $itemsize['size']; ?></option>
+                                    <?php
+                                }
+                                ?> 
+                            </select>     
+                        </td>
+                        <td class="itemprice">
+                            <span class="itemmenuprice"><?php echo "₱" . $cartdetail['itemprice'];?></span>
+                            <input type="text" name="itemprice[]" value="<?php echo $cartdetail['itemprice'];?>" id="" hidden>
+                            
+                        </td>
+                        <td class="itemquantity">
+                            <input type="text" class="quantity" name="quantity[]" value="<?php echo $cartdetail['quantity'];?>" id="">
+                        </td>
+                        <td class="total total-price"><span class="totalprice"><?php echo "₱".($cartdetail['quantity']*$cartdetail['itemprice']);?></span></td>
+                    </tr>
                     <?php
                     }
                     ?>
@@ -161,7 +165,68 @@
         }
     }
 </script>
+    <!--<script>
+        $(document).ready(function() {
+            $('.item-variant, .item-size').change(function() {
+                
+                var index = $('.item-variant').index($(this));
 
+                var selectedVariety = $('.item-variant').eq(index).val();
+                var selectedSize = $('.item-size').eq(index).val();
+                var selectedMenu = $('.itemid').eq(index).val();
+                
+                $.ajax({
+                    url: '../database/fetchmenudetails.php',
+                    method: 'POST',
+                    data: {
+                        variety: selectedVariety,
+                        size: selectedSize,
+                        menuid: selectedMenu
+                    },
+                    success: function(response) {
+                        $('.menuprice').eq(index).text(response);
+                    }
+                });
+            });
+        });
+</script>-->
+<script>
+    $(document).ready(function() {
+        $('.item-row').each(function(index, element) {
+            var itemRow = $(this);
+            var itemVariant = itemRow.find('.item-variant');
+            var itemSize = itemRow.find('.item-size');
+            var totalPrice = itemRow.find('.totalprice');
+            var selectedMenu = itemRow.find('.itemid');
+            var quantityInput = itemRow.find('.quantity');
+            var menuprice = itemRow.find('.itemmenuprice');
+
+            itemVariant.add(itemSize).add(quantityInput).change(function() {
+                var selectedVariety = itemVariant.val();
+                var selectedSize = itemSize.val();
+                var selectedMenuId = selectedMenu.val();
+                var quantity = quantityInput.val();
+                var updatedmenuprice = menuprice.val();
+
+                $.ajax({
+                    url: '../database/fetchmenudetails.php',
+                    method: 'POST',
+                    data: {
+                        variety: selectedVariety,
+                        size: selectedSize,
+                        menuid: selectedMenuId,
+                        quantity: quantity,
+                        menuprice: updatedmenuprice
+                    },
+                    success: function(response) {
+                        menuprice.text('₱' + response),
+                        totalPrice.text('₱' + (parseFloat(response) * quantity));
+                    }
+                });
+            });
+        });
+    });
+</script>
     <script src="../js/menujs.js"></script>                         
 </body>
 </html>

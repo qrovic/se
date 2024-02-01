@@ -2,13 +2,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
+    session_start();
     require_once ("../include/head.php");
     require_once('../include/js.php');
     require_once('../database/datafetch.php');
-    session_start();
-    if(!isset($_SESSION['orderid'])){
-        $_SESSION['orderid']=$lastcustomerid;
-    }
+    require_once("../database/newcustomer.php");
 ?>
 <body class="storebody">
     <div class="header">
@@ -22,7 +20,6 @@
             <form action="storesearch.php" method="POST"  id="searchforms">
             <input class="searchstores" type="text" name="search" id="" placeholder="Search for stores and menu">
             <input type="text" name=storename hidden value=<?php if (isset($_POST['storename'])){echo $_POST['storename'];}?>>
-          
         </form>
         </div>
         <div class="accountstext" id="storestext">

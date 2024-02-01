@@ -3,6 +3,10 @@
 <html lang="en">
 <?php
     session_start();
+    if (!isset($_SESSION['orderid'])){
+        header('Location: ../kiosk/stores.php');
+    }
+    
     if (isset($_POST['storeid'])){
         $_SESSION['storeid']=$_POST['storeid'];
         $_SESSION['storename']=$_POST['storename'];
@@ -100,8 +104,8 @@
                                                     foreach($menuvariant as $menuvariants){
                                                         ?>
                                                         <div class="radioholder">
-                                                        <input type="radio" name="menuvariation" id="variant_<?php echo $menuvariants['menuvariety'];?>" value="<?php echo $menuvariants['menuvariety'];?>">
-                                                        <label for="variant_<?php echo $menuvariants['menuvariety'];?>"><?php echo $menuvariants['menuvariety'];?></label>
+                                                        <input type="radio" name="menuvariation" id="variant_<?php echo $menuvariants['menuvariety'].$nope['item_id'];?>" value="<?php echo $menuvariants['menuvariety'];?>">
+                                                        <label for="variant_<?php echo $menuvariants['menuvariety'].$nope['item_id'];?>"><?php echo $menuvariants['menuvariety'];?></label>
                                                         </div>
                                                         <?php
                                                     }
@@ -114,8 +118,8 @@
                                                     foreach($menusize as $menusizes){
                                                         ?>
                                                         <div class="radioholder">
-                                                        <input type="radio" name="menusize" id="size_<?php echo $menusizes['menusize'];?>" value="<?php echo $menusizes['menusize'];?>">
-                                                        <label for="size_<?php echo $menusizes['menusize'];?>"><?php echo $menusizes['menusize'];?></label>
+                                                        <input type="radio" name="menusize" id="size_<?php echo $menusizes['menusize'].$nope['item_id'];?>" value="<?php echo $menusizes['menusize'];?>">
+                                                        <label for="size_<?php echo $menusizes['menusize'].$nope['item_id'];?>"><?php echo $menusizes['menusize'];?></label>
                                                         </div>
                                                         <?php
                                                     }
@@ -186,6 +190,6 @@
     }
 </script>
 
-    <script src="../js/menujs.js"></script>                         
+    <script src="../js/menujs.js"></script>                     
 </body>
 </html>
