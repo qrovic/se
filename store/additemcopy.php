@@ -92,13 +92,8 @@
                             <input type="text" id="newSizeInput" placeholder="Add new size and press Enter">
                         </div>
                         <button type="button" id="addSizeBtn">Add size</button>
-
-                        
                     </div>
-
                     <input type="submit" id="submitbtn" value="Submit">
-                                    
-                
             </div>
             
         </div>

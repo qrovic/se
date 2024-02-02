@@ -36,7 +36,7 @@
     }?>
     <div class="storemenus cartdiv">
         
-        <form action="../database/confirmedorder.php" method="POST">
+        <form action="../database/checkout.php" method="POST">
         <?php
             
             foreach($cartstores AS $cartstore){
@@ -132,101 +132,43 @@
             ?>
         </form>
     </div>
-    <div id="loading-overlay">
-        <div id="loading-spinner"></div>
-    </div>
+    <script src="../js/menujs.js"></script>         
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById("loading-overlay").style.visibility = "visible";
-            setTimeout(function () {
-                document.getElementById("loading-overlay").style.visibility = "hidden";
-            }, 2000);
-        });
-    </script>
-
-    <script>
-    
-    function increaseQuantity() {
-        var quantityInputs = document.getElementsByClassName('quantityInput');
-        for (var i = 0; i < quantityInputs.length; i++) {
-            var currentQuantity = parseInt(quantityInputs[i].value, 10);
-            quantityInputs[i].value = currentQuantity + 1;
-        }
-    }
-
-    function decreaseQuantity() {
-        var quantityInputs = document.getElementsByClassName('quantityInput');
-        for (var i = 0; i < quantityInputs.length; i++) {
-            var currentQuantity = parseInt(quantityInputs[i].value, 10);
-
-            if (currentQuantity > 1) {
-                quantityInputs[i].value = currentQuantity - 1;
-            }
-        }
-    }
-</script>
-    <!--<script>
-        $(document).ready(function() {
-            $('.item-variant, .item-size').change(function() {
-                
-                var index = $('.item-variant').index($(this));
-
-                var selectedVariety = $('.item-variant').eq(index).val();
-                var selectedSize = $('.item-size').eq(index).val();
-                var selectedMenu = $('.itemid').eq(index).val();
-                
-                $.ajax({
-                    url: '../database/fetchmenudetails.php',
-                    method: 'POST',
-                    data: {
-                        variety: selectedVariety,
-                        size: selectedSize,
-                        menuid: selectedMenu
-                    },
-                    success: function(response) {
-                        $('.menuprice').eq(index).text(response);
-                    }
-                });
-            });
-        });
-</script>-->
-<script>
     $(document).ready(function() {
-        $('.item-row').each(function(index, element) {
-            var itemRow = $(this);
-            var itemVariant = itemRow.find('.item-variant');
-            var itemSize = itemRow.find('.item-size');
-            var totalPrice = itemRow.find('.totalprice');
-            var selectedMenu = itemRow.find('.itemid');
-            var quantityInput = itemRow.find('.quantity');
-            var menuprice = itemRow.find('.itemmenuprice');
+    $('.item-row').each(function(index, element) {
+        var itemRow = $(this);
+        var itemVariant = itemRow.find('.item-variant');
+        var itemSize = itemRow.find('.item-size');
+        var totalPrice = itemRow.find('.totalprice');
+        var selectedMenu = itemRow.find('.itemid');
+        var quantityInput = itemRow.find('.quantity');
+        var menuprice = itemRow.find('.itemmenuprice');
 
-            itemVariant.add(itemSize).add(quantityInput).change(function() {
-                var selectedVariety = itemVariant.val();
-                var selectedSize = itemSize.val();
-                var selectedMenuId = selectedMenu.val();
-                var quantity = quantityInput.val();
-                var updatedmenuprice = menuprice.val();
+        itemVariant.add(itemSize).add(quantityInput).change(function() {
+            var selectedVariety = itemVariant.val();
+            var selectedSize = itemSize.val();
+            var selectedMenuId = selectedMenu.val();
+            var quantity = quantityInput.val();
+            var updatedmenuprice = menuprice.val();
 
-                $.ajax({
-                    url: '../database/fetchmenudetails.php',
-                    method: 'POST',
-                    data: {
-                        variety: selectedVariety,
-                        size: selectedSize,
-                        menuid: selectedMenuId,
-                        quantity: quantity,
-                        menuprice: updatedmenuprice
-                    },
-                    success: function(response) {
-                        menuprice.text('₱' + response),
-                        totalPrice.text('₱' + (parseFloat(response) * quantity));
-                    }
-                });
+            $.ajax({
+                url: '../database/fetchmenudetails.php',
+                method: 'POST',
+                data: {
+                    variety: selectedVariety,
+                    size: selectedSize,
+                    menuid: selectedMenuId,
+                    quantity: quantity,
+                    menuprice: updatedmenuprice
+                },
+                success: function(response) {
+                    menuprice.text('₱' + response),
+                    totalPrice.text('₱' + (parseFloat(response) * quantity));
+                }
             });
         });
     });
-</script>
-    <script src="../js/menujs.js"></script>                         
+});
+</script>                
 </body>
 </html>

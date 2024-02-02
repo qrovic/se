@@ -34,25 +34,41 @@ try {
     $stmt->execute();
     $lastInsertedId = $pdo->lastInsertId();
 
-    foreach ($itemvariants as $variant) {
-        
-        foreach ($itemsizes as $i => $size) {
-            echo $size."";
-            $itemprice=$itemprices[$i];
-            $itemstock=$itemstocks[$i];
-            /*$stmt = $pdo->prepare("INSERT INTO itemprice (itemid, variant, size, price, stock) VALUES (:itemid, :variant, :size, :price, :stock)");
-            $stmt->bindParam(':itemid', $lastInsertedId);
-            $stmt->bindParam(':variant', $variant);
-            $stmt->bindParam(':size', $size); 
-            $stmt->bindParam(':price', $itemprice); 
-            $stmt->bindParam(':stock', $itemstock); 
-            $stmt->execute();*/
-            echo "price: ".$itemprice." stock: ".$itemstock;
-            
-        }
-    }
+    $counter = 0;
 
-    //header('location: ../superadmin/store.php');
+foreach ($itemvariants as $key => $variant) {
+    echo "<br>";
+    echo $variant;
+
+    foreach ($itemsizes as $key1 => $size) {
+        echo "<br>";
+        echo $size;
+        echo "<br>";
+
+        $adjustedIndex = $counter % count($itemstocks);
+
+        $itemprice = $itemprices[$adjustedIndex];
+        $itemstock = $itemstocks[$adjustedIndex];
+
+        echo $itemprice;
+        echo $itemstock;
+
+        $stmt = $pdo->prepare("INSERT INTO itemprice (itemid, variant, size, price, stock) VALUES (:itemid, :variant, :size, :price, :stock)");
+        $stmt->bindParam(':itemid', $lastInsertedId);
+        $stmt->bindParam(':variant', $variant);
+        $stmt->bindParam(':size', $size); 
+        $stmt->bindParam(':price', $itemprice); 
+        $stmt->bindParam(':stock', $itemstock); 
+        $stmt->execute();
+        
+        $counter++;
+    }
+    echo "<br>";
+    echo "<br>";
+}
+
+
+    header('location: ../superadmin/store.php');
 } catch(PDOException $e) {
     echo "Error: " . $e->getMessage();
 }

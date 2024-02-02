@@ -31,17 +31,17 @@ if (isset($_SESSION['orderid'])){
     
 }
 
-# Fetch total count of stores
+#fetch total count of stores
 $sqltotalstorescount = "SELECT COUNT(*) FROM store";
 $resulttotalstorescount = $pdo->query($sqltotalstorescount);
 $totalstorescount = $resulttotalstorescount->fetchColumn();
 
-# Fetch count of online stores
+#fetch count of online stores
 $sqlonlinestorescount = "SELECT COUNT(*) FROM store WHERE status='online'";
 $resultonlinestorescount = $pdo->query($sqlonlinestorescount);
 $onlinestorescount = $resultonlinestorescount->fetchColumn();
 
-# Store filter based on item search term
+#store filter based on item search term
 if (isset($_POST['search'])) {
     $searchterm = $_POST['search'];
 
@@ -65,7 +65,7 @@ try {
         $orderid = $_SESSION['orderid'];
         $itemname=$cartdetail['itemname'];
         $cartstoreids=$cartstore['cartstoreid'];
-        // fetch categories
+        //fetch categories
         $sqlcategories = "SELECT DISTINCT category FROM cart LEFT JOIN itemprice ON itemprice.id=cart.itempriceid JOIN item ON item.id=itemprice.itemid JOIN store ON item.storeid=store.id WHERE store.name=:storename";
         $stmtcategories = $pdo->prepare($sqlcategories);
         $stmtcategories->bindParam(':storename', $storename, PDO::PARAM_STR);
@@ -167,12 +167,12 @@ $stmt = $pdo->prepare($sqlstores);
 $stmt->execute();  
 $stores = $stmt->fetchAll();
 
-if (isset($_POST['storename']) && isset($_POST['itemsearch'])) {
+if (isset($_SESSION['storename']) && isset($_SESSION['itemsearch'])) {
     try {
-    $storename = $_POST['storename'];
-    $itemsearch = '%'.$_POST['itemsearch'].'%';
+    $storename = $_SESSION['storename'];
+    $itemsearch = '%'.$_SESSION['itemsearch'].'%';
 
-    $sqlstoremenufilter = "SELECT item.name AS item_name, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item LEFT JOIN store ON item.storeid = store.id WHERE item.name LIKE :searchterm AND store.name = :storename";
+    $sqlstoremenufilter = "SELECT item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item LEFT JOIN store ON item.storeid = store.id WHERE item.name LIKE :searchterm AND store.name = :storename";
     $stmt = $pdo->prepare($sqlstoremenufilter);
     $stmt->bindParam(':searchterm', $itemsearch, PDO::PARAM_STR);
     $stmt->bindParam(':storename', $storename, PDO::PARAM_STR);
@@ -185,7 +185,6 @@ if (isset($_POST['storename']) && isset($_POST['itemsearch'])) {
     $stmt->bindParam(':storename', $storename, PDO::PARAM_STR);
     $stmt->execute();
     $filteredstoremenucount = $stmt->fetchColumn();
- 
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }

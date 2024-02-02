@@ -129,71 +129,62 @@ var_dump($itemsizes); ?>
 
     <script>
     $(document).on('input', '.addvariant .samesize', function () {
-    var newValue = $(this).val();
+        var newValue = $(this).val();
 
-    var closestSizeDiv = $(this).closest('.size');
-    var closestSizeClass = closestSizeDiv.attr('class');
-    var lastClass = closestSizeClass.split(' ').pop();
+        var closestSizeDiv = $(this).closest('.size');
+        var closestSizeClass = closestSizeDiv.attr('class');
+        var lastClass = closestSizeClass.split(' ').pop();
 
-    console.log('Changed input value:', newValue);
-    console.log('Last class of the closest div with .size:', lastClass);
+        console.log('Changed input value:', newValue);
+        console.log('Last class of the closest div with .size:', lastClass);
 
-    $('.addvariant .' + lastClass + ' .addsizeinput .samesize').val(newValue);
+        $('.addvariant .' + lastClass + ' .addsizeinput .samesize').val(newValue);
 
-    console.log('Updated value (Size):', $('.addvariant .' + lastClass + ' .addsizeinput .samesize').val());
-});
-
-
-
-
-
-
-        function addVariant() {
-            var variantContainer = $('.addvariant:first').clone();
-
-            variantContainer.find('input').val('');
-            $('.addvariant:last').after(variantContainer);
-        }
-
-        function addSize(button) {
-            var variantContainers = $('.addvariant');
-
-            variantContainers.each(function() {
-                var sizeContainer = $(this).find('.size-container:last');
-                var newSize = sizeContainer.clone();
-
-                var index = $(this).find('.size-container').length;
-                newSize.addClass('size-container-' + index);
-
-                sizeContainer.after(newSize);
-            });
-        }
-
-
-
-        function deleteSize(button) {
-    
-    var sizeElement = $(button).closest('.size');
-
-    var lastClass = sizeElement.attr('class').split(' ').pop();
-
-    alert('Deleting elements with last class: ' + lastClass);
-
-   
-    $('.' + lastClass).not(sizeElement).remove();
-}
+        console.log('Updated value (Size):', $('.addvariant .' + lastClass + ' .addsizeinput .samesize').val());
+    });
 
 
 
 
 
 
-        function deleteVariant(button) {
-            
-            var variantContainer = $(button).closest('.addvariant');
+    function addVariant() {
+        var variantContainer = $('.addvariant:first').clone();
+        variantContainer.find('input').val('');
+        $('.addvariant:last').after(variantContainer);
+    }
+    function addSize(button) {
+        var variantContainers = $('.addvariant');
+        variantContainers.each(function() {
+            var sizeContainer = $(this).find('.size-container:last');
+            var newSize = sizeContainer.clone();
 
-            variantContainer.remove();
-        }
+            var index = $(this).find('.size-container').length;
+            newSize.addClass('size-container-' + index);
+
+            sizeContainer.after(newSize);
+        });
+    }
+
+
+    function deleteSize(button) {
+        var sizeElement = $(button).closest('.size');
+        var lastClass = sizeElement.attr('class').split(' ').pop();
+        alert('Deleting elements with last class: ' + lastClass);        
+        $('.' + lastClass).not(sizeElement).remove();
+    }
+
+
+
+
+
+
+    function deleteVariant(button) {
+        
+        var variantContainer = $(button).closest('.addvariant');
+
+        variantContainer.remove();
+    }
 
 
 

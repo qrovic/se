@@ -496,7 +496,7 @@ input.searchstores{
 }
 /*menu*/
 .storeheader{
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     box-shadow: 0 2px 4px rgba(58, 72, 70, 0.1), 0 8px 16px 0px #77777760;
 }
 .menustorename p{
@@ -558,7 +558,7 @@ input.menusearch{
     justify-content: space-between;
     flex-wrap: nowrap;
     overflow-y: scroll;
-    max-height: calc(100lvh - 53px - 100px - 45px);
+    max-height: calc(95lvh - 53px - 100px - 45px);
     padding-right: 20px;
     width: 100%;
     max-width: 100lvw;
@@ -681,8 +681,6 @@ a{
     font-size: 1.6rem;
     margin-bottom: 0px;
     font-weight:500;
-    
-    /*font-family:sa    ns-serif;*/
 }
 .menuvariation, .menusize{
     width: 100%;
@@ -817,12 +815,10 @@ input[type="radio"] {
 }
 
 input[type="radio"]:checked {
-    animation: checkedAnimation 0.3s; /* Adjust the duration as needed */
+    animation: checkedAnimation 0.3s;
     border-width: 4px;
 }
-input[type="radio"]:checked .radioholder{
-    background-color: red !important;
-}
+
 .radioholder:hover input[type="radio"]:checked {
     border-width: 4px;
 }
@@ -834,6 +830,10 @@ input[type="radio"]:checked .radioholder{
     width: 100%;
     padding: 0 15px;
 }
+input[type="radio"]:checked ~ .radioholder {
+    background-color: red !important;
+}
+
 .radio{
     margin-right: 10px;
     
@@ -962,8 +962,10 @@ td>input{
     height: 300px;
     animation: spin 1s linear infinite;
 }
-
-/*spin animation */
+td.itemquantity input{
+    max-width: 50px !important;
+}
+/*logo animation */
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -1059,4 +1061,25 @@ td>input{
 .cartdiv{
     max-height: 60lvh !important;
     overflow-y: scroll;
+}
+@keyframes scaleAndFadeIn {
+    0% {
+        transform: scale(3);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.cart-count-number.show-animation {
+    animation: scaleAndFadeIn 0.7s ease;
+}
+
+
+/* comfirmed order*/
+.confirmorderid{
+    color: rgb(80, 80, 80);
+    font-size: 1.5rem !important;
 }

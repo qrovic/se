@@ -4,8 +4,7 @@
 <?php
     require_once ("../include/head.php");
     require_once('../include/js.php');
-    require_once('../database/datafetch.php');
-       
+    require_once('../database/datafetch.php'); 
 ?>
 <body class="storebody">
     <div class="header">
@@ -18,7 +17,6 @@
         <div class="kiosksearch">
             <form action="storesearch.php" method="POST">
             <input class="searchstores" type="text" name="search" id="" placeholder="Search for stores and menu">
-          
         </form>
         </div>
         <div class="accountstext" id="storestext">

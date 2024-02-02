@@ -14,6 +14,9 @@
     require_once ("../include/head.php");
     require_once('../include/js.php');
     require_once('../database/datafetch.php');
+    if(isset($_POST['storename'])){
+        $storename=$_SESSION['storename'];
+    }
 ?>
 <body class="storebody">
     <div class="header">
@@ -23,17 +26,15 @@
             <div class="bx-shopping-bag-container">
                 <i class='bx bx-shopping-bag'></i>
                 <div class="cart-count">
-                    <span class=""><?php echo $totalcartcount; ?></span>
+                    <span class="cart-count-number" id="cartCount"></span>
                 </div>
                 
             </div>
         </div>
-        
-        
     </div>
     <div class="storeheader">
         <div class="menustorename">
-            <p><?php if (isset($_POST['storename'])) { echo $_POST['storename']; } ?></p>
+            <p><?php if (isset($_SESSION['storename'])) { echo $_SESSION['storename']; } ?></p>
         </div>
         <div class="menusearch">
         <form action="menusearch.php" method="POST" id="searchforms">
@@ -90,12 +91,12 @@
                                                 include ('../database/fetchmenudetails.php');
                                             ?>
                                             <div class="menumodalbody">
-                                            <form action="../database/addtocart.php" METHOD="POST">
+                                            <form action="../database/addtocart.php" METHOD="POST" class="addToCartForm" onsubmit="submitForm(event, this)">
                                                 <img class="menumodalpic" src="../resources/<?php echo $nope['item_pic'];?>" alt="">
                                                 <div class="menudetails">
                                                     <p class="menuitemname"><?php echo $nope['item_name'];?></p>
                                                     <header>
-                                                    <p class="menuprice" value="0">0</p>
+                                                    <p class="menuprice" value="0"></p>
                                                     </header>
                                                 </div>
                                                 <div class="menuvariation">
@@ -171,25 +172,7 @@
    
     
 
-    <script>
-    function increaseQuantity() {
-        var quantityInputs = document.getElementsByClassName('quantityInput');
-        for (var i = 0; i < quantityInputs.length; i++) {
-            var currentQuantity = parseInt(quantityInputs[i].value, 10);
-            quantityInputs[i].value = currentQuantity + 1;
-        }
-    }
-    function decreaseQuantity() {
-        var quantityInputs = document.getElementsByClassName('quantityInput');
-        for (var i = 0; i < quantityInputs.length; i++) {
-            var currentQuantity = parseInt(quantityInputs[i].value, 10);
-            if (currentQuantity > 1) {
-                quantityInputs[i].value = currentQuantity - 1;
-            }
-        }
-    }
-</script>
-
-    <script src="../js/menujs.js"></script>                     
+    
+<script src="../js/menujs.js"></script>                     
 </body>
 </html>

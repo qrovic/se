@@ -7,7 +7,7 @@
         $stmt->bindParam(':customerid', $customerid);
         $stmt->execute();
         if (!$stmt->fetchColumn()) {
-            // If the customer does not exist, insert a new customer
+            //if cosutomer doesnt exists then add
             $stmt = $pdo->prepare("INSERT INTO customer (id) VALUES (:customerid)");
             $stmt->bindParam(':customerid', $customerid);
             $stmt->execute();

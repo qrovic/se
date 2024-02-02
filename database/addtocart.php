@@ -22,12 +22,13 @@ try {
     
     $itempriceid = $stmt->fetchColumn();
     
+    
     $stmt = $pdo->prepare("INSERT INTO cart (customerid, itempriceid, quantity) VALUES (:customerid, :itempriceid, :quantity) ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity)");
     $stmt->bindParam(':customerid', $customerid);
     $stmt->bindParam(':itempriceid', $itempriceid);
     $stmt->bindParam(':quantity', $quantity);
     $stmt->execute();
-    header('Location: ../kiosk/menu.php');
+    //header('Location: ../kiosk/menu.php');
 } catch (PDOException $e) {
     echo $itemid . $menusize . $menuvariation;
     echo "Error: " . $e->getMessage();

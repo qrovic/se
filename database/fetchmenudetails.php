@@ -3,7 +3,7 @@ require_once('../database/config.php');
 if(!isset($_SESSION)){
     session_start();
 }
-if (isset($_SESSION['storeid'])){
+if (isset($nope['item_id'])){
     $menuid = $nope['item_id'];
     $storeid = $_SESSION['storeid'];
     
@@ -28,6 +28,31 @@ if (isset($_SESSION['storeid'])){
     $stmt->execute();
     $menusize = $stmt->fetchAll();
 }
+if (isset($storemenusearch['item_name'])){
+    $menuid = $storemenusearch['item_id'];
+    $storeid = $_SESSION['storeid'];
+    
+    $sqlmenudetails = "SELECT * FROM item RIGHT JOIN itemprice ON item.id = itemprice.itemid RIGHT JOIN store ON store.id = item.storeid WHERE item.id = :menuid AND item.storeid = :storeid";
+    $stmt = $pdo->prepare($sqlmenudetails);
+    $stmt->bindParam(':menuid', $menuid, PDO::PARAM_STR);
+    $stmt->bindParam(':storeid', $storeid, PDO::PARAM_STR);
+    $stmt->execute();
+    $menudetails1 = $stmt->fetchAll();
+    
+    $sqlmenuvariant = "SELECT DISTINCT variant as menuvariety FROM itemprice LEFT JOIN item ON item.id = itemprice.itemid RIGHT JOIN store ON store.id = item.storeid WHERE item.id = :menuid AND item.storeid = :storeid";
+    $stmt = $pdo->prepare($sqlmenuvariant);
+    $stmt->bindParam(':menuid', $menuid, PDO::PARAM_STR);
+    $stmt->bindParam(':storeid', $storeid, PDO::PARAM_STR);
+    $stmt->execute();
+    $menuvariant1 = $stmt->fetchAll();
+    
+    $sqlmenusize = "SELECT DISTINCT size as menusize FROM itemprice LEFT JOIN item ON item.id = itemprice.itemid RIGHT JOIN store ON store.id = item.storeid WHERE item.id = :menuid AND item.storeid = :storeid";
+    $stmt = $pdo->prepare($sqlmenusize);
+    $stmt->bindParam(':menuid', $menuid, PDO::PARAM_STR);
+    $stmt->bindParam(':storeid', $storeid, PDO::PARAM_STR);
+    $stmt->execute();
+    $menusize1 = $stmt->fetchAll();
+}
 if(isset($_POST['variety'])){
     $selectedVariety = $_POST['variety'];
     $selectedSize = $_POST['size'];
@@ -48,7 +73,7 @@ if(isset($_POST['variety'])){
         if ($result) {
             echo $result['price'];
         } else {
-            echo "Price not available";
+            echo "choose a size";
         }
     } catch (PDOException $e) {
         echo 'Error: ' . $e->getMessage();

@@ -12,11 +12,9 @@
     function validate_email($email){
         if (isset($email)) {
             $email = trim($email);
-         
             if (empty($email)) {
                 return 'Email is required';
-            } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-               
+            } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { 
                 return 'Email is invalid format';
             } else {
                 return 'success';
@@ -25,8 +23,6 @@
             return 'Email is required'; 
         }
     }    
-       
-
     function validate_password($password) {
         $password = htmlentities($password);
         

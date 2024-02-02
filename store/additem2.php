@@ -69,28 +69,9 @@
         }*/
         
     //}
-    foreach ($itemvariants as $key => $itemvariant) {
-        echo $itemvariant;
-        echo "<br>";
     
-        foreach ($itemsizes as $key1 => $values) {
-            echo $values;
-            echo "<br><br>";
-    
-            // Check if $key is equal to $key1
-            if ($key == $key1) {
-                // If equal, use the adjusted index
-                echo "Price: " . $itemprices[($key1 - 1)] . "<br>";
-                echo "Stock: " . $itemstocks[($key1 - 1)] . "<br>";
-            } else {
-                // If not equal, use the original index
-                echo "Price: " . $itemprices[$key1] . "<br>";
-                echo "Stock: " . $itemstocks[$key1] . "<br>";
-            }
-    
-            echo "<br>";
-        }
-    }
+
+
     
     
     
@@ -124,7 +105,7 @@
     <div class="right">
         <h1>Add Store</h1>
         <div class="addstore">
-        <form action="../store/additem2.php" method="POST" enctype="multipart/form-data">
+        <form action="../database/additem.php" method="POST" enctype="multipart/form-data">
             <div class="ownerdetails" id="ownerdetails">
                 <h2>Variations and sizing</h2>
                     <div class="additem2formheader">
