@@ -204,5 +204,36 @@ $(document).ready(function() {
     $(document).on('change', '.modal.show input[name="menuvariation"], .modal.show input[name="menusize"]', function() {
         checkSelection();
     });
+    $(document).on('shown.bs.modal', '.modal', function () {
+        checkSelection();
+    });
     checkSelection();
 });
+
+
+
+$(document).ready(function() {
+    function resetBackgroundColors() {
+        $('.menuvariation').css('background-color', '');
+        $('.menusize').css('background-color', '');
+        $('.radioholder').css('background-color', '');
+    }
+
+    $('input[type="radio"]').change(function() {
+        if ($(this).is(':checked')) {
+            $(this).closest('.menuvariation').css('background-color', 'rgb(240, 240, 240)');
+            $(this).closest('.menusize').css('background-color', 'rgb(240, 240, 240)');
+            $(this).closest('.radioholder').css('background-color', 'rgb(240, 240, 240)');
+        } else {
+            resetBackgroundColors();
+        }
+    });
+
+    $(document).on('show.bs.modal', function () {
+    });
+
+    $(document).on('hidden.bs.modal', function () {
+        resetBackgroundColors();
+    });
+});
+

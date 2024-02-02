@@ -1090,6 +1090,10 @@ td.itemquantity input{
 .cart-count-number.show-animation {
     animation: scaleAndFadeIn 0.7s ease;
 }
+.radioholder input[type="radio"]:checked + label {
+    background-color: rgb(240, 240, 240) !important;
+}
+
 
 
 /* comfirmed order*/
