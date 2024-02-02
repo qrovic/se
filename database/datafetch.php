@@ -45,7 +45,7 @@ $onlinestorescount = $resultonlinestorescount->fetchColumn();
 if (isset($_POST['search'])) {
     $searchterm = $_POST['search'];
 
-    $sqlstorefilter = "SELECT store.name AS store_name, store.pic AS store_pic FROM store JOIN item ON item.storeid = store.id WHERE item.name LIKE :searchterm OR store.name LIKE :searchterm";
+    $sqlstorefilter = "SELECT store.name AS store_name, store.id AS store_id, store.pic AS store_pic FROM store JOIN item ON item.storeid = store.id WHERE item.name LIKE :searchterm OR store.name LIKE :searchterm";
     $stmt = $pdo->prepare($sqlstorefilter);
     $stmt->bindParam(':searchterm', $searchterm, PDO::PARAM_STR);
     $stmt->execute();

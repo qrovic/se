@@ -54,10 +54,10 @@
                         <label for="">Category:</label>
                         <select name="itemcategory" id="">
                             <option value="Drinks">Drinks</option>
-                            <option value="Drinks">Meals</option>
-                            <option value="Drinks">Snacks</option>
-                            <option value="Drinks">Desserts</option>
-                            <option value="Drinks">Items</option>  
+                            <option value="Meals">Meals</option>
+                            <option value="Snacks">Snacks</option>
+                            <option value="Desserts">Desserts</option>
+                            <option value="Items">Items</option>  
                         </select>
                     </div>
                     <div class="addstoreinput">

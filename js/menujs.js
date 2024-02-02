@@ -26,7 +26,7 @@ const observer = new IntersectionObserver(entries => {
             link.classList.remove('active');
         }
     });
-}, { threshold: 0.07});
+}, { threshold: 0.8});
 
 document.querySelectorAll('section[id]').forEach(section => {
     observer.observe(section);
@@ -63,24 +63,40 @@ function decreaseQuantity() {
 
 
 $(document).ready(function() {
-    $('input[name="menuvariation"], input[name="menusize"]').change(function() {
-        var selectedVariety = $('input[name="menuvariation"]:checked').val();
-        var selectedSize = $('input[name="menusize"]:checked').val();
-        var menuid = $('.modal.show').data('currentmenuid');
-        $.ajax({
-            url: '../database/fetchmenudetails.php',
-            method: 'POST',
-            data: {
-                variety: selectedVariety,
-                size: selectedSize,
-                menuid: menuid
-            },
-            success: function(response) {
-                $('.menuprice').text("₱"+response);
-            }
-        });
+    function handleMenuChanges() {
+        if ($('.modal.show').length > 0 &&
+            $('input[name="menuvariation"]:checked').length > 0 &&
+            $('input[name="menusize"]:checked').length > 0) {
+            
+            var selectedVariety = $('input[name="menuvariation"]:checked').val();
+            var selectedSize = $('input[name="menusize"]:checked').val();
+            var menuid = $('.modal.show').data('currentmenuid');
+
+            $.ajax({
+                url: '../database/fetchmenudetails.php',
+                method: 'POST',
+                data: {
+                    variety: selectedVariety,
+                    size: selectedSize,
+                    menuid: menuid
+                },
+                success: function(response) {
+                    $('.menuprice').text("₱" + response);
+                }
+            });
+        }
+    }
+    $('input[name="menuvariation"], input[name="menusize"]').change(handleMenuChanges);
+
+    $('.modal').on('hidden.bs.modal', function () {
+        $('input[name="menuvariation"], input[name="menusize"]').prop('checked', false);
+        //$('.menuprice').val("₱"+$lowestprice); // Set initial price display
+
     });
 });
+
+
+
 
 const cartCountElement = document.querySelector('.cart-count-number');
 
@@ -97,8 +113,6 @@ function closeModals() {
     $('.modal').modal('hide');
 }
 
-
-//ajax update cart count 
 function updateCartCount() {
     $.ajax({
         url: '../database/countcart.php',
@@ -143,7 +157,6 @@ setInterval(updateCartCount, 1000);
 
 
 
-// ajax dd to cart
 function submitForm(event, form) {
     event.preventDefault();
 
@@ -165,11 +178,31 @@ function submitForm(event, form) {
     closeModals();
 }
 
-document.getElementById('searchform').addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') {
-        e.preventDefault(); 
-        this.submit(); 
+
+
+
+$(document).ready(function() {
+    function checkSelection() {
+        var varietyRadio = $('.modal.show input[name="menuvariation"]:checked').length > 0;
+        var sizeRadio = $('.modal.show input[name="menusize"]:checked').length > 0;
+        var addToCartBtn = $('.modal.show #addtocartbutton');
+        var menuModalBody = $('.modal.show .menumodalbody');
+
+        if (varietyRadio && sizeRadio) {
+            addToCartBtn.removeAttr('disabled');
+            console.log('Button enabled');
+        } else {
+            addToCartBtn.attr('disabled', 'disabled');
+            console.log('Button disabled');
+            if (varietyRadio || sizeRadio) {
+                menuModalBody.animate({
+                    scrollTop: menuModalBody[0].scrollHeight
+                }, 500);
+            }
+        }
     }
+    $(document).on('change', '.modal.show input[name="menuvariation"], .modal.show input[name="menusize"]', function() {
+        checkSelection();
+    });
+    checkSelection();
 });
-
-

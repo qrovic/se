@@ -82,21 +82,21 @@
                                 <div class="modal-dialog menumodal">
                                     <div class="modal-content menumodalcontent">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel"><p class="menuitemname"><?php echo $nope['item_name'];?></p></h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body modalbody">
                                         
                                             <?php 
-                                                include ('../database/fetchmenudetails.php');
+                                                include('../database/fetchmenudetails.php');
                                             ?>
                                             <div class="menumodalbody">
                                             <form action="../database/addtocart.php" METHOD="POST" class="addToCartForm" onsubmit="submitForm(event, this)">
                                                 <img class="menumodalpic" src="../resources/<?php echo $nope['item_pic'];?>" alt="">
                                                 <div class="menudetails">
-                                                    <p class="menuitemname"><?php echo $nope['item_name'];?></p>
+                                                    
                                                     <header>
-                                                    <p class="menuprice" value="0"></p>
+                                                    <p class="menuprice" value=""><?php echo "₱".$lowestprice;?></p>
                                                     </header>
                                                 </div>
                                                 <div class="menuvariation">
@@ -136,12 +136,13 @@
                                         <div class="modalfooter">
                                             <div class="quantitydiv">
                                                 <button class="quantitybutton" onclick="decreaseQuantity()" type="button"><p class="quantitybtn">-</p></button>
-                                                <input type="text" name="quantity" class="quantityInput" id="quantityInput" value="1">
+                                                <input type="text" readonly name="quantity" class="quantityInput" id="quantityInput" value="1">
                                                 <button class="quantitybutton" onclick="increaseQuantity()" type="button"><p class="quantitybtn">+</p></button>
                                             </div>
                                         
                                             <input type="number" name="menuid" hidden value="<?php echo $nope['item_id'];?>">
-                                            <button type="submit" class="btn btn-primary addtocartbtn">Add to cart</button>
+                                            <button disabled type="submit" class="btn btn-primary addtocartbtn" id="addtocartbutton">Add to cart</button>
+
                                         </div>
                                         
                                     </div>
@@ -152,7 +153,7 @@
                             <div class="storeitem" data-bs-toggle="modal" data-bs-target="#<?php echo str_replace(' ', '', $nope['item_name']); ?>">
                                 <div class="itemdetails">
                                     <p class="itemname"><?php echo $nope['item_name'] ?></p>
-                                    <p class="itemprice">from ₱<?php echo rand(50, 199); ?></p>
+                                    <p class="itemprice">from ₱<?php echo $lowestprice;?></p>
                                 </div>
                                 <img class="itemlogo" src="<?php echo "../resources/" . $nope['item_pic']; ?>" alt="Store Logo">
                             
@@ -169,10 +170,16 @@
             ?>
         </div>
     </div>
-   
     
 
+
     
+
+   
+
+
+
+
 <script src="../js/menujs.js"></script>                     
 </body>
 </html>

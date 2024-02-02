@@ -80,6 +80,36 @@ if(isset($_POST['variety'])){
     }
     $pdo = null;
 }
-
-
+    if (isset($nope['item_id'])){
+    $menuid = $nope['item_id'];
+    $storeid = $_SESSION['storeid'];
+    
+    $sqllowestprice = "SELECT MIN(itemprice.price) AS min_price
+    FROM item
+    RIGHT JOIN itemprice ON item.id = itemprice.itemid
+    LEFT JOIN store ON store.id = item.storeid
+    WHERE item.id = :menuid AND store.id = :storeid;
+    ";
+    $stmt = $pdo->prepare($sqllowestprice);
+    $stmt->bindParam(':menuid', $menuid, PDO::PARAM_STR);
+    $stmt->bindParam(':storeid', $storeid, PDO::PARAM_STR);
+    $stmt->execute();
+    $lowestprice = $stmt->fetchColumn();
+    }
+    if (isset($storemenusearch['item_id'])){
+        $menuid = $storemenusearch['item_id'];
+        $storeid = $_SESSION['storeid'];
+        
+        $sqllowestprice1 = "SELECT MIN(itemprice.price) AS min_price
+        FROM item
+        RIGHT JOIN itemprice ON item.id = itemprice.itemid
+        LEFT JOIN store ON store.id = item.storeid
+        WHERE item.id = :menuid AND store.id = :storeid;
+        ";
+        $stmt = $pdo->prepare($sqllowestprice1);
+        $stmt->bindParam(':menuid', $menuid, PDO::PARAM_STR);
+        $stmt->bindParam(':storeid', $storeid, PDO::PARAM_STR);
+        $stmt->execute();
+        $lowestprice1 = $stmt->fetchColumn();
+    }
 ?>

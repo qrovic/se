@@ -8,7 +8,7 @@
 ?>
 <body class="storebody">
     <div class="header">
-        <img class="kioskstorelogo" src="../resources/foodparklogo.png" alt="hhee">
+    <img class="kioskstorelogo" src="../resources/foodparklogo.png" alt="hhee" onclick="window.location.href='stores.php'">
         <?php echo 'Order No.:' . $_SESSION['orderid'];?>
     </div>
     
@@ -29,11 +29,11 @@
                     ?>
                     <form id="" action="menu.php" method="POST" hidden>
                         <input type="text" id="storename" name="storename" value="<?php echo $store['store_name'];?>" hidden>
+                        <input type="text" id="storeid" name="storeid" value="<?php echo $store['store_id'];?>" hidden>
                         <button type="submit" id="<?php echo $store['store_name'];?>" style="display:none;"></button>
                     </form>
                     <div class="kioskstore" onclick="document.getElementById('<?php echo $store['store_name'];?>').click()">
-
-                        <img class="storelogo" src="<?php echo "../resources/" . $store['store_pic']; ?>" alt="Store Logo">
+                    <img class="storelogo" src="<?php echo "../resources/" . $store['store_pic']; ?>" onerror="this.src='../resources/noimg.png'";>
                         <div class="storename">
                             <p class="accountname"><?php echo $store['store_name'] ?></p>
                         </div>

@@ -107,7 +107,11 @@
                             
                         </td>
                         <td class="itemquantity">
-                            <input type="text" class="quantity" name="quantity[]" value="<?php echo $cartdetail['quantity'];?>" id="">
+                        
+                            <!--<button class="quantitybutton" onclick="decreaseQuantity(this)" type="button"><p class="quantitybtn">-</p></button>-->
+                            <input type="text" name="quantity[]" class="quantity" value="<?php echo $cartdetail['quantity'];?>">
+                            <!--<button class="quantitybutton" onclick="increaseQuantity(this)" type="button"><p class="quantitybtn">+</p></button>-->
+                
                         </td>
                         <td class="total total-price"><span class="totalprice"><?php echo "₱".($cartdetail['quantity']*$cartdetail['itemprice']);?></span></td>
                     </tr>
@@ -132,7 +136,35 @@
             ?>
         </form>
     </div>
-    <script src="../js/menujs.js"></script>         
+    <script src="../js/menujs.js"></script>     
+    <script>
+        /*function increaseQuantity(element) {
+        var quantityInput = element.previousElementSibling;
+        var currentQuantity = parseInt(quantityInput.value, 10);
+        quantityInput.value = currentQuantity + 1;
+        updateQuantityValue(quantityInput);
+    }
+
+    function decreaseQuantity(element) {
+        var quantityInput = element.nextElementSibling;
+        var currentQuantity = parseInt(quantityInput.value, 10);
+        if (currentQuantity > 1) {
+            quantityInput.value = currentQuantity - 1;
+            updateQuantityValue(quantityInput);
+        }
+    }
+
+    function updateQuantityValue(quantityInput) {
+        // Add any additional logic you need before updating the value attribute
+        var newValue = quantityInput.value;
+
+        // Update the value attribute
+        quantityInput.setAttribute('value', newValue);
+    }*/
+
+
+
+    </script>    
     <script>
     $(document).ready(function() {
     $('.item-row').each(function(index, element) {

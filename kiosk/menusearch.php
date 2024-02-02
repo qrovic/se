@@ -77,7 +77,7 @@
                             <div class="modal-dialog menumodal">
                                 <div class="modal-content menumodalcontent">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <h5 class="modal-title" id="exampleModalLabel"><p class="menuitemname"><?php echo $storemenusearch['item_name'];?></p></h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body modalbody">
@@ -89,9 +89,9 @@
                                         <form action="../database/addtocart.php" METHOD="POST" class="addToCartForm" onsubmit="submitForm(event, this)">
                                             <img class="menumodalpic" src="../resources/<?php echo $storemenusearch['item_pic'];?>" alt="">
                                             <div class="menudetails">
-                                                <p class="menuitemname"><?php echo $storemenusearch['item_name'];?></p>
+                                                
                                                 <header>
-                                                <p class="menuprice" value="0">0</p>
+                                                <p class="menuprice" value=""><?php echo "₱".$lowestprice1;?></p>
                                                 </header>
                                             </div>
                                             <div class="menuvariation">
@@ -147,7 +147,7 @@
                         <div class="storeitem" data-bs-toggle="modal" data-bs-target="#<?php echo str_replace(' ', '', $storemenusearch['item_name']); ?>">
                             <div class="itemdetails">
                                 <p class="itemname"><?php echo $storemenusearch['item_name'] ?></p>
-                                <p class="itemprice">from ₱<?php echo rand(50, 199); ?></p>
+                                <p class="itemprice">from ₱<?php echo $lowestprice1; ?></p>
                             </div>
                             <img class="itemlogo" src="<?php echo "../resources/" . $storemenusearch['item_pic']; ?>" alt="Store Logo">
                         </div>
@@ -178,7 +178,7 @@
                                 <div class="modal-dialog menumodal">
                                     <div class="modal-content menumodalcontent">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel"><p class="menuitemname"><?php echo $nope['item_name'];?></p></h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body modalbody">
@@ -190,9 +190,9 @@
                                             <form action="../database/addtocart.php" METHOD="POST" class="addToCartForm" onsubmit="submitForm(event, this)">
                                                 <img class="menumodalpic" src="../resources/<?php echo $nope['item_pic'];?>" alt="">
                                                 <div class="menudetails">
-                                                    <p class="menuitemname"><?php echo $nope['item_id'];?></p>
+                                                    
                                                     <header>
-                                                    <p class="menuprice" value="0">0</p>
+                                                    <p class="menuprice" value=""><?php echo "₱".$lowestprice;?></p>
                                                     </header>
                                                 </div>
                                                 <div class="menuvariation">
@@ -248,7 +248,7 @@
                             <div class="storeitem" data-bs-toggle="modal" data-bs-target="#<?php echo str_replace(' ', '', $nope['item_name']); ?>">
                                 <div class="itemdetails">
                                     <p class="itemname"><?php echo $nope['item_name'] ?></p>
-                                    <p class="itemprice">from ₱<?php echo rand(50, 199); ?></p>
+                                    <p class="itemprice">from ₱<?php $lowestprice?></p>
                                 </div>
                                 <img class="itemlogo" src="<?php echo "../resources/" . $nope['item_pic']; ?>" alt="Store Logo">
                             </div>
@@ -264,6 +264,14 @@
             ?>
         </div>
     </div>
+    <script>
+    document.getElementById('searchform').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault(); 
+            this.submit(); 
+        }
+    });
+    </script>
     <script src="../js/menujs.js"></script> 
 </body>
 
