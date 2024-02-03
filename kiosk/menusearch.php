@@ -19,9 +19,11 @@
     } 
     if (isset($_POST['itemsearch'])){
     $_SESSION['itemsearch']=$_POST['itemsearch'];
+    $_SESSION['storename']=$_POST['storename'];
     }
 ?>
 <body class="storebody">
+    
     <div class="header">
         <img class="kioskstorelogo" src="../resources/foodparklogo.png" alt="hhee" onclick="window.location.href='stores.php'">
         <p class="orderidtxt"><?php echo 'Order Number: ' . $_SESSION['orderid'];?></p>
@@ -42,7 +44,7 @@
         <div class="menusearch">
         <form action="menusearch.php" method="POST" id="searchforms">
             <input class="menusearch" type="text" name="itemsearch" id="" placeholder="Search for stores and menu">
-            <input type="text" class="" hidden name="storename" value="<?php echo $_POST['storename'];?>">
+            <input type="text" class="" hidden name="storename" value="<?php echo $_SESSION['storename'];?>">
             </form>
             <div class="categories">
                 <ul>
@@ -136,7 +138,7 @@
                                         </div>
                                     
                                         <input type="number" name="menuid" hidden value="<?php echo $storemenusearch['item_id'];?>">
-                                        <button type="submit" class="btn btn-primary addtocartbtn">Add to cart</button>
+                                        <button disabled type="submit" class="btn btn-primary addtocartbtn" id="addtocartbutton">Add to cart</button>
                                     </div>
                                     
                                 </div>
@@ -144,7 +146,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="storeitem" data-bs-toggle="modal" data-bs-target="#<?php echo str_replace(' ', '', $storemenusearch['item_name']); ?>">
+                        <div class="storeitem fade-in-left" data-bs-toggle="modal" data-bs-target="#<?php echo str_replace(' ', '', $storemenusearch['item_name']); ?>">
                             <div class="itemdetails">
                                 <p class="itemname"><?php echo $storemenusearch['item_name'] ?></p>
                                 <p class="itemprice">from ₱<?php echo $lowestprice1; ?></p>
@@ -237,7 +239,7 @@
                                             </div>
                                         
                                             <input type="number" name="menuid" hidden value="<?php echo $nope['item_id'];?>">
-                                            <button type="submit" class="btn btn-primary addtocartbtn">Add to cart</button>
+                                            <button disabled type="submit" class="btn btn-primary addtocartbtn" id="addtocartbutton">Add to cart</button>
                                         </div>
                                         
                                     </div>
@@ -245,7 +247,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="storeitem" data-bs-toggle="modal" data-bs-target="#<?php echo str_replace(' ', '', $nope['item_name']); ?>">
+                            <div class="storeitem fade-in-left" data-bs-toggle="modal" data-bs-target="#<?php echo str_replace(' ', '', $nope['item_name']); ?>">
                                 <div class="itemdetails">
                                     <p class="itemname"><?php echo $nope['item_name'] ?></p>
                                     <p class="itemprice">from ₱<?php $lowestprice?></p>
@@ -264,6 +266,7 @@
             ?>
         </div>
     </div>
+    <script src="../js/menujs.js"></script> 
     <script>
     document.getElementById('searchform').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
@@ -272,7 +275,7 @@
         }
     });
     </script>
-    <script src="../js/menujs.js"></script> 
+    
 </body>
 
 

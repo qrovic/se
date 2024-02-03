@@ -25,7 +25,7 @@
         <p>Please proceed to stalls to pay for your order.</p>
         <p hidden class="countdown-message">Redirecting to store menu in <span id="countdown-number">5</span> seconds...</p>
         <?php 
-            session_start();  // Make sure to start the session before using session_destroy()
+            session_start();
             session_destroy();
         ?>
 

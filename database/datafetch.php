@@ -43,15 +43,15 @@ $onlinestorescount = $resultonlinestorescount->fetchColumn();
 
 #store filter based on item search term
 if (isset($_POST['search'])) {
-    $searchterm = $_POST['search'];
+    $searchterm = "%".$_POST['search']."%";
 
-    $sqlstorefilter = "SELECT store.name AS store_name, store.id AS store_id, store.pic AS store_pic FROM store JOIN item ON item.storeid = store.id WHERE item.name LIKE :searchterm OR store.name LIKE :searchterm";
+    $sqlstorefilter = "SELECT DISTINCT store.name AS store_name, store.id AS store_id, store.pic AS store_pic FROM store RIGHT JOIN item ON item.storeid = store.id WHERE item.name LIKE :searchterm";
     $stmt = $pdo->prepare($sqlstorefilter);
     $stmt->bindParam(':searchterm', $searchterm, PDO::PARAM_STR);
     $stmt->execute();
     $filteredstores = $stmt->fetchAll();
 
-    $sqlstorefiltercount = "SELECT COUNT(*) FROM store JOIN item ON item.storeid = store.id WHERE item.name LIKE :searchterm OR store.name LIKE :searchterm";
+    $sqlstorefiltercount = "SELECT DISTINCT COUNT(DISTINCT store.id) FROM store JOIN item ON item.storeid = store.id WHERE item.name LIKE :searchterm;";
     $stmt = $pdo->prepare($sqlstorefiltercount);
     $stmt->bindParam(':searchterm', $searchterm, PDO::PARAM_STR);
     $stmt->execute();
@@ -167,10 +167,10 @@ $stmt = $pdo->prepare($sqlstores);
 $stmt->execute();  
 $stores = $stmt->fetchAll();
 
-if (isset($_SESSION['storename']) && isset($_SESSION['itemsearch'])) {
+if (isset($_POST['storename']) && isset($_POST['itemsearch'])) {
     try {
     $storename = $_SESSION['storename'];
-    $itemsearch = '%'.$_SESSION['itemsearch'].'%';
+    $itemsearch = "%".$_POST['itemsearch'].'%';
 
     $sqlstoremenufilter = "SELECT item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item LEFT JOIN store ON item.storeid = store.id WHERE item.name LIKE :searchterm AND store.name = :storename";
     $stmt = $pdo->prepare($sqlstoremenufilter);

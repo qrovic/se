@@ -39,7 +39,7 @@
         <div class="menusearch">
         <form action="menusearch.php" method="POST" id="searchforms">
             <input class="menusearch" type="text" name="itemsearch" id="" placeholder="Search for stores and menu">
-            <input type="text" class="" hidden name="storename" value="<?php echo $_POST['storename'];?>">
+            <input type="text" class="" hidden name="storename" value="<?php echo $_SESSION['storename'];?>">
             </form>
             <div class="categories">
                 <ul>
@@ -150,7 +150,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="storeitem" data-bs-toggle="modal" data-bs-target="#<?php echo str_replace(' ', '', $nope['item_name']); ?>">
+                            <div class="storeitem fade-in-left" data-bs-toggle="modal" data-bs-target="#<?php echo str_replace(' ', '', $nope['item_name']); ?>">
                                 <div class="itemdetails">
                                     <p class="itemname"><?php echo $nope['item_name'] ?></p>
                                     <p class="itemprice">from ₱<?php echo $lowestprice;?></p>
@@ -170,15 +170,6 @@
             ?>
         </div>
     </div>
-    
-
-
-    
-
-   
-
-
-
 
 <script src="../js/menujs.js"></script>                     
 </body>

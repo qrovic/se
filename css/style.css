@@ -816,6 +816,26 @@ button:disabled{
     border-color: gray !important;
     
 }
+.fade-in-left {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.fade-in-left.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.fade-in.show {
+    opacity: 1;
+}
+
 
 @keyframes checkedAnimation {
     50% {
@@ -844,9 +864,7 @@ input[type="radio"]:checked {
     width: 100%;
     padding: 0 15px;
 }
-input[type="radio"]:checked ~ .radioholder {
-    background-color: red !important;
-}
+
 
 .radio{
     margin-right: 10px;
@@ -937,10 +955,7 @@ td>select{
 select>option{
     background-color: lightgray !important;
 }
-select:focus > option:checked { 
-    background:gray !important;
-    color: white !important;
-}
+
 td>input{
     border: 0px;
     outline: none;
@@ -1090,10 +1105,11 @@ td.itemquantity input{
 .cart-count-number.show-animation {
     animation: scaleAndFadeIn 0.7s ease;
 }
-.radioholder input[type="radio"]:checked + label {
-    background-color: rgb(240, 240, 240) !important;
-}
 
+
+.menuvariation, .menusize, .radioholder {
+    transition: background-color 0.5s ease-out;
+}
 
 
 /* comfirmed order*/

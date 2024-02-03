@@ -35,7 +35,7 @@
                         <input type="text" id="storeid" name="storeid" value="<?php echo $store['id'];?>" hidden>
                         <button type="submit" id="<?php echo $store['name'];?>" style="display:none;"></button>
                     </form>
-                    <div class="kioskstore" onclick="document.getElementById('<?php echo $store['name'];?>').click()">
+                    <div class="kioskstore fade-in" onclick="document.getElementById('<?php echo $store['name'];?>').click()">
                     <img class="storelogo" src="<?php echo "../resources/" . $store['pic']; ?>" onerror="this.src='../resources/noimg.png'";>
                         <div class="storename">
                             <p class="accountname"><?php echo $store['name'] ?></p>
@@ -47,7 +47,19 @@
             ?>
         </div>
     </div>
-    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                var elements = document.querySelectorAll('.fade-in');
+
+                elements.forEach(function(element, index) {
+                    setTimeout(function() {
+                        element.classList.add('show');
+                    }, index * 100);
+                });
+            }, 100);
+        });
+    </script>
     <script>
     document.getElementById('searchforms').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
@@ -56,5 +68,6 @@
         }
     });
     </script>
+    
 </body>
 </html>

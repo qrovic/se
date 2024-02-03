@@ -32,9 +32,6 @@ document.querySelectorAll('section[id]').forEach(section => {
     observer.observe(section);
 });
 
-
-
-
 document.getElementById('searchforms').addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
         e.preventDefault();
@@ -42,7 +39,6 @@ document.getElementById('searchforms').addEventListener('keypress', function (e)
     }
 });
 
-//increase quantity button
 function increaseQuantity() {
     var quantityInputs = document.getElementsByClassName('quantityInput');
     for (var i = 0; i < quantityInputs.length; i++) {
@@ -50,7 +46,7 @@ function increaseQuantity() {
         quantityInputs[i].value = currentQuantity + 1;
     }
 }
-//decrease quantity button
+
 function decreaseQuantity() {
     var quantityInputs = document.getElementsByClassName('quantityInput');
     for (var i = 0; i < quantityInputs.length; i++) {
@@ -236,4 +232,31 @@ $(document).ready(function() {
         resetBackgroundColors();
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        var elements = document.querySelectorAll('.fade-in-left');
+
+        elements.forEach(function(element, index) {
+            setTimeout(function() {
+                element.classList.add('show');
+            }, index * 100);
+        });
+    }, 100);
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        var elements = document.querySelectorAll('.fade-in');
+
+        elements.forEach(function(element, index) {
+            setTimeout(function() {
+                element.classList.add('show');
+            }, index * 100);
+        });
+    }, 100);
+});
+
 
