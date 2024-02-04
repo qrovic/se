@@ -1117,13 +1117,177 @@ td.itemquantity input{
     color: rgb(80, 80, 80);
     font-size: 1.5rem !important;
 }
+.orderpaymenttxt{
+    font-size: 1.7rem !important;
+    font-weight: 700;
+    color: #007F41 !important;
+    margin-bottom: 0;
+    text-align: center;
+}
+.customernumbertxt{
+    font-size: 0.8rem !important;
+    font-weight: 600;
+    color: #007F41 !important;
+    text-align: center;
+    margin-bottom: 30px;
+}
 
 
 
+/*STore orders*/
+.modalorders{
+    padding: 30px 50px !important;
+    min-height: 80lvh !important; 
+}
+.paybtn{
+    width:40% !important;
+    min-height: 7lvh;
+    background-color: #02BF63 !important;
+    border-color:#02BF63 !important;
+    border-radius: 10px !important;
+}
+.closebtn{
+    background-color: gray !important;
+    border-color: gray !important;
+}
+.cashdiv{
+    display: flex;
 
-
-
-
+    align-items: end;
+    flex-direction: column;
+}
+.cashtendered{
+    max-width: 100px;
+    border-radius: 10px;
+}
+.cashdivholder{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+.cashtxt{
+    margin-bottom: 0 !important;
+}
+.totalpricenonmodal{
+    text-align: end;
+}
+.totalinputmodal,.totalprice{
+    min-width: 70px; /* Set the minimum width to 100 pixels, adjust as needed */
+    text-align: start;
+    display: inline-block; 
+}
+.totalinputmodal,.modalchange,.cashtendered,.pesosign{
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.ordersnumdiv{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+}
+.orderserved{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.orderpending{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.orderpendingtxt,.orderservedtxt{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    color: #007F41;
+}
+.orderpendingtxt p,.orderservedtxt p {
+    color: #007F41;
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+.ordertxt{
+    margin-bottom: 0;
+}
+.orderpeningnum,.orderservednum{
+    align-items: center;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: center;
+    font-size: 5rem;
+    color: #FF914D;
+    font-weight: 700;
+    margin-right: 10px;
+}
+.storeright{
+    padding: 20px 50px 20px 50px;
+}
+.container.mt-4{
+    margin-top: 0px !important;
+}
+.storesrow{
+    border-style: none !important;
+}
+.tablestore td {
+  border: none !important;
+}
+table{
+    border-collapse: unset;
+}
+.orderqueuetxt{
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    color: #007F41;
+    margin-bottom: 0;
+}
+.storehr{
+    margin-top: 0 !important;
+    margin-bottom: 20px !important;
+    color: black !important;
+    background-color: black;
+    opacity: 1 !important;
+}
+td.ordernum{
+    max-width: 20px !important;
+}
+.tablestore th{
+    max-width: 30px !important;
+}
+.tablestore tr{
+    text-align:center;
+}
+td.price span{
+    display: inline-block !important;
+}
+.tablestore td.price{
+    max-width: 5px !important;
+}
+.table-max-height tbody{
+    max-height: 30lvh !important;
+    overflow-y: auto !important; 
+}
+.paybtnnonmodal{
+    width: 30%;
+    background-color:#02BF63;
+    border-color:#02BF63;
+    margin-bottom: 5px;
+}
+#orderTableBody{
+    
+    overflow-y: scroll !important;
+}
+.bg-primary {
+    background-color:#01a556!important;
+    
+}
+.toast-body{
+    color: white !important;
+}
+.neworderid{
+    color: white !important;
+}
 @media (orientation: portrait) {
     .storename p{
         font-size: 1.5rem !important;
@@ -1179,3 +1343,4 @@ td.itemquantity input{
         max-width: 60% !important;
     }
   }
+

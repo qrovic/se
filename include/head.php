@@ -5,7 +5,7 @@
     <title>Ruis Hub</title>
     <link rel="manifest" href="../json/manifest.json">
     <link href="../vendor/bootstrap-5.0.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../vendor/dataTable-1.13.6/datatables.min.css" rel="stylesheet">
+    <!--<link href="../vendor/dataTable-1.13.6/datatables.min.css" rel="stylesheet">-->
     <link rel="stylesheet" href="../vendor/font-awesome-4.7.0/css/font-awesome.min.css"/>
 
     

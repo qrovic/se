@@ -28,11 +28,10 @@ try {
 
         $itempriceid = $stmt->fetchColumn();
 
-        $stmt = $pdo->prepare("INSERT INTO orders (customerid, itempriceid, quantity, status) VALUES (:customerid, :itempriceid, :quantity, :status) ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity)");
+        $stmt = $pdo->prepare("INSERT INTO orderitems (customerid, itempriceid, quantity) VALUES (:customerid, :itempriceid, :quantity) ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity)");
         $stmt->bindParam(':customerid', $customerid);
         $stmt->bindParam(':itempriceid', $itempriceid);
         $stmt->bindParam(':quantity', $quantities[$i]);
-        $stmt->bindParam(':status', $status); 
         $stmt->execute();
     }
     header('Location: ../kiosk/orderconfirmed.php');
