@@ -162,7 +162,7 @@
                     <div class="addacclogo" style="background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(''); background-position: center; background-size: cover;">
                             
                             <label for="file" class="btn uploadbtn"><i class='bx bx-upload'></i>Upload</label>
-                            <input id="file" name="storepic" hidden type="file" onchange="previewimg(this);">
+                            <input id="file" name="storepic" type="file" onchange="previewimg(this);">
                             
                         </div>
                         <div class="storeinfo">

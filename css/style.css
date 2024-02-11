@@ -64,7 +64,9 @@ div.right{
 div.addstore{
     display: flex;
     flex-direction: row;
-    
+    position: fixed;
+    bottom: 20px;
+    right: 0;
 }
 /*Login*/
 div.login-left{
@@ -1230,7 +1232,7 @@ td.itemquantity input{
     border-style: none !important;
 }
 .tablestore td {
-  border: none !important;
+  /*border: none !important;*/
 }
 table{
     border-collapse: unset;
@@ -1269,10 +1271,14 @@ td.price span{
     overflow-y: auto !important; 
 }
 .paybtnnonmodal{
-    width: 30%;
+    width: 50%;
     background-color:#02BF63;
     border-color:#02BF63;
     margin-bottom: 5px;
+}
+.paybtnnonmodal:hover{
+    background-color: #00b35c;
+    border-color: #00b35c !important;
 }
 #orderTableBody{
     
@@ -1287,7 +1293,79 @@ td.price span{
 }
 .neworderid{
     color: white !important;
+    font-weight: 600;
 }
+.toast{
+    font-size: 1.1rem !important;
+    font-weight: 500;
+}
+.storequeuebody{
+    display: flex !important;
+    justify-content: center;
+    align-items: start;
+    flex-direction: row;
+    width: 100lvw;
+    background-color: rgba(231, 231, 231, 0.5);
+    background-size:30%;
+    background-position:center; 
+    background-repeat: no-repeat;
+}
+.storequeuebody::after {
+    content: "";
+    position: absolute;
+    top: 70px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-size: 80lvh;
+    background-position: center; 
+    background-repeat: no-repeat;
+    opacity: 0.5; /* Adjust the opacity as needed */
+    z-index: -1;
+}
+.storequeueleft,.storequeueright{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    
+}
+.colleccttxt,.preparingtxt{
+    text-align: center;
+    margin-bottom: 0;
+    font-size: 3rem;
+    font-weight: 700;
+    color: white;
+}
+.storequeueheader{
+    background-color:#008d49;
+}
+.storequeueheader.preparing{
+    background-color: rgb(83, 83, 83);
+}
+.preparingorderid,.collectorderid{
+    font-size: 4rem;
+    font-weight: 600;
+    margin-bottom: 0px;
+}
+#collectdiv,#preparingdiv{
+    column-count: 3;
+    column-gap: 20px; 
+    overflow: hidden; 
+    max-height: 85lvh;
+    break-inside: avoid-column; 
+    column-fill: auto; 
+    padding-left: 20px;
+    padding-right: 20px;
+    overflow: hidden;
+}
+.storequeueleft{
+    margin-right: 5px;
+}
+
+
+
+
 @media (orientation: portrait) {
     .storename p{
         font-size: 1.5rem !important;
@@ -1342,5 +1420,5 @@ td.price span{
     .menumodal{
         max-width: 60% !important;
     }
-  }
+}
 

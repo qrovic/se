@@ -24,8 +24,6 @@ if (isset($_SESSION['storestoreid'])) {
     $stmtOrderServed->execute();
     $orderserved = $stmtOrderServed->fetchColumn();
     
-
-    
     $sqlstoreorders = "SELECT orderitems.customerid AS customerid,SUM(itemprice.price * orderitems.quantity) AS totalprice, DATE_FORMAT(MAX(orderitems.datetime), '%H:%i') AS ordertime FROM orderitems JOIN itemprice ON itemprice.id = orderitems.itempriceid JOIN item ON itemprice.itemid = item.id WHERE storeid = :storestoreid and status='to_pay' GROUP BY orderitems.customerid";
     $stmt = $pdo->prepare($sqlstoreorders);
     $stmt->bindParam(':storestoreid', $storestoreid, PDO::PARAM_STR);
@@ -38,14 +36,25 @@ if (isset($_SESSION['storestoreid'])) {
     $stmt->execute();
     $customerstoreorder = $stmt->fetchAll();
 
-    $sqlneworderid = "SELECT MAX(DISTINCT orderitems.customerid) FROM orderitems LEFT JOIN itemprice ON orderitems.itempriceid = itemprice.id JOIN item ON itemprice.itemid = item.id WHERE orderitems.status = 'to_pay' AND item.storeid = :storestoreid";
-
+    $sqlneworderid = "SELECT MAX(DISTINCT orderitems.customerid) AS neworderid FROM orderitems LEFT JOIN itemprice ON orderitems.itempriceid = itemprice.id JOIN item ON itemprice.itemid = item.id WHERE orderitems.status = 'to_pay' AND item.storeid = :storestoreid";
     $stmt = $pdo->prepare($sqlneworderid);
     $stmt->bindParam(':storestoreid', $storestoreid, PDO::PARAM_STR);
     $stmt->execute();
     $neworderid = $stmt->fetchColumn();
 
-    echo json_encode(['orderpending' => $orderpending, 'orderserved' => $orderserved, 'customerstoreorder' => $customerstoreorder, 'storeorders' => $storeorders, 'neworderid' => $neworderid]);
+    $sqlstorequeuepreparing = "SELECT id AS customerid FROM orders WHERE storeid = :storestoreid AND status = 'paid'";
+    $stmt = $pdo->prepare($sqlstorequeuepreparing);
+    $stmt->bindParam(':storestoreid', $storestoreid, PDO::PARAM_STR);
+    $stmt->execute();
+    $storequeuepreparing = $stmt->fetchAll();
+
+    $sqlstorequeuecollect = "SELECT id AS customerid FROM orders WHERE storeid = :storestoreid AND status = 'collect'";
+    $stmt = $pdo->prepare($sqlstorequeuecollect);
+    $stmt->bindParam(':storestoreid', $storestoreid, PDO::PARAM_STR);
+    $stmt->execute();
+    $storequeuecollect = $stmt->fetchAll();
+    
+    echo json_encode(['orderpending' => $orderpending, 'orderserved' => $orderserved, 'customerstoreorder' => $customerstoreorder, 'storeorders' => $storeorders, 'neworderid' => $neworderid, 'storequeuepreparing' => $storequeuepreparing, 'storequeuecollect' => $storequeuecollect]);
 } else {
     echo json_encode(['error' => 'Session storestoreid not set']);
 }

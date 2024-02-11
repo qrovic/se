@@ -7,6 +7,7 @@ toast._element.addEventListener('shown.bs.toast', function () {
 
 
 
+
 function updatetable() {
     $.ajax({
         url: '../database/fetchordersdetails.php',
@@ -15,7 +16,6 @@ function updatetable() {
         success: function (data) {
             
             $('#orderTableBody').empty();
-
             $.each(data.storeorders, function (index, storeorder) {
                 $('#orderTableBody').append(`
                     <tr class="item-row storesrow">

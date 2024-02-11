@@ -13,5 +13,9 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href='https://fonts.googleapis.com/css?family=Inter:100,200,300,400,500,600,700,800,900' rel='stylesheet'>
-
+    <style>
+        .storequeuebody::after {
+            background-image: url('../resources/foodparklogo.png');
+        }
+    </style>
 </head>
