@@ -41,7 +41,7 @@
             <div class="toast align-items-center text-white bg-primary border-0 position-fixed top-0 end-0" style="margin-top: 1.5rem !important; margin-right: 1.5rem !important;" role="alert" aria-live="assertive" aria-atomic="true" id="myToast">
                 <div class="d-flex">
                     <div class="toast-body">
-                        Incoming order: ORDER #<span class="neworderid"></span>
+                        Serve order: ORDER #<span class="neworderid"></span>
                     </div>
                     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
@@ -51,7 +51,7 @@
             <div class="orderserved">
                 <p class="orderservednum"></p>
                 <div class="orderservedtxt">
-                    <p class="ordertxt">PAID</p>
+                    <p class="ordertxt">SERVED</p>
                     <p class="ordertxt">ORDERS</p>
                 </div>
                 
@@ -59,21 +59,20 @@
             <div class="orderpending">
                 <p class="orderpeningnum"></p>
                 <div class="orderpendingtxt">
-                    <p class="ordertxt">UNPAID</p>
+                    <p class="ordertxt">PREPARING</p>
                     <p class="ordertxt">ORDERS</p>
                 </div>
                 
             </div>
         </div>
         
-        <p class="orderqueuetxt">Pending Payment</p>
+        <p class="orderqueuetxt">Serving</p>
         <div class="container mt-4">
             <table class="table tablestore table-max-height">
-                <thead><p class="cartstorename"><?php echo $cartstore['cartstorename']; ?></p>
+                <thead>
                     <tr>
                         <th>Order number</th>
                         <th>Time</th>
-                        <th>Total</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -86,7 +85,7 @@
     
     
     <div id="modalshere"></div>
-    <script src="../js/stores.js"></script>
+    <script src="../js/storespaid.js"></script>
     <script>
         $(document).ready(function() {
             setInterval(function() {
@@ -98,8 +97,8 @@
                     data: { storestoreid: storestoreid },
                     dataType: 'json',
                     success: function(response) {
-                        $('.orderpeningnum').text(response.orderpending);
-                        $('.orderservednum').text(response.orderserved);
+                        $('.orderpeningnum').text(response.ordertoservecount);
+                        $('.orderservednum').text(response.orderservedcount);
                         $('.neworderid').text(response.neworderid);
                     },
                     error: function(xhr, status, error) {

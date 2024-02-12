@@ -1,7 +1,9 @@
 <?php
     require_once('config.php');
-    session_start();
-    if (!($_SESSION['orderid'])){
+    if (!isset($_SESSION)){
+        session_start();
+    }
+    if (!isset($_SESSION['orderid'])){
         $customerid=$lastcustomerid+1;
         $stmt = $pdo->prepare("SELECT id FROM customer WHERE id = :customerid");
         $stmt->bindParam(':customerid', $customerid);

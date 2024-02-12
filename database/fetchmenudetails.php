@@ -56,9 +56,9 @@ if (isset($storemenusearch['item_name'])){
 if(isset($_POST['variety'])){
     $selectedVariety = $_POST['variety'];
     $selectedSize = $_POST['size'];
-    $storeid=$_POST['storeid'];
+    $storeid=$_SESSION['storeid'];
     $menuid=$_POST['menuid'];
-    $quantity=$_POST['quantity'];
+    
 
     $query = "SELECT price FROM itemprice WHERE variant = :variety AND size = :size AND itemid = :menuid";
     $stmt = $pdo->prepare($query);

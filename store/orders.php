@@ -69,7 +69,7 @@
         <p class="orderqueuetxt">Pending Payment</p>
         <div class="container mt-4">
             <table class="table tablestore table-max-height">
-                <thead><p class="cartstorename"><?php echo $cartstore['cartstorename']; ?></p>
+                <thead>
                     <tr>
                         <th>Order number</th>
                         <th>Time</th>
@@ -98,8 +98,8 @@
                     data: { storestoreid: storestoreid },
                     dataType: 'json',
                     success: function(response) {
-                        $('.orderpeningnum').text(response.orderpending);
-                        $('.orderservednum').text(response.orderserved);
+                        $('.orderpeningnum').text(response.ordertopaycount);
+                        $('.orderservednum').text(response.orderpaidcount);
                         $('.neworderid').text(response.neworderid);
                     },
                     error: function(xhr, status, error) {

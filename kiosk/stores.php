@@ -6,7 +6,9 @@
     require_once("../include/head.php");
     require_once('../include/js.php');
     require_once('../database/datafetch.php');
-    require_once("../database/newcustomer.php");
+    require("../database/newcustomer.php");
+    
+    
 ?>
 <body class="storebody">
     <div class="header">

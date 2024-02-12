@@ -40,7 +40,7 @@
         <?php
             
             foreach($cartstores AS $cartstore){
-                include('../database/datafetch.php');
+                include("../database/fetchcartdetails.php");
                 ?>
                 <div class="container mt-4">
             <table class="table">
@@ -58,10 +58,10 @@
                     <?php 
                     
                     foreach($cartdetails AS $cartdetail){
-                        $cartstoreids = $cartdetail['cartstoreid'];
+                        $cartstoreids = $cartstore['cartstoreid'];
                         
                         
-                        include('../database/datafetch.php');
+                        include('../database/fetchcartdetails.php');
                         
                     ?>
                     

@@ -1,6 +1,5 @@
 <?php
 require_once('../database/config.php');
-session_start();
 $change = $_POST['change'];
 $orderid = $_POST['storecustomerid'];
 $storestoreid = $_SESSION['storestoreid'];
