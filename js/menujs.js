@@ -6,9 +6,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         document.querySelectorAll('a[href^="#"]').forEach(a => {
             a.classList.remove('active');
         });
-
         this.classList.add('active');
-
         document.querySelector(this.getAttribute('href')).scrollIntoView({
             behavior: 'smooth'
         });

@@ -7,34 +7,19 @@
        
 ?>
 <body>
-    <div class="left">
-        <img class="superadminstorelogo" src="../resources/foodparklogo.png" alt="hhee">
-        <div class="options">
-            <ul class="options">
-                <li class="options">
-                    <a  href="overview.php">Overview</a>
-                </li>
-                <li class="options">
-                    <a class="active" href="overview.php">Accounts</a>
-                </li>
-                <li class="options">
-                    <a href="overview.php">Sales</a>
-                </li>
-                <li class="options">
-                    <a href="overview.php">Settings</a>
-                </li>
-                <li class="options logout">
-                    <a href="overview.php">Logout</a>
-                </li>
-            </ul>
-            
-        </div>
-    </div>
+    <?php
+        $currentpage='accounts';
+        require_once('../include/sidebar.php');
+    ?>
     <div class="right" id="rightaccount">
         <div class="accountstext">
             <p>Accounts</p>
         </div>
-        
+        <div class="addstore">
+            <button type="button" class="btn btn-primary" id="add-store" data-bs-toggle="modal" data-bs-target="#addstoremodal" >
+                Add Store
+            </button>
+        </div>
         <div class="accountsdiv" onclick="examplemodal">
             <?php
             if ($storewowner) {
@@ -137,11 +122,7 @@
     </div>
     
 
-    <div class="addstore">
-        <button type="button" class="btn btn-primary" id="add-store" data-bs-toggle="modal" data-bs-target="#addstoremodal" >
-            Add Store
-        </button>
-    </div>
+    
     
 
     <!-- Modal -->

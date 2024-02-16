@@ -47,18 +47,16 @@ scanButton.addEventListener("click", async () => {
             log(`> Serial Number: ${serialNumber}`);
             log(`> Records: (${message.records.length})`);
 
-            // Assuming only one record is scanned
+        
             const record = message.records[0];
-            const payload = record.data ? new TextDecoder().decode(record.data) : "Empty Payload";
+            const payload = record.data ? new TextDecoder().decode(record.data) : "Empty";
             log(`Scanned RFID Tag: ${payload}`);
-            rfidInput.value = payload; // Set the scanned RFID tag in the input field
+            rfidInput.value = payload; 
         });
     } catch (error) {
         log("Argh! " + error);
     }
 });
-
-// You can keep the registration form submission logic as it was before.
 
 </script>
 </html>

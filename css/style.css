@@ -19,9 +19,10 @@ div.left{
     background-color: #02BF63;
     height: 100vh;
     width: 300px;
-    justify-content: center;
+    justify-content: space-between;
     display: flex;
-    
+    padding-top: 20px;
+    padding-bottom: 20px;
     flex-direction: column;
     align-items: center;
 }
@@ -33,6 +34,7 @@ ul.options{
     text-align: center;
     padding: 0;
     margin: 0;
+   
     display: flex;
     flex-direction: column !important;
 }
@@ -42,16 +44,16 @@ li.logout{
 }
 li.options{
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 5px !important;
 }
 
 li.options>a{
     text-decoration: none;
     color: white;
-
     
-    font-size: 4lvh;
-    font-weight:500;
+    
+    font-size: 3.6lvh;
+    font-weight:400;
 }
 ul{
     list-style: none;
@@ -118,6 +120,11 @@ label.login-label{
     width: 30lvh;
     
 }
+.storelogooverview{
+    width: 20lvh;
+    margin-right: 20px;
+    border-radius: 50%;
+}
 .storetable{
     margin-left: 100px;
 }
@@ -128,11 +135,10 @@ label.login-label{
 /*overview superadmin*/
 .storestat{
     display: flex;
-    justify-content: end;
+    justify-content:space-around;
     align-items: end;
-    flex-direction: column;
-    margin-right: 100px;
-    margin-top: 50px;
+    flex-direction: row;
+    
 }
 .stores{
     display: flex;
@@ -147,6 +153,7 @@ label.login-label{
     margin-right: 15px;
     color:#FF914D;
     font-size: 4rem;
+    font-weight: 800;
     /*font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif !important;*/
     
 }
@@ -155,7 +162,7 @@ label.login-label{
     line-height: 1.2;
     font-size: 1.5rem;
     color:#007F41;
-    font-weight: 700;
+    font-weight: 700 !important;
     
     /*font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;*/  
 }
@@ -164,8 +171,134 @@ label.login-label{
     justify-content: center;
     flex-direction: column;
 }
+.productrank{
+    padding: 0px 70px;
+}
+.superadminoverview th{
+    color:#007F41 !important;
+}
+.monthlyproducttxt{
+    font-size: 1.6rem;
+    color:#007F41;
+    font-weight: 700;
+    text-align: center;
+}
+.stafftxt{
+    font-size: 1.6rem;
+    color:#008d49;
+    font-weight: 700;
+    text-align: center;
+}
+.ranktxt,.rankhead{
+    font-weight: 700;
+    text-align: center !important;
+}
+.notranktxt{
+    font-weight: 500;
+}
+.filteroverview{
+    display: flex;
+    flex-direction: row;
+    justify-content:end;
+    margin-bottom: 10px;
+    
+}
+.monthlyproducttxt{
+    margin-bottom: 20px;
+}
+.storefilter{
+    margin-left: 0px;
+}
+.storefilter,.categoryfilter{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: end;
+}
+.labeloverview{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-right:5px;
+}
+.salestxt{
+    font-size: 2rem;
+    color: #007F41;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0 !important;
+    margin-top: 20px;
+    width: 100%;
+    align-items: center;
+}
+.itemperiod{
+    display: flex;
+    justify-content: end !important;
+    width: fit-content;
+    flex-direction: row;
+    align-items: center;
+}
 
-
+.salessuper>.form-select{
+    width:min-content;
+   
+}
+.salessuper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: end;
+}
+.superadminsalescanvas{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 50px;
+}
+.storeinfotxt{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.storeinfotxt p{
+    margin-bottom: 0;
+}
+.overviewstorename{
+    color: #007F41;
+    font-size: 2rem;
+    font-weight: 700;
+}
+.storeinfooverview{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 28%;
+    margin: 20px 40px;
+}
+.storeoverview{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.storeinfooverview{
+    width: 90%;
+}
+.form-check-input:checked {
+    background-color:#007F41;
+    border-color:#007F41;
+}
+.form-switch .form-check-input {
+    height: 2rem;
+    width: 3rem;
+}
+.form-check.form-switch{
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end;
+}
 /*Account*/
 #rightaccount{
     
@@ -175,6 +308,7 @@ label.login-label{
     margin-left: 5lvw;
     
 }
+
 .accountstext{
     color: #02BF63;
     font-weight: 800;
@@ -183,6 +317,9 @@ label.login-label{
     margin-top: 40px;
     margin-bottom: 1lvh;
 }
+.accountstext p{
+    color: #02BF63;
+}
 
 .accountsdiv{
     display: flex;
@@ -190,7 +327,7 @@ label.login-label{
     justify-content: space-between;
     flex-wrap: wrap;
     overflow-y: scroll;
-    height: 70lvh;
+    height: 65lvh;
     padding-right: 5lvw;
     
 }
@@ -200,8 +337,8 @@ label.login-label{
     cursor: pointer;
     align-items: center;
     width: 40%;
-    max-height: 35%;
-    height: 30%;
+    max-height: 30%;
+    height: 27%;
     background-color: #02BF63;
     border-radius: 30px;
     margin-bottom: 30px;
@@ -210,7 +347,7 @@ label.login-label{
 
 .accountlogo{
     width: lvh;
-    height: 16lvh;
+    height: 14lvh;
     aspect-ratio: 1;
     border-radius: 50%;
     margin-left: 5%;
@@ -243,10 +380,10 @@ label.login-label{
     background-color: #02BF63;
     border-color: #02BF63;
     width: 15lvw;
-    height:8lvh;
+    height:10lvh;
     border-radius: 30px 0 0 30px;
-    font-size: 2.1lvh;
-    font-weight: 800;
+    font-size: 1.2rem;
+    font-weight: 700;
 }
 .modal-dialog {
     max-width: 60% !important;
@@ -547,7 +684,6 @@ input.menusearch{
 }
 .active{
     border: 0;
-    border-bottom: 7px #02BF63;
     margin-bottom: 0px !important;
     border-style:solid ;
     line-height: 50px !important;
@@ -1362,7 +1498,20 @@ td.price span{
 .storequeueleft{
     margin-right: 5px;
 }
-
+/*staff*/
+.addstaffbtn{
+    background-color:#00b35c !important;
+    border-color: #00b35c !important;
+    border-radius: 30px;
+    width: 14%;
+    margin-bottom: 30px;
+}
+.overviewstaffsheader{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
 
 
 

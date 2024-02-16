@@ -30,7 +30,7 @@
         <div class="kioskstores" onclick="examplemodal">
             <?php
             if ($stores) {
-                foreach ($stores as $store) {
+                foreach ($stores as $store)     {
                     ?>
                     <form id="" action="menu.php" method="POST" hidden>
                         <input type="text" id="storename" name="storename" value="<?php echo $store['name'];?>" hidden>

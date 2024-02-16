@@ -18,15 +18,15 @@
     </style>
     <?php
         $currentpage='overview';
-        require_once('../include/sidebar.php');
+        require_once('../include/sidebarstore.php');
     ?>
     <div class="right">
         <div class="storeinfooverview">
             <div class="storeoverview">
                 <img class="storelogooverview" src="../resources/mcdo.png" alt="">
                 <div class="storeinfotxt">
-                    <p class="overviewstorename">37' Coffee</p>
-                    <p>Tara, kape, as a friend</p>
+                    <p class="overviewstorename">McDonald's</p>
+                    <p>I'm Lovin' It</p>
                 </div>
             </div>
             <div class="form-check form-switch">
@@ -36,18 +36,18 @@
         </div>
         <div class="storestat">
             <div class="stores">
-                <p class="storenumber"><?php if($onlinestorescount){ echo $onlinestorescount;}?></p>
+                <p class="storenumber"><?php if($salecount){ echo $salecount;}?></p>
                 <div class="storestext">
-                    <p>STORES</p>
-                    <p>OPEN</p>
+                    <p>ITEMS</p>
+                    <p>SOLD</p>
                 </div>
                 
             </div>
             <div class="stores">
-                <p class="storenumber"><?php if($totalstorescount){ echo $totalstorescount;}?></p>
+                <p class="storenumber"><?php if($staffcount){ echo $staffcount;}?></p>
                 <div class="storestext">
-                    <p>TOTAL</p>
-                    <p>STORES</p>
+                    <p></p>
+                    <p>STAFF</p>
                 </div>
             </div>
         </div>
@@ -67,15 +67,6 @@
                     
                 </select>
             </div>
-           
-            <div class="storefilter">
-                <label class="labeloverview" for="store" >Store:</label>
-                <select name="store" id="store" class="form-select">
-                    <?php foreach ($allstores as $store): ?>
-                        <option value="<?php echo $store['name']; ?>"><?php echo $store['name']; ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
         </div>
        
 
@@ -86,22 +77,20 @@
                 <th class="rankhead">Rank</th>
                 <th>Product</th>
                 <th>Category</th>
-                <th>Store</th>
                 <th class="rankhead">Sales</th>
                 </tr>
             </thead>
             <tbody>
                 <?php 
                 $rank=1;
-                    foreach($topproduct as $topproducts){
+                    foreach($storetopproduct as $storetopproducts){
                       
                         ?>
                         <tr>
                         <td class="ranktxt"><?php echo $rank ?></td>
-                        <td class="notranktxt"><?php if (isset($topproducts['itemname'])){echo $topproducts['itemname'];}?></td>
-                        <td class="notranktxt"><?php if (isset($topproducts['itemcategory'])){echo $topproducts['itemcategory'];}?></td>
-                        <td class="notranktxt"><?php if (isset($topproducts['storename'])){echo $topproducts['storename'];}?></td>
-                        <td class="ranktxt"><?php if (isset($topproducts['totalquantity'])){echo $topproducts['totalquantity'];}?></td>
+                        <td class="notranktxt"><?php if (isset($storetopproducts['itemname'])){echo $storetopproducts['itemname'];}?></td>
+                        <td class="notranktxt"><?php if (isset($storetopproducts['itemcategory'])){echo $storetopproducts['itemcategory'];}?></td>
+                        <td class="ranktxt"><?php if (isset($storetopproducts['totalquantity'])){echo $storetopproducts['totalquantity'];}?></td>
                         </tr>
                         <?php
                         $rank=$rank+1;
@@ -120,11 +109,11 @@
 
         var dataTable = $('#dataTable').DataTable({
            
-            lengthChange: false,
-            pageLength: 5, 
+            lengthChange: false,  
+            pageLength: 5,  
             pagingType: 'simple',
             language: {
-            info: ''  
+            info: ''
         }
         });
 

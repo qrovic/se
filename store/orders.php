@@ -13,28 +13,10 @@
 
 ?>
 <body>
-    <div class="left">
-        <div class="options">
-            <ul class="options">
-                <li class="options">
-                    <a href="overview.php">Overview</a>
-                </li>
-                <li class="options">
-                    <a href="overview.php">Accounts</a>
-                </li>
-                <li class="options">
-                    <a href="overview.php">Sales</a>
-                </li>
-                <li class="options">
-                    <a href="overview.php">Settings</a>
-                </li>
-                <li class="options logout">
-                    <a href="overview.php">Logout</a>
-                </li>
-            </ul>
-        </div>
-        
-    </div>
+    <?php
+        $currentpage='payment';
+        require_once('../include/sidebarstore.php');
+    ?>
     <div class="right storeright">
         <div class="notif">
             <audio id="notifsound" src="../resources/notif.mp3"></audio>

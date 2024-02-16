@@ -16,11 +16,59 @@ $stmt = $pdo->prepare($sqlstorewowner);
 $stmt->execute();  
 $storewowner = $stmt->fetchAll();
 
+#fetch superadmin staff
+$sqlsuperadminstaffs = "SELECT store.name AS staffstorename, staff.id AS staffid, staff.storeid AS staffstoreid, staff.fname as stafffname, staff.lname as stafflname,staff.mname as staffmname, staff.contactno AS staffcontactno, staff.email as staffemailF, staff.password as staffpassword, staff.role as staffrole FROM store right JOIN staff ON store.id=staff.storeid";
+$stmt = $pdo->prepare($sqlsuperadminstaffs); 
+$stmt->execute();  
+$superadminstaffs = $stmt->fetchAll();
+
+if (isset($_SESSION['storestoreid'])){
+    $storeid=$_SESSION['storestoreid'];
+
+    $sqlstorestaff = "SELECT store.id AS storeid, store.name AS staffstorename, staff.id AS staffid, staff.storeid AS staffstoreid, staff.fname as stafffname, staff.lname as stafflname,staff.mname as staffmname, staff.contactno AS staffcontactno, staff.email as staffemailF, staff.password as staffpassword, staff.role as staffrole FROM store right JOIN staff ON store.id=staff.storeid WHERE storeid=:storeid";
+    $stmt = $pdo->prepare($sqlstorestaff);
+    $stmt->bindParam(':storeid', $storeid, PDO::PARAM_INT);
+    $stmt->execute();
+    $storestaff = $stmt->fetchAll();
+    
+}
+if (isset($_SESSION['storestoreid'])){
+    $storeid=$_SESSION['storestoreid'];
+
+    $sqlstoreitems = "SELECT * FROM item WHERE storeid=:storeid";
+    $stmt = $pdo->prepare($sqlstoreitems);
+    $stmt->bindParam(':storeid', $storeid, PDO::PARAM_INT);
+    $stmt->execute();
+    $storeitems = $stmt->fetchAll();
+    
+}
+
 #get customerid
 $sqllastcustomerid = "SELECT max(id) FROM customer";
 $stmt = $pdo->prepare($sqllastcustomerid); 
 $stmt->execute();  
 $lastcustomerid = $stmt->fetchColumn();
+
+#staff count
+if (isset($_SESSION['storestoreid'])){
+    $storeid=$_SESSION['storestoreid'];
+
+    $sqlstaffcount = "SELECT count(*) FROM staff WHERE storeid=:storeid";
+    $stmt = $pdo->prepare($sqlstaffcount); 
+    $stmt->bindParam(':storeid', $storeid, PDO::PARAM_INT);
+    $stmt->execute();  
+    $staffcount = $stmt->fetchColumn();
+}
+#orders count
+if (isset($_SESSION['storestoreid'])){
+    $storeid=$_SESSION['storestoreid'];
+
+    $sqlsalecount = "SELECT SUM(quantity) FROM orders JOIN orderitems ON orderitems.customerid=orders.id WHERE orders.storeid=:storeid";
+    $stmt = $pdo->prepare($sqlsalecount); 
+    $stmt->bindParam(':storeid', $storeid, PDO::PARAM_INT);
+    $stmt->execute();  
+    $salecount = $stmt->fetchColumn();
+}
 
 #cartcount
 if (isset($_SESSION['orderid'])){
@@ -38,7 +86,7 @@ $resulttotalstorescount = $pdo->query($sqltotalstorescount);
 $totalstorescount = $resulttotalstorescount->fetchColumn();
 
 #fetch count of online stores
-$sqlonlinestorescount = "SELECT COUNT(*) FROM store WHERE status='online'";
+$sqlonlinestorescount = "SELECT COUNT(*) FROM store WHERE status='open'";
 $resultonlinestorescount = $pdo->query($sqlonlinestorescount);
 $onlinestorescount = $resultonlinestorescount->fetchColumn();
 
@@ -249,7 +297,57 @@ if (isset($_POST['storename']) && isset($_POST['itemsearch'])) {
     }
     
 }
+
+//Store overview
+$sqltopproduct = "SELECT item.name AS itemname, item.category AS itemcategory, store.name AS storename, SUM(orderitems.quantity) AS totalquantity, SUM(orderitems.quantity * itemprice.price) AS total_sales FROM item LEFT JOIN itemprice ON item.id=itemprice.itemid LEFT JOIN store ON store.id=item.storeid LEFT JOIN orderitems ON orderitems.itempriceid=itemprice.id WHERE orderitems.quantity > 0 GROUP BY itemname, itemcategory, storename ORDER BY totalquantity DESC";
+$stmt = $pdo->prepare($sqltopproduct);
+$stmt->execute();
+$topproduct = $stmt->fetchAll();
+
+
+//Store top sales
+if (isset($_SESSION['storestoreid'])){
+    $storeid=$_SESSION['storestoreid'];
+
+    $sqlstoretopproduct = "SELECT item.name AS itemname, item.category AS itemcategory, store.name AS storename, SUM(orderitems.quantity) AS totalquantity, SUM(orderitems.quantity * itemprice.price) AS total_sales FROM item LEFT JOIN itemprice ON item.id=itemprice.itemid LEFT JOIN store ON store.id=item.storeid LEFT JOIN orderitems ON orderitems.itempriceid=itemprice.id WHERE orderitems.quantity > 0 AND store.id=:storeid GROUP BY itemname, itemcategory, storename ORDER BY totalquantity DESC";
+    $stmt = $pdo->prepare($sqlstoretopproduct);
+    $stmt->bindParam(':storeid', $storeid , PDO::PARAM_STR);
+    $stmt->execute();
+    $storetopproduct = $stmt->fetchAll();
+}
+
+//store sales
+$sqlsuperadminsales="SELECT store.name AS storename, IFNULL(SUM(orderitems.quantity * itemprice.price), 0) AS total_sales, IFNULL(SUM(orderitems.quantity), 0) AS total_quantity FROM store LEFT JOIN item ON store.id = item.storeid LEFT JOIN itemprice ON item.id = itemprice.itemid LEFT JOIN orderitems ON itemprice.id = orderitems.itempriceid GROUP BY storename";
+$stmt = $pdo->prepare($sqlsuperadminsales);
+$stmt->execute();
+$superadminsales = $stmt->fetchAll();
+
+//storesalesyearly
+$sqlsuperadminsalesyearly="SELECT store.name AS storename, IFNULL(SUM(orderitems.quantity * itemprice.price), 0) AS total_sales, IFNULL(SUM(orderitems.quantity), 0) AS total_quantity FROM store LEFT JOIN item ON store.id = item.storeid LEFT JOIN itemprice ON item.id = itemprice.itemid LEFT JOIN orderitems ON itemprice.id = orderitems.itempriceid AND YEAR(orderitems.datetime) = YEAR(CURDATE()) GROUP BY storename";
+$stmt = $pdo->prepare($sqlsuperadminsalesyearly);
+$stmt->execute();
+$superadminsalesyearly = $stmt->fetchAll();
+
+
+
+//storesalesmonthlu
+$sqlsuperadminsalesmonthly="SELECT store.name AS storename, IFNULL(SUM(orderitems.quantity * itemprice.price), 0) AS total_sales, IFNULL(SUM(orderitems.quantity), 0) AS total_quantity FROM store LEFT JOIN item ON store.id = item.storeid LEFT JOIN itemprice ON item.id = itemprice.itemid LEFT JOIN orderitems ON itemprice.id = orderitems.itempriceid AND YEAR(orderitems.datetime) = YEAR(CURDATE()) AND MONTH(orderitems.datetime) = MONTH(CURDATE()) GROUP BY storename";
+$stmt = $pdo->prepare($sqlsuperadminsalesmonthly);
+$stmt->execute();
+$superadminsalesmonthly = $stmt->fetchAll();
+
+
+//storsalesdaily
+$sqlsuperadminsalesdaily="SELECT store.name AS storename, IFNULL(SUM(orderitems.quantity * itemprice.price), 0) AS total_sales, IFNULL(SUM(orderitems.quantity), 0) AS total_quantity FROM store LEFT JOIN item ON store.id = item.storeid LEFT JOIN itemprice ON item.id = itemprice.itemid LEFT JOIN orderitems ON itemprice.id = orderitems.itempriceid AND DATE(orderitems.datetime) = CURDATE() GROUP BY storename";
+
+$stmt = $pdo->prepare($sqlsuperadminsalesdaily);
+$stmt->execute();
+$superadminsalesdaily = $stmt->fetchAll();
+
+
+
 ?>
+
 
 
 
