@@ -299,6 +299,12 @@ label.login-label{
     flex-direction: column !important;
     align-items: flex-end;
 }
+.superadmintxt{
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 20px 0px 0px 30px;
+    color: #007F41;
+}
 /*Account*/
 #rightaccount{
     
@@ -1121,7 +1127,7 @@ td>input{
     border: 8px solid #f3f3f3; 
     border-top: 8px solid #02BF63; 
     border-radius: 50%;
-    background-image: url('../resources/banner3.jpeg');
+    background-image: url('../resources/foodparklogo.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -1456,7 +1462,7 @@ td.price span{
     background-size: 80lvh;
     background-position: center; 
     background-repeat: no-repeat;
-    opacity: 0.5; /* Adjust the opacity as needed */
+    opacity: 0.5;
     z-index: -1;
 }
 .storequeueleft,.storequeueright{

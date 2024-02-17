@@ -1,17 +1,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<?php
-    require_once ("../include/head.php");
-    require_once('../include/js.php');
-
-    session_start();
-    if(!isset($_SESSION['$storestoreid'])){
-        $_SESSION['storestoreid']=38;
-    }
-    $storestoreid=38;
-
-?>
 <body>
     <?php
         $currentpage='payment';
@@ -72,7 +61,7 @@
     <script>
         $(document).ready(function() {
             setInterval(function() {
-                var storestoreid = <?php echo $storestoreid; ?>;
+                var storestoreid = <?php echo $_SESSION['storestoreid']; ?>;
 
                 $.ajax({
                     type: 'POST',

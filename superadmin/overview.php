@@ -1,11 +1,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<?php
-    require_once ("../include/head.php");
-    require_once('../include/js.php');
-    require_once('../database/datafetch.php');
-?>
 <body>
     <style>
 
@@ -21,19 +16,7 @@
         require_once('../include/sidebar.php');
     ?>
     <div class="right">
-        <div class="storeinfooverview">
-            <div class="storeoverview">
-                <img class="storelogooverview" src="../resources/mcdo.png" alt="">
-                <div class="storeinfotxt">
-                    <p class="overviewstorename">37' Coffee</p>
-                    <p>Tara, kape, as a friend</p>
-                </div>
-            </div>
-            <div class="form-check form-switch">
-                <input class="form-check-input"  type="checkbox" id="flexSwitchCheckDefault">
-                <label class="form-check-label" for="flexSwitchCheckDefault">Store is closed</label>
-            </div>
-        </div>
+            <p class="superadmintxt">Welcome, <?php echo $_SESSION['name'];?></p>
         <div class="storestat">
             <div class="stores">
                 <p class="storenumber"><?php if($onlinestorescount){ echo $onlinestorescount;}?></p>

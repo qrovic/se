@@ -1,11 +1,17 @@
 <?php
 require_once('../database/config.php');
+if (!isset($_SESSION)) {
+    session_start();
+}
 $change = $_POST['change'];
 $orderid = $_POST['storecustomerid'];
 $storestoreid = $_SESSION['storestoreid'];
 $total = $_POST['total'];
 $cash = $_POST['cash'];
 $change = $cash - $total;
+
+echo "<script>";
+echo "console.log('change: $change, orderid: $orderid, storestoreid: $storestoreid, total: $total, cash: $cash');";
 
 try {
     $pdo->beginTransaction();
@@ -27,5 +33,8 @@ try {
 } catch (PDOException $e) {
     $pdo->rollBack();
     echo "Error: " . $e->getMessage();
+    echo "console.error('Database error:'," . json_encode($e->getMessage()) . ");";
 }
+
+echo "</script>";
 ?>

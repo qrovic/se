@@ -1,11 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<?php
-    require_once ("../include/head.php");
-    require_once('../include/js.php');
-    require_once('../database/datafetch.php');
-?>
+
 <body>
     <style>
 
@@ -23,10 +19,14 @@
     <div class="right">
         <div class="storeinfooverview">
             <div class="storeoverview">
-                <img class="storelogooverview" src="../resources/mcdo.png" alt="">
+                <?php foreach ($storedeets AS $storedeet){ ?>
+                <img class="storelogooverview" src="../resources/<?php echo $storedeet['pic']?>" alt="">
                 <div class="storeinfotxt">
-                    <p class="overviewstorename">McDonald's</p>
-                    <p>I'm Lovin' It</p>
+                    
+                    <p class="overviewstorename"><?php echo $storedeet['name']?></p>
+                    <p><?php echo $storedeet['description']?></p>
+                <?php } ?>
+                
                 </div>
             </div>
             <div class="form-check form-switch">
@@ -36,7 +36,7 @@
         </div>
         <div class="storestat">
             <div class="stores">
-                <p class="storenumber"><?php if($salecount){ echo $salecount;}?></p>
+                <p class="storenumber"><?php if($salecount){ echo $salecount;}else{ echo 0; }?></p>
                 <div class="storestext">
                     <p>ITEMS</p>
                     <p>SOLD</p>
@@ -44,7 +44,7 @@
                 
             </div>
             <div class="stores">
-                <p class="storenumber"><?php if($staffcount){ echo $staffcount;}?></p>
+                <p class="storenumber"><?php if($staffcount){ echo $staffcount;}else{ echo 0; }?></p>
                 <div class="storestext">
                     <p></p>
                     <p>STAFF</p>

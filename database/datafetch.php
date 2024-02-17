@@ -86,7 +86,7 @@ $resulttotalstorescount = $pdo->query($sqltotalstorescount);
 $totalstorescount = $resulttotalstorescount->fetchColumn();
 
 #fetch count of online stores
-$sqlonlinestorescount = "SELECT COUNT(*) FROM store WHERE status='open'";
+$sqlonlinestorescount = "SELECT COUNT(*) FROM store WHERE status='Online'";
 $resultonlinestorescount = $pdo->query($sqlonlinestorescount);
 $onlinestorescount = $resultonlinestorescount->fetchColumn();
 
@@ -338,14 +338,22 @@ $superadminsalesmonthly = $stmt->fetchAll();
 
 
 //storsalesdaily
-$sqlsuperadminsalesdaily="SELECT store.name AS storename, IFNULL(SUM(orderitems.quantity * itemprice.price), 0) AS total_sales, IFNULL(SUM(orderitems.quantity), 0) AS total_quantity FROM store LEFT JOIN item ON store.id = item.storeid LEFT JOIN itemprice ON item.id = itemprice.itemid LEFT JOIN orderitems ON itemprice.id = orderitems.itempriceid AND DATE(orderitems.datetime) = CURDATE() GROUP BY storename";
+$sqlsuperadminsalesdaily="SELECT store.name AS storename, IFNULL(SUM(orderitems.quantity * itemprice.price), 0) AS total_sales, IFNULL(SUM(orderitems.quantity), 0) AS total_quantity FROM store LEFT JOIN item ON store.id = item.storeid LEFT JOIN itemprice ON item.id = itemprice.itemid LEFT JOIN orderitems ON itemprice.id = orderitems.itempriceid AND DATE(orderitems.datetime) = CURDATE() WHERE orderitems.status='collect' GROUP BY storename";
 
 $stmt = $pdo->prepare($sqlsuperadminsalesdaily);
 $stmt->execute();
 $superadminsalesdaily = $stmt->fetchAll();
 
+/*fetch store details*/
+if (isset($_SESSION['storestoreid'])){
+    $storeid=$_SESSION['storestoreid'];
 
-
+    $sqlstoredeets = "SELECT * FROM store WHERE id=:storeid";
+    $stmt = $pdo->prepare($sqlstoredeets); 
+    $stmt->bindParam(':storeid', $storeid, PDO::PARAM_INT);
+    $stmt->execute();  
+    $storedeets = $stmt->fetchAll();
+}
 ?>
 
 
