@@ -25,7 +25,9 @@
         </form>
         </div>
         <div class="accountstext" id="storestext">
+            <?php if ($stores) {?>
             <p>All stores</p>
+            <?php } ?>
         </div>
         <div class="kioskstores" onclick="examplemodal">
             <?php

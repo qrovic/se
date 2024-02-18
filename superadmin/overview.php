@@ -19,7 +19,7 @@
             <p class="superadmintxt">Welcome, <?php echo $_SESSION['name'];?></p>
         <div class="storestat">
             <div class="stores">
-                <p class="storenumber"><?php if($onlinestorescount){ echo $onlinestorescount;}?></p>
+                <p class="storenumber"><?php if($onlinestorescount){ echo $onlinestorescount;}else{ echo 0;}?></p>
                 <div class="storestext">
                     <p>STORES</p>
                     <p>OPEN</p>
@@ -27,7 +27,7 @@
                 
             </div>
             <div class="stores">
-                <p class="storenumber"><?php if($totalstorescount){ echo $totalstorescount;}?></p>
+                <p class="storenumber"><?php if($totalstorescount){ echo $totalstorescount;}else{ echo 0;}?></p>
                 <div class="storestext">
                     <p>TOTAL</p>
                     <p>STORES</p>

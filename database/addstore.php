@@ -34,7 +34,8 @@ try {
     $stmt->execute();
     $lastInsertedId = $pdo->lastInsertId();
 
-    
+    $hashedpassword = password_hash($ownerpassword, PASSWORD_DEFAULT);
+
     $stmt = $pdo->prepare("INSERT INTO staff (storeid, fname, lname, mname, contactno, email, password, role) VALUES (:storeid, :ownerfname, :ownerlname, :ownermname, :ownercontact, :owneremail, :ownerpassword, 'Owner')");
     $stmt->bindParam(':storeid', $lastInsertedId);
     $stmt->bindParam(':ownerfname', $storedescription);
@@ -42,7 +43,7 @@ try {
     $stmt->bindParam(':ownermname', $ownermname);
     $stmt->bindParam(':ownercontact', $ownercontact);
     $stmt->bindParam(':owneremail', $owneremail);
-    $stmt->bindParam(':ownerpassword', $ownerpassword);
+    $stmt->bindParam(':ownerpassword', $hashedpassword);
     $stmt->execute();
 
     header('location: ../superadmin/accounts.php');

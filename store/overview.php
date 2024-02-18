@@ -36,7 +36,7 @@
         </div>
         <div class="storestat">
             <div class="stores">
-                <p class="storenumber"><?php if($salecount){ echo $salecount;}else{ echo 0; }?></p>
+                <p class="storenumber"><?php if(isset($salecount)){ echo $salecount;}else{ echo '0'; }?></p>
                 <div class="storestext">
                     <p>ITEMS</p>
                     <p>SOLD</p>
@@ -44,7 +44,7 @@
                 
             </div>
             <div class="stores">
-                <p class="storenumber"><?php if($staffcount){ echo $staffcount;}else{ echo 0; }?></p>
+                <p class="storenumber"><?php if(isset($staffcount)){ echo $staffcount;}else{ echo 0; }?></p>
                 <div class="storestext">
                     <p></p>
                     <p>STAFF</p>
