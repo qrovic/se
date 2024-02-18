@@ -17,7 +17,7 @@ $stmt->execute();
 $storewowner = $stmt->fetchAll();
 
 #fetch superadmin staff
-$sqlsuperadminstaffs = "SELECT store.name AS staffstorename, staff.id AS staffid, staff.storeid AS staffstoreid, staff.fname as stafffname, staff.lname as stafflname,staff.mname as staffmname, staff.contactno AS staffcontactno, staff.email as staffemailF, staff.password as staffpassword, staff.role as staffrole FROM store right JOIN staff ON store.id=staff.storeid";
+$sqlsuperadminstaffs = "SELECT store.name AS staffstorename, staff.id AS staffid, staff.storeid AS staffstoreid, staff.fname as stafffname, staff.lname as stafflname,staff.mname as staffmname, staff.contactno AS staffcontactno, staff.email as staffemail, staff.password as staffpassword, staff.role as staffrole FROM store right JOIN staff ON store.id=staff.storeid";
 $stmt = $pdo->prepare($sqlsuperadminstaffs); 
 $stmt->execute();  
 $superadminstaffs = $stmt->fetchAll();
@@ -25,7 +25,7 @@ $superadminstaffs = $stmt->fetchAll();
 if (isset($_SESSION['storestoreid'])){
     $storeid=$_SESSION['storestoreid'];
 
-    $sqlstorestaff = "SELECT store.id AS storeid, store.name AS staffstorename, staff.id AS staffid, staff.storeid AS staffstoreid, staff.fname as stafffname, staff.lname as stafflname,staff.mname as staffmname, staff.contactno AS staffcontactno, staff.email as staffemailF, staff.password as staffpassword, staff.role as staffrole FROM store right JOIN staff ON store.id=staff.storeid WHERE storeid=:storeid";
+    $sqlstorestaff = "SELECT store.id AS storeid, store.name AS staffstorename, staff.id AS staffid, staff.storeid AS staffstoreid, staff.fname as stafffname, staff.lname as stafflname,staff.mname as staffmname, staff.contactno AS staffcontactno, staff.email as staffemail, staff.password as staffpassword, staff.role as staffrole FROM store right JOIN staff ON store.id=staff.storeid WHERE storeid=:storeid";
     $stmt = $pdo->prepare($sqlstorestaff);
     $stmt->bindParam(':storeid', $storeid, PDO::PARAM_INT);
     $stmt->execute();
@@ -72,7 +72,7 @@ if (isset($_SESSION['storestoreid'])){
 
 #cartcount
 if (isset($_SESSION['orderid'])){
-    $sqltotalcartcount = "SELECT COUNT(*) FROM cart WHERE customerid = :orderid";
+    $sqltotalcartcount = "SELECT COUNT(*) FROM cart JOIN itemprice ON itemprice.id=cart.itempriceid WHERE customerid = :orderid AND itemprice.stock!=0";
     $stmt = $pdo->prepare($sqltotalcartcount);
     $stmt->bindParam(':orderid', $_SESSION['orderid'], PDO::PARAM_INT);
     $stmt->execute();
@@ -176,8 +176,11 @@ $stmtcategories->bindParam(':storename', $storename, PDO::PARAM_STR);
 $stmtcategories->execute();
 $categories = $stmtcategories->fetchAll();
 
+//fetch popular
+
+
 // fetch cart details
-$sqlcartstore = "SELECT DISTINCT item.storeid AS cartstoreid, store.name AS cartstorename FROM cart JOIN itemprice ON itemprice.id=cart.itempriceid JOIN item ON itemprice.itemid=item.id JOIN store ON store.id=item.storeid WHERE cart.customerid = :orderid";
+$sqlcartstore = "SELECT DISTINCT item.storeid AS cartstoreid, store.name AS cartstorename FROM cart JOIN itemprice ON itemprice.id=cart.itempriceid JOIN item ON itemprice.itemid=item.id JOIN store ON store.id=item.storeid WHERE cart.customerid = :orderid AND itemprice.stock!=0";
 $stmt = $pdo->prepare($sqlcartstore);
 $stmt->bindParam(':orderid', $orderid, PDO::PARAM_STR);
 $stmt->execute();
@@ -261,11 +264,17 @@ if (isset($_SESSION['storename'])) {
     $stmtdesserts->execute();
     $Desserts = $stmtdesserts->fetchAll();
 
-    $sqlcombos = "SELECT item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN store ON item.storeid = store.id WHERE category='Combos' AND store.name=:storename";
+    $sqlcombos = "SELECT item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN popular ON popular.itemid=item.id JOIN store ON item.storeid = store.id WHERE store.name=:storename";
     $stmtcombos = $pdo->prepare($sqlcombos);
     $stmtcombos->bindParam(':storename', $storename, PDO::PARAM_STR);
     $stmtcombos->execute();
     $Combos = $stmtcombos->fetchAll();
+
+    $sqlpopular = "SELECT item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN popular ON popular.itemid=item.id JOIN store ON item.storeid = store.id WHERE store.name=:storename";
+    $stmtpopular = $pdo->prepare($sqlpopular);
+    $stmtpopular->bindParam(':storename', $storename, PDO::PARAM_STR);
+    $stmtpopular->execute();
+    $Popular = $stmtpopular->fetchAll();
 }
 
 #fetch all stores with items and are active

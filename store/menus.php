@@ -40,7 +40,7 @@
                 </div>
             
             </div>
-            <button type="button" class="btn btn-primary addstaffbtn" data-bs-toggle="modal" data-bs-target="#addstaffmodal">Add Menu</button>
+            <button type="button" class="btn btn-primary addstaffbtn" onclick="window.location.href='../store/additemcopy.php'">Add Menu</button>
         </div>
         
 

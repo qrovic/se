@@ -4,16 +4,14 @@ require_once("config.php");
 $storename = trim($_POST['storename']);
 $storedescription = $_POST['storedescription'];
 $storestatus = trim($_POST['storestatus']);
-$storepic = $_FILES['storepic']['name'];
-
 $ownerfname = trim($_POST['ownerfname']); 
 $ownermname = trim($_POST['ownermname']); 
 $ownerlname = trim($_POST['ownerlname']); 
 $ownercontact = trim($_POST['ownercontact']); 
 $owneremail = trim($_POST['owneremail']); 
-
 $ownerpassword = trim($_POST['ownerpassword']);
 
+$storepic = $_FILES['storepic']['name'];
 if (isset($_FILES["storepic"]) && $_FILES["storepic"]["error"] == 0) {
     $destinationFolder = "../resources/";
     $tempName = $_FILES["storepic"]["tmp_name"];

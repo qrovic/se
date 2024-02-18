@@ -1,58 +1,32 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<?php
-    require_once ("../include/head.php");
-    require_once('../include/js.php');
-    require_once('../database/datafetch.php')
-?>
 <body>
-    <div class="left">
-        <div class="options">
-            <ul class="options">
-                <li class="options">
-                    <a href="overview.php">Overview</a>
-                </li>
-                <li class="options">
-                    <a href="overview.php">Accounts</a>
-                </li>
-                <li class="options">
-                    <a href="overview.php">Sales</a>
-                </li>
-                <li class="options">
-                    <a href="overview.php">Settings</a>
-                </li>
-                <li class="options logout">
-                    <a href="overview.php">Logout</a>
-                </li>
-            </ul>
-        </div>
-        
-    </div>
+    <?php
+        $currentpage='menus';
+        require_once('../include/sidebarstore.php');
+    ?>
     <div class="right">
-        <h1>Add Store</h1>
-        <div class="addstore">
-        <form action="../store/additem2.php" method="POST" enctype="multipart/form-data">
-            <div class="storedetails">
-                <h2>Store Details</h2>
-                    <div class="addstoreinput">
-                        <label for="">Store ID:</label>
-                        <select name="storeid" id="">
-                            <?php foreach ($allstores as $allstore){
-                                ?>
-                                <option value="<?php echo $allstore['id'];?>"><?php echo $allstore['name'];?></option>
-                                <?php
-                                }
-                                ?>
-                        </select>
+        <div class="">
+            <form class="addstore" action="../store/additem2.php" method="POST" enctype="multipart/form-data">
+            <div class="storedetails additemstore">
+            
+                <p class="itemdetailstxt">Item Details</p>
+                    <div class="addstoreinput additeminput">
+                        <input type="number" name="storeid" id="" value=<?php echo $_SESSION['storestoreid'];?> hidden>
                     </div>
-                    <div class="addstoreinput">
-                        <label for="">Product Name:</label>
-                        <input type="text" name="itemname" id="">
+                    <div class="addacclogo additemlogo" style="background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), background-position: center; background-size: cover;">
+                        <label for="file" class="btn uploadbtn"><i class='bx bx-upload'></i>Upload</label>
+                        <input id="file" hidden name="itempic" type="file" onchange="previewimg(this);">
                     </div>
-                    <div class="addstoreinput">
-                        <label for="">Category:</label>
-                        <select name="itemcategory" id="">
+                    
+                    <div class="addstoreinput additeminput">
+                        <label class="form-label" for="itemname">Product Name:</label>
+                        <input class="form-control" type="text" id="itemname" name="itemname" id="">
+                    </div>
+                    <div class="addstoreinput additeminput">
+                        <label class="form-label" for="itemcategory">Category:</label>
+                        <select class="form-control" name="itemcategory" id="itemcategory">
                             <option value="Drinks">Drinks</option>
                             <option value="Meals">Meals</option>
                             <option value="Snacks">Snacks</option>
@@ -60,49 +34,61 @@
                             <option value="Combos">Combos</option>  
                         </select>
                     </div>
-                    <div class="addstoreinput">
-                        <label for="">item Pic:</label>
-                        <input type="file" name ="itempic" src="" alt="">
-                    </div>
+                    
             </div>
-            <div class="ownerdetails" id="ownerdetails">
-                <h2>Variations and sizing</h2>
-
+            <div class="ownerdetails additemvariant" id="ownerdetails">
             
-                    <label for="categories">Select Variation</label><br>
-                    <div id="varietiesContainer">
-                        <input type="checkbox" name="itemvariants[]" value="hot"> Hot<br>
-                        <input type="checkbox" name="itemvariants[]" value="cold"> Cold<br>
+                <p class="itemdetailstxt">Variations and Sizing</p>
+
+                <label class="form-label" for="categories">Select Variation</label><br>
+                <div id="varietiesContainer">
+                    <div class="form-check checkbox">
+                        <input class="form-check-input" type="checkbox" name="itemvariants[]" value="hot" id="hotCheckbox">
+                        <label class="form-check-label" for="hotCheckbox">Hot</label>
+                    </div>
+                    <div class="form-check checkbox">
+                        <input class="form-check-input" type="checkbox" name="itemvariants[]" value="cold" id="coldCheckbox">
+                        <label class="form-check-label" for="coldCheckbox">Cold</label>
+                    </div>
+                </div>
+
+                <div id="newVarietyContainer" style="display: none;">
+                    <input type="text" id="newVarietyInput" class="form-control" placeholder="Add new variety and press Enter">
+                </div>
+                <button type="button" id="addVarietyBtn" class="btn btn-primary addsizebtngreen">+ Add</button>
+                <br>
+
+                <div class="sizediv">
+                    <label class="form-label" for="size">Select size</label><br>
+                    <div id="sizesContainer">
+                        <div class="form-check checkbox">
+                            <input class="form-check-input" type="checkbox" name="itemsizes[]" value="Small" id="smallCheckbox">
+                            <label class="form-check-label" for="smallCheckbox">Small</label>
+                        </div>
+                        <div class="form-check checkbox">
+                            <input class="form-check-input" type="checkbox" name="itemsizes[]" value="Medium" id="mediumCheckbox">
+                            <label class="form-check-label" for="mediumCheckbox">Medium</label>
+                        </div>
                     </div>
 
-                    <div id="newVarietyContainer" style="display: none;">
-                        <input type="text" id="newVarietyInput" placeholder="Add new variety and press Enter">
+                    <div id="newSizeContainer" style="display: none;">
+                        <input type="text" id="newSizeInput" class="form-control" placeholder="Add new size and press Enter">
                     </div>
-                    <button type="button" id="addVarietyBtn">Add Variety</button>
-                    <br>
-                    <input type="checkbox"  id="toggleSizeDiv" checked> Show/Hide SizeDiv
-                    <div class="sizediv">
-                        <label for="size">Select size</label><br>
-                        <div id="sizesContainer">
-                            <input type="checkbox" name="itemsizes[]" value="Small"> smaill<br>
-                            <input type="checkbox" name="itemsizes[]" value="Medium"> medi<br>
-                        </div>
-
-                        <div id="newSizeContainer" style="display: none;">
-                            <input type="text" id="newSizeInput" placeholder="Add new size and press Enter">
-                        </div>
-                        <button type="button" id="addSizeBtn">Add size</button>
-                    </div>
-                    <input type="submit" id="submitbtn" value="Submit">
+                    <button type="button" id="addSizeBtn" class="btn btn-primary addsizebtngreen">+ Add</button>
+                    <div class="submitbtndiv">
+                    <input type="submit" id="submitbtn" class="btn btn-primary addsizebtngreensubmit" value="Set Variation Info">
+                </div>
+                </div>
+               
             </div>
-            
+            </form>  
         </div>
-        </form>               
+                   
     </div>
 <?php
-var_dump($_POST['storeid']);
-var_dump($_POST['itemvariants']);
-var_dump($_POST['itemsizes']);
+//var_dump($_POST['storeid']);
+//var_dump($_POST['itemvariants']);
+//var_dump($_POST['itemsizes']);
 ?>
 
 
@@ -110,44 +96,14 @@ var_dump($_POST['itemsizes']);
 </body>
 
 <script>
-        var varietiesContainer = document.getElementById('varietiesContainer');
-        var newVarietyContainer = document.getElementById('newVarietyContainer');
-        var newVarietyInput = document.getElementById('newVarietyInput');
-        var addVarietyBtn = document.getElementById('addVarietyBtn');
-        addVarietyBtn.addEventListener('click', function() {
-            newVarietyContainer.style.display = 'block';
-            newVarietyInput.focus();
-        });
-
-        newVarietyInput.addEventListener('keyup', function(event) {
-            if (event.keyCode === 13) {
-                var newCheckbox = document.createElement('input');
-                newCheckbox.type = 'checkbox';
-                newCheckbox.name = 'itemvariants[]';
-                newCheckbox.value = newVarietyInput.value;
-                var newLabel = document.createElement('label');
-                newLabel.innerHTML = newVarietyInput.value;
-
-                var varietyOption = document.createElement('div');
-                varietyOption.id = 'varietyOption'; 
-                varietyOption.appendChild(newCheckbox);
-                varietyOption.appendChild(newLabel);
-                varietiesContainer.appendChild(varietyOption);
-                newVarietyInput.value = '';
-                newVarietyContainer.style.display = 'none';
-            }
-        });
-    </script>
-<script>
         var sizesContainer = document.getElementById('sizesContainer');
         var newSizeContainer = document.getElementById('newSizeContainer');
         var newSizeInput = document.getElementById('newSizeInput');
         var addSizeBtn = document.getElementById('addSizeBtn');
-        var toggleSizeDiv = document.getElementById('toggleSizeDiv');
+   
 
         addSizeBtn.addEventListener('click', function() {
             newSizeContainer.style.display = 'block';
-
             newSizeInput.focus();
         });
 
@@ -157,38 +113,98 @@ var_dump($_POST['itemsizes']);
                 newSizeCheckbox.type = 'checkbox';
                 newSizeCheckbox.name = 'itemsizes[]';
                 newSizeCheckbox.value = newSizeInput.value;
+                newSizeCheckbox.classList.add('form-check-input');
 
                 var newSizeLabel = document.createElement('label');
                 newSizeLabel.innerHTML = ' ' + newSizeInput.value;
 
                 var sizeOption = document.createElement('div');
-                sizeOption.className = 'size-option';
+                sizeOption.className = 'form-check checkbox';
                 sizeOption.appendChild(newSizeCheckbox);
                 sizeOption.appendChild(newSizeLabel);
 
                 sizesContainer.appendChild(sizeOption);
 
                 newSizeInput.value = '';
-
                 newSizeContainer.style.display = 'none';
             }
         });
 
-        toggleSizeDiv.addEventListener('change', function() {
-            var sizediv = document.querySelector('.sizediv');
-            sizediv.style.display = this.checked ? 'block' : 'none';
+
+        var varietiesContainer = document.getElementById('varietiesContainer');
+        var newVarietyContainer = document.getElementById('newVarietyContainer');
+        var newVarietyInput = document.getElementById('newVarietyInput');
+        var addVarietyBtn = document.getElementById('addVarietyBtn');
+
+        addVarietyBtn.addEventListener('click', function() {
+            newVarietyContainer.style.display = 'block';
+            newVarietyInput.focus();
         });
+
+        newVarietyInput.addEventListener('keyup', function(event) {
+            if (event.keyCode === 13) {
+                var newVarietyCheckbox = document.createElement('input');
+                newVarietyCheckbox.type = 'checkbox';
+                newVarietyCheckbox.name = 'itemvariants[]';
+                newVarietyCheckbox.value = newVarietyInput.value;
+                newVarietyCheckbox.classList.add('form-check-input');
+
+                var newVarietyLabel = document.createElement('label');
+                newVarietyLabel.innerHTML = ' ' + newVarietyInput.value;
+
+                var varietyOption = document.createElement('div');
+                varietyOption.className = 'form-check checkbox';
+                varietyOption.appendChild(newVarietyCheckbox);
+                varietyOption.appendChild(newVarietyLabel);
+
+                varietiesContainer.appendChild(varietyOption);
+
+                newVarietyInput.value = '';
+                newVarietyContainer.style.display = 'none';
+            }
+        });
+
     </script>
 
 
-<script>
+
+    <script>
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Enter' && e.target.tagName.toLowerCase() !== 'textarea' && e.target.type !== 'submit') {
                 e.preventDefault();
             }
         });
     </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var previewContainers = document.querySelectorAll('.addacclogo');
+        previewContainers.forEach(function (previewContainer) {
+            previewContainer.dataset.defaultBg = getComputedStyle(previewContainer).backgroundImage;
+        });
+    });
 
+    function previewimg(input) {
+        var fileInput = input;
+        var previewContainers = document.querySelectorAll('.addacclogo');
+        
+        previewContainers.forEach(function (previewContainer) {
+            var defaultBg = previewContainer.dataset.defaultBg;
+            var file = fileInput.files[0];
+
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    previewContainer.style.backgroundImage = "linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('" + e.target.result + "')";
+                    previewContainer.style.backgroundPosition = "center";
+                    previewContainer.style.backgroundSize = "cover";
+                }
+                reader.readAsDataURL(file);
+            } else {
+                previewContainer.style.backgroundImage = defaultBg; 
+            }
+        });
+    }
+</script>
 
 
 

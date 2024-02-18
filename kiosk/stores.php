@@ -7,7 +7,7 @@
     require_once('../include/js.php');
     require_once('../database/datafetch.php');
     require("../database/newcustomer.php");
-    
+    include('../database/popular.php');
     
 ?>
 <body class="storebody">

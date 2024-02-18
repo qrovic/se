@@ -17,6 +17,7 @@
     if(isset($_POST['storename'])){
         $storename=$_SESSION['storename'];
     }
+    
 ?>
 <body class="storebody">
     <div class="header">
@@ -67,7 +68,7 @@
                     $item = $category['category'];
                     ?>
                     <div class="categoryitem">
-                    
+                       
                         <section id="<?php echo $category['category']; ?>">
                         <div class="categoryname">
                             <p><?php echo $category['category']; ?></p>
@@ -77,7 +78,6 @@
                         foreach ($$item as $nope) {
                             
                         ?>
-                            <!-- Modal -->
                             <div class="modal fade" id="<?php echo str_replace(' ', '', $nope['item_name']); ?>" data-currentmenuid="<?php echo $nope['item_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog menumodal">
                                     <div class="modal-content menumodalcontent">
@@ -106,7 +106,7 @@
                                                         ?>
                                                         <div class="radioholder">
                                                         <input type="radio" name="menuvariation" id="variant_<?php echo $menuvariants['menuvariety'].$nope['item_id'];?>" value="<?php echo $menuvariants['menuvariety'];?>">
-                                                        <label for="variant_<?php echo $menuvariants['menuvariety'].$nope['item_id'];?>"><?php echo $menuvariants['menuvariety'];?></label>
+                                                        <label class="itemsizelabel" for="variant_<?php echo $menuvariants['menuvariety'].$nope['item_id'];?>"><?php echo $menuvariants['menuvariety'];?></label>
                                                         </div>
                                                         <?php
                                                     }
@@ -114,13 +114,13 @@
                                                 </div>
                                                 <br>
                                                 <div class="menusize">
-                                                    <p class="choosevariant">Choose a variant:</p>
+                                                    <p class="choosevariant">Choose a size:</p>
                                                     <?php 
                                                     foreach($menusize as $menusizes){
                                                         ?>
                                                         <div class="radioholder">
                                                         <input type="radio" name="menusize" id="size_<?php echo $menusizes['menusize'].$nope['item_id'];?>" value="<?php echo $menusizes['menusize'];?>">
-                                                        <label for="size_<?php echo $menusizes['menusize'].$nope['item_id'];?>"><?php echo $menusizes['menusize'];?></label>
+                                                        <label class="itemsizelabel" for="size_<?php echo $menusizes['menusize'].$nope['item_id'];?>"><?php echo $menusizes['menusize'];?></label>
                                                         </div>
                                                         <?php
                                                     }
@@ -134,12 +134,14 @@
                                     </div>
                                     <div class="modal-footer">
                                         <div class="modalfooter">
-                                            <div class="quantitydiv">
-                                                <button class="quantitybutton" onclick="decreaseQuantity()" type="button"><p class="quantitybtn">-</p></button>
-                                                <input type="text" readonly name="quantity" class="quantityInput" id="quantityInput" value="1">
-                                                <button class="quantitybutton" onclick="increaseQuantity()" type="button"><p class="quantitybtn">+</p></button>
+                                            <div class="stockdiv">
+                                                <div class="quantitydiv">
+                                                        <button class="quantitybutton" onclick="decreaseQuantity()" type="button"><p class="quantitybtn">-</p></button>
+                                                        <input type="text" readonly name="quantity" class="quantityInput" id="quantityInput" value="1" max="1">
+                                                        <button class="quantitybutton" onclick="increaseQuantity()" type="button"><p class="quantitybtn">+</p></button>
+                                                    </div>
+                                                    <p class="menustock"></p>
                                             </div>
-                                        
                                             <input type="number" name="menuid" hidden value="<?php echo $nope['item_id'];?>">
                                             <button disabled type="submit" class="btn btn-primary addtocartbtn" id="addtocartbutton">Add to cart</button>
 

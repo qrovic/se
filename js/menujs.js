@@ -4,9 +4,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         e.preventDefault();
 
         document.querySelectorAll('a[href^="#"]').forEach(a => {
-            a.classList.remove('active');
+            a.classList.remove('activemenu');
         });
-        this.classList.add('active');
+        this.classList.add('activemenu');
         document.querySelector(this.getAttribute('href')).scrollIntoView({
             behavior: 'smooth'
         });
@@ -19,12 +19,12 @@ const observer = new IntersectionObserver(entries => {
         const link = document.querySelector(`a[href="#${id}"]`);
 
         if (entry.isIntersecting) {
-            link.classList.add('active');
+            link.classList.add('activemenu');
         } else {
-            link.classList.remove('active');
+            link.classList.remove('activemenu');
         }
     });
-}, { threshold: 0.8});
+}, { threshold: 1});
 
 document.querySelectorAll('section[id]').forEach(section => {
     observer.observe(section);
@@ -37,23 +37,7 @@ document.getElementById('searchforms').addEventListener('keypress', function (e)
     }
 });
 
-function increaseQuantity() {
-    var quantityInputs = document.getElementsByClassName('quantityInput');
-    for (var i = 0; i < quantityInputs.length; i++) {
-        var currentQuantity = parseInt(quantityInputs[i].value, 10);
-        quantityInputs[i].value = currentQuantity + 1;
-    }
-}
 
-function decreaseQuantity() {
-    var quantityInputs = document.getElementsByClassName('quantityInput');
-    for (var i = 0; i < quantityInputs.length; i++) {
-        var currentQuantity = parseInt(quantityInputs[i].value, 10);
-        if (currentQuantity > 1) {
-            quantityInputs[i].value = currentQuantity - 1;
-        }
-    }
-}
 
 
 $(document).ready(function() {
@@ -75,7 +59,25 @@ $(document).ready(function() {
                     menuid: menuid
                 },
                 success: function(response) {
-                    $('.menuprice').text("₱" + response);
+                    var data = JSON.parse(response);
+                    if (data.price) {
+                        $('.menuprice').text("₱" + data.price);
+                    } else {
+                        $('.menuprice').text("Price not available");
+                    }
+
+                    if (data.stock) {
+                        $('.menustock').text("(" + data.stock + " left" + ")");
+                        if (parseInt($('.quantityInput').val()) > data.stock) {
+                            $('.quantityInput').val(data.stock); 
+                        }
+                        $('.quantityInput').prop('max', data.stock);
+                    }
+                    
+                     else {
+                        $('.menustock').text("Stock not available");
+                        $('#quantityInput').attr('max', 0);
+                    }
                 }
             });
         }
@@ -88,6 +90,30 @@ $(document).ready(function() {
 
     });
 });
+
+function increaseQuantity() {
+    var quantityInputs = document.getElementsByClassName('quantityInput');
+    for (var i = 0; i < quantityInputs.length; i++) {
+        var currentQuantity = parseInt(quantityInputs[i].value, 10);
+        var maxStock = parseInt(quantityInputs[i].getAttribute('max'), 10);
+        console.log("Max attribute:", maxStock);
+        if (currentQuantity < maxStock) {
+            quantityInputs[i].value = currentQuantity + 1;
+        }
+        
+    }
+}
+
+
+function decreaseQuantity() {
+    var quantityInputs = document.getElementsByClassName('quantityInput');
+    for (var i = 0; i < quantityInputs.length; i++) {
+        var currentQuantity = parseInt(quantityInputs[i].value, 10);
+        if (currentQuantity > 1) {
+            quantityInputs[i].value = currentQuantity - 1;
+        }
+    }
+}
 
 
 

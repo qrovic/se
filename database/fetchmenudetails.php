@@ -14,14 +14,14 @@ if (isset($nope['item_id'])){
     $stmt->execute();
     $menudetails = $stmt->fetchAll();
     
-    $sqlmenuvariant = "SELECT DISTINCT variant as menuvariety FROM itemprice LEFT JOIN item ON item.id = itemprice.itemid RIGHT JOIN store ON store.id = item.storeid WHERE item.id = :menuid AND item.storeid = :storeid";
+    $sqlmenuvariant = "SELECT DISTINCT variant as menuvariety FROM itemprice LEFT JOIN item ON item.id = itemprice.itemid RIGHT JOIN store ON store.id = item.storeid WHERE item.id = :menuid AND item.storeid = :storeid AND itemprice.stock!=0";
     $stmt = $pdo->prepare($sqlmenuvariant);
     $stmt->bindParam(':menuid', $menuid, PDO::PARAM_STR);
     $stmt->bindParam(':storeid', $storeid, PDO::PARAM_STR);
     $stmt->execute();
     $menuvariant = $stmt->fetchAll();
     
-    $sqlmenusize = "SELECT DISTINCT size as menusize FROM itemprice LEFT JOIN item ON item.id = itemprice.itemid RIGHT JOIN store ON store.id = item.storeid WHERE item.id = :menuid AND item.storeid = :storeid";
+    $sqlmenusize = "SELECT DISTINCT size as menusize FROM itemprice LEFT JOIN item ON item.id = itemprice.itemid RIGHT JOIN store ON store.id = item.storeid WHERE item.id = :menuid AND item.storeid = :storeid AND itemprice.stock!=0";
     $stmt = $pdo->prepare($sqlmenusize);
     $stmt->bindParam(':menuid', $menuid, PDO::PARAM_STR);
     $stmt->bindParam(':storeid', $storeid, PDO::PARAM_STR);
@@ -60,7 +60,7 @@ if(isset($_POST['variety'])){
     $menuid=$_POST['menuid'];
     
 
-    $query = "SELECT price FROM itemprice WHERE variant = :variety AND size = :size AND itemid = :menuid";
+    $query = "SELECT price, stock FROM itemprice WHERE variant = :variety AND size = :size AND itemid = :menuid";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':variety', $selectedVariety);
     $stmt->bindParam(':size', $selectedSize);
@@ -71,10 +71,13 @@ if(isset($_POST['variety'])){
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
         if ($result) {
-            echo $result['price'];
+            //echo $result['price'];
+            echo json_encode(array('price' => $result['price'], 'stock' => $result['stock']));
         } else {
-            echo "choose a size";
+            //echo "choose a size";
+            echo json_encode(array('error' => 'Choose a size'));
         }
+      
     } catch (PDOException $e) {
         echo 'Error: ' . $e->getMessage();
     }

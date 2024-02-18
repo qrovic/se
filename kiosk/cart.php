@@ -73,7 +73,7 @@
                         <td class="itemnamecart">
                         <input type="text" class="itemid" name="itemid[]" value="<?php echo $cartdetail['itemid'];?>" id="" hidden>
                             <input type="text" class="itempriceid" name="itempriceid[]" value="<?php echo $cartdetail['itempriceid'];?>" id="" hidden>
-                            <?php echo $cartdetail['itemname'];?>
+                            <p class="cartitemname"><?php echo $cartdetail['itemname'];?></p>
                         </td>
                         
                         <td class="itemvariant">    
@@ -113,7 +113,7 @@
                             <!--<button class="quantitybutton" onclick="increaseQuantity(this)" type="button"><p class="quantitybtn">+</p></button>-->
                 
                         </td>
-                        <td class="total total-price"><span class="totalprice"><?php echo "₱".($cartdetail['quantity']*$cartdetail['itemprice']);?></span></td>
+                        <td class="total total-price"><span class="totalprice"><?php echo "₱ ".($cartdetail['quantity']*$cartdetail['itemprice']);?></span></td>
                     </tr>
                     <?php
                     }
@@ -175,6 +175,7 @@
         var selectedMenu = itemRow.find('.itemid');
         var quantityInput = itemRow.find('.quantity');
         var menuprice = itemRow.find('.itemmenuprice');
+        var stockleft = itemRow.find('.stockleft');
 
         itemVariant.add(itemSize).add(quantityInput).change(function() {
             var selectedVariety = itemVariant.val();
@@ -194,8 +195,24 @@
                     menuprice: updatedmenuprice
                 },
                 success: function(response) {
-                    menuprice.text('₱' + response),
-                    totalPrice.text('₱' + (parseFloat(response) * quantity));
+                    var data = JSON.parse(response);
+                    if (data.price) {
+                        if (data.stock) {
+                            quantityInput.prop('max', data.stock);
+                            if (parseInt(quantityInput.val()) > data.stock) {
+                                quantityInput.val(data.stock); 
+                                totalPrice.text('₱' + (parseFloat(data.price) * data.stock));
+                            }else{
+                                totalPrice.text('₱' + (parseFloat(data.price) * quantity));
+                            }
+                            stockleft.text(data.stock + 'left');
+                        }
+                        menuprice.text('₱' + data.price);
+                       
+                    } else {
+                        $('.menuprice').text("Price not available");
+                    }
+
                 }
             });
         });

@@ -131,10 +131,13 @@
                                 </div>
                                 <div class="modal-footer">
                                     <div class="modalfooter">
-                                        <div class="quantitydiv">
-                                            <button class="quantitybutton" onclick="decreaseQuantity()" type="button"><p class="quantitybtn">-</p></button>
-                                            <input type="text" name="quantity" class="quantityInput" id="quantityInput" value="1">
-                                            <button class="quantitybutton" onclick="increaseQuantity()" type="button"><p class="quantitybtn">+</p></button>
+                                        <div class="stockdiv">
+                                            <div class="quantitydiv">
+                                                <button class="quantitybutton" onclick="decreaseQuantity()" type="button"><p class="quantitybtn">-</p></button>
+                                                <input type="text" readonly name="quantity" class="quantityInput" id="quantityInput" value="1" max="1">
+                                                <button class="quantitybutton" onclick="increaseQuantity()" type="button"><p class="quantitybtn">+</p></button>
+                                            </div>
+                                            <p class="menustock"></p>
                                         </div>
                                     
                                         <input type="number" name="menuid" hidden value="<?php echo $storemenusearch['item_id'];?>">
@@ -232,10 +235,13 @@
                                     </div>
                                     <div class="modal-footer">
                                         <div class="modalfooter">
-                                            <div class="quantitydiv">
-                                                <button class="quantitybutton" onclick="decreaseQuantity()" type="button"><p class="quantitybtn">-</p></button>
-                                                <input type="text" name="quantity" class="quantityInput" id="quantityInput" value="1">
-                                                <button class="quantitybutton" onclick="increaseQuantity()" type="button"><p class="quantitybtn">+</p></button>
+                                        <div class="stockdiv">
+                                                <div class="quantitydiv">
+                                                        <button class="quantitybutton" onclick="decreaseQuantity()" type="button"><p class="quantitybtn">-</p></button>
+                                                        <input type="text" readonly name="quantity" class="quantityInput" id="quantityInput" value="1" max="1">
+                                                        <button class="quantitybutton" onclick="increaseQuantity()" type="button"><p class="quantitybtn">+</p></button>
+                                                    </div>
+                                                    <p class="menustock"></p>
                                             </div>
                                         
                                             <input type="number" name="menuid" hidden value="<?php echo $nope['item_id'];?>">

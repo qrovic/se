@@ -2,6 +2,12 @@
     require_once ("../include/head.php");
     require_once('../include/js.php');
     require_once('../database/datafetch.php');
+    if(!isset($_SESSION)){
+        session_start();
+    }
+    if (!isset($_SESSION['storestoreid'])){
+        header('Location:../login/login.php');
+    }
 ?>
 <div class="left">
         <img class="superadminstorelogo" src="../resources/foodparklogo.png" alt="hhee">
@@ -34,8 +40,7 @@
                 <?php } ?>
                 <?php if($_SESSION['role']=='Manager'){ ?>
                 <li class="options">
-                <a class="<?php if ($currentpage === 'staffs') { echo 'active'; } ?>" href="storequeue.php" target="_blank">Queue</a>
-
+                <a class="<?php if ($currentpage === 'queue') { echo 'active'; } ?>" href="storequeue.php" target="_blank">Queue</a>
                 </li>
                 <?php } ?>
                 <?php if($_SESSION['role']=='Manager'){ ?>

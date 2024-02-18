@@ -12,7 +12,14 @@
         $currentpage='staffs';
         require_once('../include/sidebarstore.php');
     ?>
-    <div class="right">    
+      
+    <div class="right">   
+    <div class="alert alert-success staffadded staffadded1 d-none" role="alert">
+            <strong class="strongsuccess">Success! </strong>A staff has been added.
+        </div> 
+        <div class="alert alert-success staffadded updated d-none" role="alert">
+            <strong class="strongsuccess">Success! </strong>A staff details has been edited.
+    </div>   
         <div class="productrank">
        <br>
         <p class="stafftxt">Staffs</p>
@@ -31,7 +38,7 @@
                 </div>
             
             </div>
-            <button type="button" class="btn btn-primary addstaffbtn" data-bs-toggle="modal" data-bs-target="#addstaffmodal">Add Staff</button>
+            <button type="button" class="btn btn-primary addstaffbtn" data-bs-toggle="modal" data-bs-target="#addstaffstore">Add Staff</button>
         </div>
         
 
@@ -51,16 +58,88 @@
             <tbody>
                 <?php 
                 $rank=1;
-                    foreach($storestaff as $superadminstaff){
+                    foreach($storestaff as $storestaffs){
                       
                         ?>
                         <tr>
                         <td class="ranktxt"><?php echo $rank ?></td>
-                        <td class="notranktxt"><?php if (isset($superadminstaff['stafffname'])){echo $superadminstaff['stafffname'];}?></td>
-                        <td class="notranktxt"><?php if (isset($superadminstaff['staffcontactno'])){echo $superadminstaff['staffcontactno'];}?></td>
-                        <td class="notranktxt"><?php if (isset($superadminstaff['staffrole'])){echo $superadminstaff['staffrole'];}?></td>
-                        <td class="notranktxt"><i class='bx bxs-trash-alt' ></i><i class='bx bxs-edit-alt' ></i></td>
+                        <td class="notranktxt"><?php if (isset($storestaffs['stafffname'])){echo $storestaffs['stafffname'];}?></td>
+                        <td class="notranktxt"><?php if (isset($storestaffs['staffcontactno'])){echo $storestaffs['staffcontactno'];}?></td>
+                        <td class="notranktxt"><?php if (isset($storestaffs['staffrole'])){echo $storestaffs['staffrole'];}?></td>
+                        <td class="notranktxt"><i class='bx bxs-trash-alt' data-bs-toggle="modal" data-bs-target="#addstasffstore"></i><i class='bx bxs-edit-alt' data-bs-toggle="modal" data-bs-target="#addstaffstore<?php echo $storestaffs['staffid'];?>"></i></td>
                         </tr>
+                        <div class="modal modaledit fade" id="addstaffstore<?php echo $storestaffs['staffid'];?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog addstaffmodaldialog">
+                                <div class="modal-content addstaffmodalcontent">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add Staff</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form action="../database/updatestaff.php" method="POST" class="needs-validation" novalidate>
+                                <div class="modal-body addstaffmodalbody">
+                                    
+                                        <p class="formtxt">Personal Information</p>
+                                        <div class="persoinfo">
+                                            <div class="addstaffinput">
+                                                <label class="form-label" for="fname">First Name </label>
+                                                <input class="form-control" type="text" name="fname" id="" value=<?php echo $storestaffs['stafffname'];?> required>
+                                                <div class="invalid-feedback">Please enter a valid first name.</div>
+                                            </div>
+                                            <div class="addstaffinput">
+                                                <label class="form-label"  for="mname">Middle Name <span class="optional">(Optional)</span></label>
+                                                <input class="form-control" type="text" name="mname" id="" value=<?php echo $storestaffs['staffmname'];?>>
+                                                
+                                            </div>
+                                            <div class="addstaffinput">
+                                                <label class="form-label" for="lname">Last Name</label>
+                                                <input class="form-control" type="text" name="lname" id="" value=<?php echo $storestaffs['stafflname'];?> required>
+                                                <div class="invalid-feedback">Please enter a valid last name.</div>
+                                            </div>
+                                            <div class="addstaffinput">
+                                                <label class="form-label" for="contactno">Contact Number</label>
+                                                <input class="form-control" type="number" name="contactno" id="" value=<?php echo $storestaffs['staffcontactno'];?> required>
+                                                <div class="invalid-feedback">Please enter a valid contact number.</div>
+                                            </div>
+                                            
+                                        </div>
+                                        <?php if($storestaffs['staffrole']!='Owner'){ ?>
+                                        <label class="form-label" for="role">Role</label>
+                                        <select name="role" id="role" class="form-select">
+                                            <option value="Cashier" <?php if($storestaffs['staffrole']=='Cashier'){ echo 'selected';}?>>Cashier</option>
+                                            <option value="Manager" <?php if($storestaffs['staffrole']=='Manager'){ echo 'selected';}?>>Manager</option>
+                                            <option value="Cook" <?php if($storestaffs['staffrole']=='Cook'){ echo 'selected';}?>>Cook</option>
+                                            <option value="Server" <?php if($storestaffs['staffrole']=='Server'){ echo 'selected';}?>>Server</option>
+                                            <option value="Server" <?php if($storestaffs['staffrole']=='Owner'){ echo 'selected';}?>>Owner</option>
+                                        </select>
+                                        <br>
+                                        
+                                        <p class="formtxt">Login Credentials</p>
+                                        <div class="logincred">
+                                            <div class="addstaffinput">
+                                                <label class="form-label" for="email">Email Address</label>
+                                                <input class="form-control" type="email" name="email" id="" value=<?php echo $storestaffs['staffemail']; ?> required>
+                                                <div class="invalid-feedback">Please enter a valid email address.</div>
+                                            </div>
+                                            <div class="addstaffinput">
+                                                <label class="form-label" for="password">Password</label>
+                                                <input class="form-control" type="password" name="password" id="">
+                                                <input class="form-control" hidden type="number" name="staffid" id="" value=<?php echo $storestaffs['staffid']; ?> required>
+                                                <div class="invalid-feedback">Please enter a valid password.</div>
+                                            </div>
+                                            
+                                        </div>
+                                        <?php } ?>
+                                        
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary addstaffsubmit">Save changes</button>
+                                </div>
+                                </form>
+                                </div>
+                            </div>
+                        </div>
                         <?php
                         $rank=$rank+1;
                         
@@ -72,85 +151,92 @@
 
         </div>
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="addstaffmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal modaladd fade" id="addstaffstore" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog addstaffmodaldialog">
+            <div class="modal-content addstaffmodalcontent">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Staff</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="../database/addstaff.php" method="POST" class="needs-validation" novalidate>
+            <div class="modal-body addstaffmodalbody">
                 
-            <div class="modal-content">
+                    <p class="formtxt">Personal Information</p>
+                    <div class="persoinfo">
+                        <div class="addstaffinput">
+                            <label class="form-label" for="fname">First Name </label>
+                            <input class="form-control" type="text" name="fname" id="fname" required>
+                            <div class="invalid-feedback">Please enter a valid first name.</div>
+                        </div>
+                        <div class="addstaffinput">
+                            <label class="form-label"  for="mname">Middle Name <span class="optional">(Optional)</span></label>
+                            <input class="form-control" type="text" name="mname" id="mname">
             
-            <div class="modal-body">
-                <div class="modaltitle">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Store</h5>
-                </div>
+                        </div>
+                        <div class="addstaffinput">
+                            <label class="form-label" for="lname">Last Name</label>
+                            <input class="form-control" type="text" name="lname" id="" required>
+                            <div class="invalid-feedback">Please enter a valid last name.</div>
+                        </div>
+                        <div class="addstaffinput">
+                            <label class="form-label" for="contactno">Contact Number</label>
+                            <input class="form-control" type="number" name="contactno" id="" required>
+                            <div class="invalid-feedback">Please enter a valid contact number.</div>
+                        </div>
+                        
+                    </div>
+                    <label class="form-label" for="role">Role</label>
+                    <select name="role" id="role" class="form-select">
+                        <option value="Cashier">Cashier</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Cook">Cook</option>
+                        <option value="Server">Server</option>
+                    </select>
+                    <br>
+                    <p class="formtxt">Login Credentials</p>
+                    <div class="logincred">
+                        <div class="addstaffinput">
+                            <label class="form-label" for="email">Email Address</label>
+                            <input class="form-control" type="email" name="email" id="">
+                        </div>
+                        <div class="addstaffinput">
+                            <label class="form-label" for="password">Password</label>
+                            <input class="form-control" type="password" name="password" id="" required>
+                            <div class="invalid-feedback">Please enter a valid contact number.</div>
+                        </div>
+                        
+                    </div>
                     
                 
-                <form action="../database/addstore.php" method="POST" enctype="multipart/form-data">
-                    <div class="upperaddacc">
-                        
-                    <div class="addacclogo" style="background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(''); background-position: center; background-size: cover;">
-                            
-                            <label for="file" class="btn uploadbtn"><i class='bx bx-upload'></i>Upload</label>
-                            <input id="file" name="storepic" type="file" onchange="previewimg(this);">
-                            
-                        </div>
-                        <div class="storeinfo">
-                        <h4 class="ownerdetailstext">Store Details</h4>
-                            <div class="storeinforow">
-                                <div class="labelinput">
-                                    <label for="" class="form-label">Store Name</label>
-                                    <input type="text" class="form-control" name="storename" id="" placeholder="">
-                                </div>
-                                <div>
-                                    <label for="" class="form-label">Contact</label>
-                                    <input type="number" name="ownercontact" class="form-control ownercontact" id="" placeholder="">
-                                </div>
-                            </div>
-                            <div class="storeinfodescription">
-                                <label for="" class="form-label">Description/Tagline</label>
-                                <input type="text" name="storedescription" class="form-control" id="" placeholder="">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="addstorebelow">
-                        <h4 class="ownerdetailstext">Owner Details</h4>
-                        <div class="storeinforow">
-                            
-                            <div class="labelinput">
-                                <label for="" class="form-label">First Name</label>
-                                <input type="text" name="ownerfname" class="form-control" id="" placeholder="">
-                            </div>
-                            <div class="labelinput">
-                                <label for="" class="form-label">Middle Name</label>
-                                <input type="text" name="ownermname" class="form-control" id="" placeholder="">
-                            </div>
-                            <div class="labelinput labelinputright">
-                                <label for="" class="form-label">Last Name</label>
-                                <input type="text" name="ownerlname" class="form-control" id="" placeholder="">
-                            </div>
-                            
-                        </div>
-                        <div class="storeinforow">
-                            
-                            <div class="labelinput">
-                                <label for="" class="form-label">Email</label>
-                                <input type="email" name="owneremail" class="form-control" id="" placeholder="">
-                            </div>
-                            <div class="labelinput labelinputright">
-                                <label for="" class="form-label">Password</label>
-                                <input type="password" name="ownerpassword"class="form-control" id="" placeholder="">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary greenbtn">Add Store</button>
-                    </div>
-                </form>
             </div>
-            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary addstaffsubmit">Save changes</button>
+            </div>
+            </form>
             </div>
         </div>
     </div>
+    <?php if (isset($_SESSION['msg']) && $_SESSION['msg']=='editstaff'): ?>
+        <script>
+            setTimeout(function() {
+                $('.updated').removeClass('d-none').fadeIn(1000, function() {
+                    $(this).delay(3000).fadeOut(1000); 
+                });
+            }, 1000);
+        </script>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['msg']) && $_SESSION['msg']=='addstaff'): ?>
+        <script>
+            setTimeout(function() {
+                $('.staffadded1').removeClass('d-none').fadeIn(1000, function() {
+                    $(this).delay(3000).fadeOut(1000); 
+                });
+            }, 1000);
+        </script>
+    <?php endif; ?>
+
     <script>
     $(document).ready(function() {
        
@@ -158,7 +244,7 @@
         var dataTable = $('#dataTable').DataTable({
            
             lengthChange: false,  
-            pageLength: 10, 
+            pageLength: 8, 
             paging: true,  
             pagingType: 'simple',
             language: {
@@ -173,6 +259,82 @@
             dataTable.columns(3).search(role).draw();
         });
     });
+</script>
+<script>
+    (function () {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+        }, false)
+        })
+        
+        var nameFields = document.querySelectorAll('.modal input[type="text"]:not([readonly]), .modal input[type="text"]:not([readonly])');
+
+        nameFields.forEach(function(field) {
+            field.addEventListener('input', function() {
+                var sanitizedValue = field.value.replace(/[^A-Za-z\s]/g, '');
+                if (field.value !== sanitizedValue) {
+                    field.value = sanitizedValue;
+                }
+            });
+        });
+    })()
+</script>
+<script>
+    
+    $(document).on('submit', '.modaladd form', function(e) {
+        e.preventDefault(); 
+        var formData = new FormData(this); 
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: $(this).attr('method'), 
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                
+                $('#addstaffstore').modal('hide'); 
+                window.location.reload();
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).on('shown.bs.modal', '.modaledit', function (e) {
+    var form = $(this).find('form');
+
+    form.on('submit', function(e) {
+        e.preventDefault(); 
+        var formData = new FormData(this); 
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: $(this).attr('method'), 
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                $('.modaledit').modal('hide'); 
+                window.location.reload();
+            }
+
+        });
+    });
+});
+
+
+
 </script>
 
 

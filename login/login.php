@@ -25,7 +25,7 @@
                 <div class="alert alert-danger" role="alert">
                 <?php if ($_SESSION['error']=='incorrect'){ echo 'Incorrect email or password.';} else{ echo 'No user found.';}?>
                 </div>
-            <?php } ?>
+            <?php } session_destroy(); ?>
             
             <label class="login-label" for="">Email</label><br>    
             <input class="form-control" id="login-input" type="email" name="email" id="">
