@@ -66,7 +66,16 @@
                         <td class="ranktxt"><?php echo $rank ?></td>
                         <td class="notranktxt"><?php if (isset($storeitem['name'])){echo $storeitem['name'];}?></td>
                         <td class="notranktxt"><?php if (isset($storeitem['category'])){echo $storeitem['category'];}?></td>
-                        <td class="notranktxt"><i class='bx bxs-trash-alt' ></i><i class='bx bxs-edit-alt' ></i></td>
+                        <td class="notranktxt">
+                            <i class='bx bxs-trash-alt'></i>
+                            <form action="../store/editmenu.php" method="post" style="display: inline;">
+                                <input type="hidden" name="editstoreid" value="<?php echo $storeitem['id']; ?>">
+                                <button type="submit" style="border: none; background: none; padding: 0; cursor: pointer;">
+                                    <i class='bx bxs-edit-alt'></i>
+                                </button>
+                            </form>
+                        </td>
+
                         </tr>
                         <?php
                         $rank=$rank+1;

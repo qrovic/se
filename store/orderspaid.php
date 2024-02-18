@@ -20,7 +20,7 @@
         </div>
         <div class="ordersnumdiv">
             <div class="orderserved">
-                <p class="orderservednum"></p>
+                <p class="orderservednum">0</p>
                 <div class="orderservedtxt">
                     <p class="ordertxt">SERVED</p>
                     <p class="ordertxt">ORDERS</p>
@@ -28,7 +28,7 @@
                 
             </div>
             <div class="orderpending">
-                <p class="orderpeningnum"></p>
+                <p class="orderpeningnum">0</p>
                 <div class="orderpendingtxt">
                     <p class="ordertxt">PREPARING</p>
                     <p class="ordertxt">ORDERS</p>

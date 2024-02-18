@@ -363,6 +363,18 @@ if (isset($_SESSION['storestoreid'])){
     $stmt->execute();  
     $storedeets = $stmt->fetchAll();
 }
+
+//edit store
+if (isset($_POST['editstoreid'])){
+    $itemid=$_POST['editstoreid'];
+
+    $sqledititem = "SELECT * FROM item JOIN itemprice ON itemprice.itemid=item.id WHERE item.id=:itemid";
+    $stmt = $pdo->prepare($sqledititem); 
+    $stmt->bindParam(':itemid', $itemid, PDO::PARAM_INT);
+    $stmt->execute();  
+    $edititem = $stmt->fetchAll();
+}
+
 ?>
 
 
