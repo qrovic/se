@@ -27,17 +27,17 @@
                     <a class="<?php if ($currentpage==='overview'){ echo 'active';}?>" href="overview.php">Overview</a>
                 </li>
                 <?php } ?>
-                <?php if($_SESSION['role']=='Cashier' || $_SESSION['role']=='Manager' || $_SESSION['role']=='Owner'){ ?>
+                <?php if($_SESSION['role']=='Cashier' || $_SESSION['role']=='Manager'){ ?>
                 <li class="options">
                     <a class="<?php if ($currentpage==='payment'){ echo 'active';}?>" href="orders.php">Payment</a>
                 </li>
                 <?php } ?>
-                <?php if($_SESSION['role']=='Cook' || $_SESSION['role']=='Manager' || $_SESSION['role']=='Owner'){ ?>
+                <?php if($_SESSION['role']=='Cook' || $_SESSION['role']=='Manager'){ ?>
                 <li class="options">
                     <a class="<?php if ($currentpage==='orders'){ echo 'active';}?>" href="orderspaid.php">Orders</a>
                 </li>
                 <?php } ?>
-                <?php if($_SESSION['role']=='Cashier' || $_SESSION['role']=='Manager' || $_SESSION['role']=='Owner'){ ?>
+                <?php if($_SESSION['role']=='Cashier' || $_SESSION['role']=='Manager'){ ?>
                 <li class="options">
                     <a class="<?php if ($currentpage==='cashier'){ echo 'active';}?>" href="cashier.php">Cashier</a>
                 </li>

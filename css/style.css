@@ -13,7 +13,7 @@ body{
     height: 100vh;
 }
 .active{
-    font-weight: bold !important;
+    font-weight: 600 !important;
 }
 div.left{
     background-color: #02BF63;
@@ -44,7 +44,7 @@ li.logout{
 }
 li.options{
     text-align: center;
-    margin-bottom: 5px !important;
+    margin-bottom: 10px !important;
 }
 
 li.options>a{
@@ -1796,6 +1796,49 @@ td.price span{
 }
 .cartfooterstorecart{
     width: 80%;
+}
+.uppersetting{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.leftupper{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 100%;
+}
+.lowersetting{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-top: 30px;
+    
+}
+.lowerlower{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+.lowerrow{
+   
+    margin-right: 20px;
+}
+.formsetting{
+    margin: 0px 80px;
+    margin-top: 20px !important;
+}
+.storedetailssetting{
+    width: 100%;
+}
+.labeltxt{
+    font-size: 1.5rem;
+    margin-bottom: 7px;
+}
+.editstorelogo{
+    min-height: 25lvh;
+    min-width: 18%;
 }
 @media (orientation: portrait) {
     .modalbody{
