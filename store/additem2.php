@@ -99,7 +99,7 @@
         require_once('../include/sidebarstore.php');
     ?>
     <div class="right">
-        <div class="addstore">
+        <div class="additemdiv">
         <div class="sizedetails headeradditem2">
                            
             <p class="sizetxt varietytxtheader"></p>
@@ -108,7 +108,7 @@
                 <p class="pricestocktxt">Price</p>
                 
             </div>
-
+            
             <div class="addstoreinput"> 
                 <p class="pricestocktxt">Stock</p>
             </div>

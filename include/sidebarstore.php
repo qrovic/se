@@ -8,9 +8,18 @@
     if (!isset($_SESSION['storestoreid'])){
         header('Location:../login/login.php');
     }
+    require_once("../database/newcustomer.php");
+    require_once('../database/popular.php');
 ?>
 <div class="left">
-        <img class="superadminstorelogo" src="../resources/foodparklogo.png" alt="hhee">
+        <?php foreach ($storedeets AS $storedeet){ 
+            $_SESSION['storename']=$storedeet['name']; 
+            $_SESSION['storeid']=$storedeet['id']; 
+            $storename=$_SESSION['storename'];
+            ?>
+            
+        <img class="superadminstorelogo" src="../resources/<?php echo $storedeet['pic'];?>" alt="hhee">
+        <?php } ?>
         <div class="options">
             <ul class="options">
                 <?php if($_SESSION['role']=='Manager' || $_SESSION['role']=='Owner'){ ?>
@@ -26,6 +35,11 @@
                 <?php if($_SESSION['role']=='Cook' || $_SESSION['role']=='Manager' || $_SESSION['role']=='Owner'){ ?>
                 <li class="options">
                     <a class="<?php if ($currentpage==='orders'){ echo 'active';}?>" href="orderspaid.php">Orders</a>
+                </li>
+                <?php } ?>
+                <?php if($_SESSION['role']=='Cashier' || $_SESSION['role']=='Manager' || $_SESSION['role']=='Owner'){ ?>
+                <li class="options">
+                    <a class="<?php if ($currentpage==='cashier'){ echo 'active';}?>" href="cashier.php">Cashier</a>
                 </li>
                 <?php } ?>
                 <?php if($_SESSION['role']=='Manager' || $_SESSION['role']=='Owner'){ ?>

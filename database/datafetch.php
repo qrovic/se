@@ -170,6 +170,7 @@ if (isset($_POST['search'])) {
 if (isset($_SESSION['orderid'])){
     $orderid = $_SESSION['orderid'];
 }
+
 $sqlcategories = "SELECT DISTINCT category FROM cart LEFT JOIN itemprice ON itemprice.id=cart.itempriceid JOIN item ON item.id=itemprice.itemid JOIN store ON item.storeid=store.id WHERE store.name=:storename";
 $stmtcategories = $pdo->prepare($sqlcategories);
 $stmtcategories->bindParam(':storename', $storename, PDO::PARAM_STR);
@@ -264,17 +265,18 @@ if (isset($_SESSION['storename'])) {
     $stmtdesserts->execute();
     $Desserts = $stmtdesserts->fetchAll();
 
-    $sqlcombos = "SELECT item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN popular ON popular.itemid=item.id JOIN store ON item.storeid = store.id WHERE store.name=:storename";
+    $sqlcombos = "SELECT item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN popular ON popular.itemid=item.id JOIN store ON item.storeid = store.id WHERE category='Combos' AND store.name=:storename";
     $stmtcombos = $pdo->prepare($sqlcombos);
     $stmtcombos->bindParam(':storename', $storename, PDO::PARAM_STR);
     $stmtcombos->execute();
     $Combos = $stmtcombos->fetchAll();
 
-    $sqlpopular = "SELECT item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN popular ON popular.itemid=item.id JOIN store ON item.storeid = store.id WHERE store.name=:storename";
+    $sqlpopular = "SELECT item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN popular ON popular.itemid=item.id JOIN store ON item.storeid = store.id WHERE category='Popular' AND store.name=:storename";
     $stmtpopular = $pdo->prepare($sqlpopular);
     $stmtpopular->bindParam(':storename', $storename, PDO::PARAM_STR);
     $stmtpopular->execute();
     $Popular = $stmtpopular->fetchAll();
+    
 }
 
 #fetch all stores with items and are active
@@ -326,32 +328,62 @@ if (isset($_SESSION['storestoreid'])){
 }
 
 //store sales
-$sqlsuperadminsales="SELECT store.name AS storename, IFNULL(SUM(orderitems.quantity * itemprice.price), 0) AS total_sales, IFNULL(SUM(orderitems.quantity), 0) AS total_quantity FROM store LEFT JOIN item ON store.id = item.storeid LEFT JOIN itemprice ON item.id = itemprice.itemid LEFT JOIN orderitems ON itemprice.id = orderitems.itempriceid GROUP BY storename";
+$sqlsuperadminsales="SELECT store.name AS storename, IFNULL(SUM(orderitems.quantity * itemprice.price), 0) AS total_sales, IFNULL(SUM(orderitems.quantity), 0) AS total_quantity FROM store LEFT JOIN item ON store.id = item.storeid LEFT JOIN itemprice ON item.id = itemprice.itemid LEFT JOIN orderitems ON itemprice.id = orderitems.itempriceid WHERE orderitems.status!='to_pay' GROUP BY storename";
 $stmt = $pdo->prepare($sqlsuperadminsales);
 $stmt->execute();
 $superadminsales = $stmt->fetchAll();
 
 //storesalesyearly
-$sqlsuperadminsalesyearly="SELECT store.name AS storename, IFNULL(SUM(orderitems.quantity * itemprice.price), 0) AS total_sales, IFNULL(SUM(orderitems.quantity), 0) AS total_quantity FROM store LEFT JOIN item ON store.id = item.storeid LEFT JOIN itemprice ON item.id = itemprice.itemid LEFT JOIN orderitems ON itemprice.id = orderitems.itempriceid AND YEAR(orderitems.datetime) = YEAR(CURDATE()) GROUP BY storename";
+$sqlsuperadminsalesyearly="SELECT store.name AS storename, IFNULL(SUM(orderitems.quantity * itemprice.price), 0) AS total_sales, IFNULL(SUM(orderitems.quantity), 0) AS total_quantity FROM store LEFT JOIN item ON store.id = item.storeid LEFT JOIN itemprice ON item.id = itemprice.itemid LEFT JOIN orderitems ON itemprice.id = orderitems.itempriceid WHERE orderitems.status!='to_pay' AND YEAR(orderitems.datetime) = YEAR(CURDATE()) GROUP BY storename";
 $stmt = $pdo->prepare($sqlsuperadminsalesyearly);
 $stmt->execute();
 $superadminsalesyearly = $stmt->fetchAll();
 
-
-
 //storesalesmonthlu
-$sqlsuperadminsalesmonthly="SELECT store.name AS storename, IFNULL(SUM(orderitems.quantity * itemprice.price), 0) AS total_sales, IFNULL(SUM(orderitems.quantity), 0) AS total_quantity FROM store LEFT JOIN item ON store.id = item.storeid LEFT JOIN itemprice ON item.id = itemprice.itemid LEFT JOIN orderitems ON itemprice.id = orderitems.itempriceid AND YEAR(orderitems.datetime) = YEAR(CURDATE()) AND MONTH(orderitems.datetime) = MONTH(CURDATE()) GROUP BY storename";
+$sqlsuperadminsalesmonthly="SELECT store.name AS storename, IFNULL(SUM(orderitems.quantity * itemprice.price), 0) AS total_sales, IFNULL(SUM(orderitems.quantity), 0) AS total_quantity FROM store LEFT JOIN item ON store.id = item.storeid LEFT JOIN itemprice ON item.id = itemprice.itemid LEFT JOIN orderitems ON itemprice.id = orderitems.itempriceid WHERE orderitems.status!='to_pay' AND YEAR(orderitems.datetime) = YEAR(CURDATE()) AND MONTH(orderitems.datetime) = MONTH(CURDATE()) GROUP BY storename";
 $stmt = $pdo->prepare($sqlsuperadminsalesmonthly);
 $stmt->execute();
 $superadminsalesmonthly = $stmt->fetchAll();
 
-
 //storsalesdaily
-$sqlsuperadminsalesdaily="SELECT store.name AS storename, IFNULL(SUM(orderitems.quantity * itemprice.price), 0) AS total_sales, IFNULL(SUM(orderitems.quantity), 0) AS total_quantity FROM store LEFT JOIN item ON store.id = item.storeid LEFT JOIN itemprice ON item.id = itemprice.itemid LEFT JOIN orderitems ON itemprice.id = orderitems.itempriceid AND DATE(orderitems.datetime) = CURDATE() WHERE orderitems.status='collect' GROUP BY storename";
+$sqlsuperadminsalesdaily="SELECT store.name AS storename, IFNULL(SUM(orderitems.quantity * itemprice.price), 0) AS total_sales, IFNULL(SUM(orderitems.quantity), 0) AS total_quantity FROM store LEFT JOIN item ON store.id = item.storeid LEFT JOIN itemprice ON item.id = itemprice.itemid LEFT JOIN orderitems ON itemprice.id = orderitems.itempriceid AND DATE(orderitems.datetime) = CURDATE() WHERE orderitems.status!='to_pay' GROUP BY storename";
 
 $stmt = $pdo->prepare($sqlsuperadminsalesdaily);
 $stmt->execute();
 $superadminsalesdaily = $stmt->fetchAll();
+
+
+if(isset($_SESSION['storestoreid'])){
+    $storeid=$_SESSION['storestoreid'];
+    
+    $sqlstoresales="SELECT store.name AS storename, IFNULL(SUM(orderitems.quantity * itemprice.price), 0) AS total_sales, IFNULL(SUM(orderitems.quantity), 0) AS total_quantity FROM store LEFT JOIN item ON store.id = item.storeid LEFT JOIN itemprice ON item.id = itemprice.itemid LEFT JOIN orderitems ON itemprice.id = orderitems.itempriceid WHERE orderitems.status!='to_pay' AND store.id=:storeid";
+    $stmt = $pdo->prepare($sqlstoresales);
+    $stmt->bindParam(':storeid', $storeid , PDO::PARAM_STR);
+    $stmt->execute();
+    $storesales = $stmt->fetchAll();
+
+    //storesalesyearly
+    $sqlstoresalesyearly="SELECT store.name AS storename, YEAR(orderitems.datetime) AS day, IFNULL(SUM(orderitems.quantity * itemprice.price), 0) AS total_sales, IFNULL(SUM(orderitems.quantity), 0) AS total_quantity FROM store LEFT JOIN item ON store.id = item.storeid LEFT JOIN itemprice ON item.id = itemprice.itemid LEFT JOIN orderitems ON itemprice.id = orderitems.itempriceid WHERE orderitems.status != 'to_pay' AND store.id = :storeid GROUP BY YEAR(orderitems.datetime)";
+    $stmt = $pdo->prepare($sqlstoresalesyearly);
+    $stmt->bindParam(':storeid', $storeid , PDO::PARAM_STR);
+    $stmt->execute();
+    $storesalesyearly = $stmt->fetchAll();
+
+    //storesalesmonthlu
+    $sqlstoresalesmonthly="SELECT store.name AS storename, MONTHNAME(orderitems.datetime) AS day, IFNULL(SUM(orderitems.quantity * itemprice.price), 0) AS total_sales, IFNULL(SUM(orderitems.quantity), 0) AS total_quantity FROM store LEFT JOIN item ON store.id = item.storeid LEFT JOIN itemprice ON item.id = itemprice.itemid LEFT JOIN orderitems ON itemprice.id = orderitems.itempriceid WHERE orderitems.status != 'to_pay' AND YEAR(orderitems.datetime) = YEAR(CURDATE()) AND store.id = :storeid GROUP BY MONTH(orderitems.datetime)";
+    $stmt = $pdo->prepare($sqlstoresalesmonthly);
+    $stmt->bindParam(':storeid', $storeid , PDO::PARAM_STR);
+    $stmt->execute();
+    $storesalesmonthly = $stmt->fetchAll();
+
+    //storsalesdaily
+    $sqlstoresalesdaily="SELECT store.name AS storename, DAY(orderitems.datetime) AS day, IFNULL(SUM(orderitems.quantity * itemprice.price), 0) AS total_sales, IFNULL(SUM(orderitems.quantity), 0) AS total_quantity FROM store LEFT JOIN item ON store.id = item.storeid LEFT JOIN itemprice ON item.id = itemprice.itemid LEFT JOIN orderitems ON itemprice.id = orderitems.itempriceid WHERE orderitems.status != 'to_pay' AND YEAR(orderitems.datetime) = YEAR(CURDATE()) AND MONTH(orderitems.datetime) = MONTH(CURDATE()) AND store.id = :storeid GROUP BY DAY(orderitems.datetime)";
+    $stmt = $pdo->prepare($sqlstoresalesdaily);
+    $stmt->bindParam(':storeid', $storeid , PDO::PARAM_STR);
+    $stmt->execute();
+    $storesalesdaily = $stmt->fetchAll();
+
+}
 
 /*fetch store details*/
 if (isset($_SESSION['storestoreid'])){
@@ -368,11 +400,35 @@ if (isset($_SESSION['storestoreid'])){
 if (isset($_POST['editstoreid'])){
     $itemid=$_POST['editstoreid'];
 
-    $sqledititem = "SELECT * FROM item JOIN itemprice ON itemprice.itemid=item.id WHERE item.id=:itemid";
+    $sqledititem = "SELECT DISTINCT item.*, item.id 
+    FROM item 
+    JOIN itemprice ON itemprice.itemid = item.id 
+    WHERE item.id = :itemid
+    ";
     $stmt = $pdo->prepare($sqledititem); 
     $stmt->bindParam(':itemid', $itemid, PDO::PARAM_INT);
     $stmt->execute();  
     $edititem = $stmt->fetchAll();
+
+    $sqledititemvariant = "SELECT DISTINCT itemprice.variant FROM item JOIN itemprice ON itemprice.itemid=item.id WHERE item.id=:itemid";
+    $stmt = $pdo->prepare($sqledititemvariant); 
+    $stmt->bindParam(':itemid', $itemid, PDO::PARAM_INT);
+    $stmt->execute();  
+    $edititemvariant = $stmt->fetchAll();
+
+    $sqledititemsize = "SELECT DISTINCT itemprice.size FROM item JOIN itemprice ON itemprice.itemid=item.id WHERE item.id=:itemid";
+    $stmt = $pdo->prepare($sqledititemsize); 
+    $stmt->bindParam(':itemid', $itemid, PDO::PARAM_INT);
+    $stmt->execute();  
+    $edititemsize = $stmt->fetchAll();
+
+
+    $sqledititeminventory = "SELECT DISTINCT itemprice.*, itemprice.id AS itempriceid FROM item JOIN itemprice ON itemprice.itemid=item.id WHERE item.id=:itemid";
+    $stmt = $pdo->prepare($sqledititeminventory); 
+    $stmt->bindParam(':itemid', $itemid, PDO::PARAM_INT);
+    $stmt->execute();  
+    $edititeminventory = $stmt->fetchAll();
+   
 }
 
 ?>

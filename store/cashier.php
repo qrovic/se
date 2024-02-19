@@ -1,45 +1,31 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<?php
-    session_start();
-    if (!isset($_SESSION['orderid'])){
-        header('Location: ../kiosk/stores.php');
-    }
+
+<body class="storebody cashierbody">
     
-    if (isset($_POST['storeid'])){
-        $_SESSION['storeid']=$_POST['storeid'];
-        $_SESSION['storename']=$_POST['storename'];
-    }
-    require_once ("../include/head.php");
-    require_once('../include/js.php');
-    require_once('../database/datafetch.php');
+    <?php
+        $currentpage='cashier';
+        require_once('../include/sidebarstore.php');
+
+    ?>
     
-    if(isset($_POST['storename'])){
-        $storename=$_SESSION['storename'];
-    }
-    
-?>
-<body class="storebody">
-    <div class="header">
-        <img class="kioskstorelogo" src="../resources/foodparklogo.png" alt="hhee" onclick="window.location.href='stores.php'">
-        <p class="orderidtxt"><?php echo 'Order Number: ' . $_SESSION['orderid'];?></p>
-        <div class="cartbag" onclick="window.location.href='../kiosk/cart.php'">
-            <div class="bx-shopping-bag-container">
-                <i class='bx bx-shopping-bag'></i>
-                <div class="cart-count">
-                    <span class="cart-count-number" id="cartCount"></span>
+    <div class="right"> 
+        <div class="header headercashier">
+            <div class="cartbag" onclick="window.location.href='../store/storecart.php'">
+                <div class="bx-shopping-bag-container cashierbag">
+                    <i class='bx bx-shopping-bag shoppingbag' style='color: black;'></i>
+                    <div class="cart-count shoppingbagcircle" style='background-color: black;'>
+                        <span class="cart-count-number cartcountnumber" id="cartCount" style='color: white;'></span>
+                    </div>
+                    
                 </div>
-                
             </div>
         </div>
-    </div>
-    <div class="storeheader">
-        <div class="menustorename">
-            <p><?php if (isset($_SESSION['storename'])) { echo $_SESSION['storename']; } ?></p>
-        </div>
-        <div class="menusearch">
-        <form action="menusearch.php" method="POST" id="searchforms">
+        <div class="storeheader">
+       
+        <div class="menusearch cashiersearch">
+        <form action="cashiersearch.php" method="POST" id="searchforms">
             <input class="menusearch" type="text" name="itemsearch" id="" placeholder="Search for stores and menu">
             <input type="text" class="" hidden name="storename" value="<?php echo $_SESSION['storename'];?>">
             </form>
@@ -62,14 +48,14 @@
         
     </div>
     <div class="storemenus">
-        <div class="storeitems">
+        <div class="storeitems cashieritems">
             <?php
             if ($categories) {
                 foreach ($categories as $category) {
                     $item = $category['category'];
                     ?>
                     <div class="categoryitem">
-                       
+                        <script>console.log('<?php echo $item;?>')</script>
                         <section id="<?php echo $category['category']; ?>">
                         <div class="categoryname">
                             <p><?php echo $category['category']; ?></p>
@@ -77,8 +63,8 @@
                         <div class="itemsdiv">
                         <?php
                         foreach ($$item as $nope) {
-                            
-                        ?>
+                        
+                        ?>  
                             <div class="modal fade" id="<?php echo str_replace(' ', '', $nope['item_name']); ?>" data-currentmenuid="<?php echo $nope['item_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog menumodal">
                                     <div class="modal-content menumodalcontent">
@@ -87,7 +73,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body modalbody">
-                                        
+                                    <script>console.log('itemname')</script>
                                             <?php 
                                                 include('../database/fetchmenudetails.php');
                                             ?>
@@ -173,7 +159,7 @@
             ?>
         </div>
     </div>
-
+</div>
 <script src="../js/menujs.js"></script>                     
 </body>
 </html>

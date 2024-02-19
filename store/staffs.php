@@ -20,6 +20,9 @@
         <div class="alert alert-success staffadded updated d-none" role="alert">
             <strong class="strongsuccess">Success! </strong>A staff details has been edited.
     </div>   
+    <div class="alert alert-success staffadded deletestaff d-none" role="alert">
+            <strong class="strongsuccess">Success! </strong>A staff details has been removed.
+    </div>   
         <div class="productrank">
        <br>
         <p class="stafftxt">Staffs</p>
@@ -66,7 +69,14 @@
                         <td class="notranktxt"><?php if (isset($storestaffs['stafffname'])){echo $storestaffs['stafffname'];}?></td>
                         <td class="notranktxt"><?php if (isset($storestaffs['staffcontactno'])){echo $storestaffs['staffcontactno'];}?></td>
                         <td class="notranktxt"><?php if (isset($storestaffs['staffrole'])){echo $storestaffs['staffrole'];}?></td>
-                        <td class="notranktxt"><i class='bx bxs-trash-alt' data-bs-toggle="modal" data-bs-target="#addstasffstore"></i><i class='bx bxs-edit-alt' data-bs-toggle="modal" data-bs-target="#addstaffstore<?php echo $storestaffs['staffid'];?>"></i></td>
+                        <td class="notranktxt">
+                        <form action="../database/deletestaff.php" method="post" style="display: inline;">
+                            <input type="hidden" name="editstaffid" value="<?php echo $storestaffs['staffid']; ?>">
+                            <button type="submit" style="border: none; background: none; padding: 0; cursor: pointer;">
+                                <i class='bx bxs-trash-alt'></i>
+                            </button>
+                        </form>
+                        <i class='bx bxs-edit-alt' data-bs-toggle="modal" data-bs-target="#addstaffstore<?php echo $storestaffs['staffid'];?>"></i></td>
                         </tr>
                         <div class="modal modaledit fade" id="addstaffstore<?php echo $storestaffs['staffid'];?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog addstaffmodaldialog">
@@ -231,6 +241,16 @@
         <script>
             setTimeout(function() {
                 $('.staffadded1').removeClass('d-none').fadeIn(1000, function() {
+                    $(this).delay(3000).fadeOut(1000); 
+                });
+            }, 1000);
+        </script>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['msg']) && $_SESSION['msg']=='deletestaff'): ?>
+        <script>
+            setTimeout(function() {
+                $('.deletestaff').removeClass('d-none').fadeIn(1000, function() {
                     $(this).delay(3000).fadeOut(1000); 
                 });
             }, 1000);

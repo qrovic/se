@@ -15,6 +15,7 @@
     <?php
         $currentpage='overview';
         require_once('../include/sidebarstore.php');
+
     ?>
     <div class="right">
         <div class="storeinfooverview">

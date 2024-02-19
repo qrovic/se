@@ -116,8 +116,9 @@ label.login-label{
 /*Super admin*/
 .superadminstorelogo{
     
-   
-    width: 30lvh;
+    border-radius: 50%;
+    width: 25lvh;
+    height: 25lvh;
     
 }
 .storelogooverview{
@@ -381,14 +382,17 @@ label.login-label{
     
 }
 .addstore{
-    
+    display: flex;
+    justify-content: end;
+    align-items: center;
 }
 #add-store{
     background-color: #02BF63;
     border-color: #02BF63;
-    width: 15lvw;
-    height:10lvh;
-    border-radius: 30px 0 0 30px;
+    width: 12lvw;
+    height:8lvh;
+    margin-right: 20px;
+    border-radius: 20px;
     font-size: 1.2rem;
     font-weight: 700;
 }
@@ -1740,9 +1744,59 @@ td.price span{
 .strongsuccess{
     color: unset;
 }
+.chart-label{
+    text-align: center;
+}
+/*cashier*/
+.cashierbody{
+    flex-direction: row !important;
+}
+.cashierbag{
+    position: fixed;
+    right: 70px;
+    bottom: 50px;
+}
+.cart-count>.cartcountnumber{
+    color: white !important;
+    font-size: 1.5rem !important;
+}
+.shoppingbag{
+    font-size: 3rem !important;
 
-
-
+}
+.shoppingbagcircle{
+    height: 30px;
+    width: 30px;
+    top: 25px !important;
+    right: -15px !important;
+}
+.cashiersearch{
+    margin-top: 20px;
+}
+.cashieritems{
+    max-height: calc(85lvh) !important;
+    overflow-y: auto !important;
+}
+.storecartbody{
+    display: flex;
+    flex-direction: row;
+}
+.storecartcancel{
+    color: black !important;
+}
+.tablecartstore{
+    max-height: 90lvh !important;
+    overflow-y: auto;
+}
+.storecarttable{
+    padding: 0 20px !important;
+}
+.cartstoretxt{
+    margin:25px;
+}
+.cartfooterstorecart{
+    width: 80%;
+}
 @media (orientation: portrait) {
     .modalbody{
         max-height: 100lvh !important;

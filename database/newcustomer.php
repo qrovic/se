@@ -4,7 +4,9 @@
         session_start();
     }
     if (!isset($_SESSION['orderid'])){
+        if(isset($lastcustomerid)){
         $customerid=$lastcustomerid+1;
+        }
         $stmt = $pdo->prepare("SELECT id FROM customer WHERE id = :customerid");
         $stmt->bindParam(':customerid', $customerid);
         $stmt->execute();

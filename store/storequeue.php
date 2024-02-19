@@ -15,8 +15,7 @@
     }
 </style>
 <?php
-        $currentpage='queue';
-        require_once('../include/sidebarstore.php');
+        
     ?>
 <body class="storequeuebody">
     <div class="storequeueleft">

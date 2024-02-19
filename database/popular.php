@@ -9,6 +9,7 @@ if (!isset($_SESSION)) {
 try {
     foreach($allstores as $allstore){
         $storeid=$allstore['id'];
+
         $stmt = $pdo->prepare("SELECT COUNT(orderitems.customerid) AS customercount, item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic
         FROM item
         JOIN store ON item.storeid = store.id
@@ -41,9 +42,6 @@ try {
             $stmt_update->execute();
         }
     }
-    
-
-    
     
     
 } catch (PDOException $e) {

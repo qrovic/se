@@ -37,12 +37,12 @@
                             <option <?php if ($edititems['permcategory']=='Combos'){ echo 'selected';}?> value="Combos">Combos</option>  
                         </select>
                     </div>
-                    
+                    <?php } ?>
             </div>
             <div class="ownerdetails additemvariant" id="ownerdetails">
             
                 <p class="itemdetailstxt">Variations and Sizing</p>
-
+                
                 <label class="form-label" for="categories">Select Variation</label><br>
                 <div id="varietiesContainer">
                     <div class="form-check checkbox">
@@ -82,7 +82,7 @@
                     <input type="submit" id="submitbtn" class="btn btn-primary addsizebtngreensubmit" value="Set Variation Info">
                 </div>
                 </div>
-            <?php } ?>
+            
             </div>
             </form>  
         </div>
