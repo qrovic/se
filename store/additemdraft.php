@@ -32,9 +32,10 @@
     <div class="right">
         <h1>Add Store</h1>
         <div class="addstore">
+        <form action="../database/additemdraft.php" method="POST" enctype="multipart/form-data">
             <div class="storedetails">
                 <h2>Store Details</h2>
-                <form action="../database/additemdraft.php" method="POST" enctype="multipart/form-data">
+                
                     <div class="addstoreinput">
                         <label for="">Store ID:</label>
                         <select name="storeid" id="">

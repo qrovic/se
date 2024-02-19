@@ -1,0 +1,21 @@
+{ 
+
+  "name": "Meet N' Eat", 
+
+  "short_name": "Meet N' Eat", 
+
+  "start_url": "https://DomainName", 
+
+  "display": "standalone", 
+
+  "icons": [{ 
+
+    "src": "../resources/foodparklogo.png", 
+
+    "sizes": "512x512", 
+
+    "type": "image/png" 
+
+  }] 
+
+}

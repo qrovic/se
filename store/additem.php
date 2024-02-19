@@ -30,10 +30,11 @@
     </div>
     <div class="right">
         <h1>Add Store</h1>
-        <div class="addstore">
+        <div class="addstore additem">
+        <form action="../store/additem.php" method="POST" enctype="multipart/form-data">
             <div class="storedetails">
                 <h2>Store Details</h2>
-                <form action="../database/addstore.php" method="POST" enctype="multipart/form-data">
+                
                     <div class="addstoreinput">
                         <label for="">Store ID:</label>
                         <input type="number" name="storeid" id="">
@@ -44,7 +45,7 @@
                     </div>
                     <div class="addstoreinput">
                         <label for="">Category:</label>
-                        <select name="category" id="">
+                        <select name="itemcategory" id="">
                             <option value="Drinks">Drinks</option>
                             <option value="Drinks">Meals</option>
                             <option value="Drinks">Snacks</option>
@@ -53,25 +54,23 @@
                         </select>
                     </div>
                     <div class="addstoreinput">
-                        <label for="">Store Pic:</label>
+                        <label for="">Item Pic:</label>
                         <input type="file" name ="itempic" src="" alt="">
                     </div>
             </div>
             <div class="ownerdetails" id="ownerdetails">
                 <h2>Owner Details</h2>
-
-                <form id="itemForm">
+                    <button type="button" onclick="addVariant()">Add Variant</button>
                     <div class="addvariant" >
-                        <button type="button" onclick="addVariant()">Add Variant</button>
+
                         <label for="">Variant:</label>
                         <input type="text" name="itemvariants[]">
+                        <div class="size size-container" id="size-container">
 
-                        <div class="size-container" >
-                            <button type="button" class="addsizebtn" onclick="addSize(this)">Add Size</button>
-
-                            <div class="addstoreinput">
+                            <div class="addstoreinput addsizeinput">
                                 <label for="">Size:</label>
-                                <input type="text" name="itemsizes[]">
+                                <input type="text" class="samesize" name="itemsizes[]">
+                                
                             </div>
 
                             <div class="addstoreinput">
@@ -83,10 +82,15 @@
                                 <label for="">Stock:</label>
                                 <input type="number" name="itemstocks[]">
                             </div>
+
+                            <button type="button" class="deletesizebtn" onclick="deleteSize(this)">Delete Size</button>
                         </div>
+
+                        <button type="button" class="addsizebtn" onclick="addSize(this)">Add Size</button>
+                        <button type="button" class="deletevariantbtn" onclick="deleteVariant(this)">Delete Variant</button>
                     </div>
 
-                    <input class="btn btn-primary" type="submit" value="submit">
+                    <input class="btn btn-primary" type="submit" value="Submit">
                 </form>
             </div>
         </div>
@@ -114,33 +118,76 @@
                 </form>
             </div>
         </div>
-    </div>
-
-   
+    </div>   
 </body>
 
-<script>
-    var sizeContainerTemplate = document.querySelector('.size-container').cloneNode(true);
+<?php 
+$itemsizes = ($_POST['itemsizes']); 
+$itemvariants = ($_POST['itemvariants']); 
+var_dump($itemvariants);
+var_dump($itemsizes); ?>
+
+    <script>
+    $(document).on('input', '.addvariant .samesize', function () {
+        var newValue = $(this).val();
+
+        var closestSizeDiv = $(this).closest('.size');
+        var closestSizeClass = closestSizeDiv.attr('class');
+        var lastClass = closestSizeClass.split(' ').pop();
+
+        console.log('Changed input value:', newValue);
+        console.log('Last class of the closest div with .size:', lastClass);
+
+        $('.addvariant .' + lastClass + ' .addsizeinput .samesize').val(newValue);
+
+        console.log('Updated value (Size):', $('.addvariant .' + lastClass + ' .addsizeinput .samesize').val());
+    });
+
+
+
+
+
 
     function addVariant() {
-        var variantTemplate = document.querySelector('.addvariant');
-        var clone = variantTemplate.cloneNode(true);
-        clone.removeAttribute('hidden');
-
-        var sizeContainer = clone.querySelector('.size-container');
-        sizeContainer.removeAttribute('hidden');
-
-        document.getElementById('ownerdetails').appendChild(clone);
+        var variantContainer = $('.addvariant:first').clone();
+        variantContainer.find('input').val('');
+        $('.addvariant:last').after(variantContainer);
     }
-
     function addSize(button) {
-        var parentContainer = button.parentNode;
-        var clone = sizeContainerTemplate.cloneNode(true);
-        clone.removeAttribute('hidden');
+        var variantContainers = $('.addvariant');
+        variantContainers.each(function() {
+            var sizeContainer = $(this).find('.size-container:last');
+            var newSize = sizeContainer.clone();
 
-        parentContainer.appendChild(clone);
+            var index = $(this).find('.size-container').length;
+            newSize.addClass('size-container-' + index);
+
+            sizeContainer.after(newSize);
+        });
     }
-</script>
 
 
+    function deleteSize(button) {
+        var sizeElement = $(button).closest('.size');
+        var lastClass = sizeElement.attr('class').split(' ').pop();
+        alert('Deleting elements with last class: ' + lastClass);        
+        $('.' + lastClass).not(sizeElement).remove();
+    }
+
+
+
+
+
+
+    function deleteVariant(button) {
+        
+        var variantContainer = $(button).closest('.addvariant');
+
+        variantContainer.remove();
+    }
+
+
+
+    </script>
+    
 </html>

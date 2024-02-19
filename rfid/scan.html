@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFC Reader</title>
+</head>
+<body>
+    <h2>User Registration</h2>
+    <form id="registrationForm" method="post" action="register.php">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+        <label for="rfid">RFID Tag:</label>
+        <input type="text" id="rfid" name="rfid" readonly><br><br>
+        <button type="button" id="scanButton">Scan NFC Tag</button><br><br>
+        <button type="submit">Register</button>
+    </form>
+    <div id="log"></div>
+
+    <script src="nfc.js"></script>
+</body>
+<script>
+    const scanButton = document.getElementById("scanButton");
+const rfidInput = document.getElementById("rfid");
+const logDiv = document.getElementById("log");
+
+function log(message) {
+    const p = document.createElement("p");
+    p.textContent = message;
+    logDiv.appendChild(p);
+}
+
+scanButton.addEventListener("click", async () => {
+    log("User clicked scan button");
+    try {
+        const ndef = new NDEFReader();
+        await ndef.scan();
+        log("> Scan started");
+
+        ndef.addEventListener("readingerror", () => {
+            log("Argh! Cannot read data from the NFC tag. Try another one?");
+        });
+
+        ndef.addEventListener("reading", ({ message, serialNumber }) => {
+            log(`> Serial Number: ${serialNumber}`);
+            log(`> Records: (${message.records.length})`);
+
+        
+            const record = message.records[0];
+            const payload = record.data ? new TextDecoder().decode(record.data) : "Empty";
+            log(`Scanned RFID Tag: ${payload}`);
+            rfidInput.value = payload; 
+        });
+    } catch (error) {
+        log("Argh! " + error);
+    }
+});
+
+</script>
+</html>

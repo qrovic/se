@@ -1,58 +1,60 @@
 <?php
 require_once("config.php");
 
-$storeid = trim($_POST['storename']);
-$itemnames = $_POST['storedescription'];
-$itemcategory = trim($_POST['category']);
-$itempic = $_FILES['itempic']['name'];
+$storeid = ($_POST['storeid']);
+$itemname = $_POST['itemname'];
+$itemsizes = ($_POST['itemsizes2']);
+$itemvariants = ($_POST['itemvariants2']); 
+$itemcategory = trim($_POST['itemcategory']);
+$itempic = $_POST['itempic'];
+$itemstocks = ($_POST['itemstocks']); 
+$itemprices = ($_POST['itemprices']); 
 
-$itemsizes = trim($_POST['itemsize']); 
-$itemvariants = trim($_POST['itemvariant']); 
-$itemstocks = trim($_POST['itemstock']); 
-$itemprices = trim($_POST['itemprice']); 
-
-
-if (isset($_FILES["storepic"]) && $_FILES["storepic"]["error"] == 0) {
-    $destinationFolder = "../resources/";
-    $tempName = $_FILES["storepic"]["tmp_name"];
-    $destinationPath = $destinationFolder . $_FILES["storepic"]["name"];
-    if (move_uploaded_file($tempName, $destinationPath)) {
-        echo "okiiiii";
-    } else {
-        echo "di okay";
-    }
-} else {
-    echo "di okayy";
-}
 
 
 try {
-    $stmt = $pdo->prepare("INSERT INTO item (name, description, status, pic) VALUES (:storename, :storedescription, :storestatus, :storepic)");
-    $stmt->bindParam(':storename', $storename);
-    $stmt->bindParam(':storedescription', $storedescription);
-    $stmt->bindParam(':storestatus', $storestatus);
-    $stmt->bindParam(':storepic', $storepic);
+    $stmt = $pdo->prepare("INSERT INTO item (storeid, name, category, pic, permcategory) VALUES (:storeid, :name, :category, :pic, :category)");
+    $stmt->bindParam(':storeid', $storeid);
+    $stmt->bindParam(':name', $itemname);
+    $stmt->bindParam(':category', $itemcategory);
+    $stmt->bindParam(':pic', $itempic);
     $stmt->execute();
     $lastInsertedId = $pdo->lastInsertId();
 
-    for ($i = 0; $i < count($POST['itemprice']); $i++) {
+    $counter = 0;
+    foreach ($itemvariants as $key => $variant) {
+        echo "<br>";
+        echo $variant;
 
-        $itemsize = $itemsizes[$i];
-        $itemvariant = $itemvariants[$i];
-        $itemstock = $itemstocks[$i];
-        $itemprice = $itemprices[$i];
+        foreach ($itemsizes as $key1 => $size) {
+            echo "<br>";
+            echo $size;
+            echo "<br>";
 
-        $stmt = $pdo->prepare("INSERT INTO itemprice (storeid, fname, lname, mname, contactno, email, address, role) VALUES (:storeid, :ownerfname, :ownerlname, :ownermname, :ownercontact, :owneremail, :owneraddress, 'Owner')");
-        $stmt->bindParam(':storeid', $lastInsertedId);
-        $stmt->bindParam(':ownerfname', $storedescription);
-        $stmt->bindParam(':ownerlname', $ownerlname);
-        $stmt->bindParam(':ownermname', $ownermname);
-        $stmt->bindParam(':ownercontact', $ownercontact);
-        $stmt->bindParam(':owneremail', $owneremail);
-        $stmt->bindParam(':owneraddress', $owneraddress);
-        $stmt->execute();
+            $adjustedIndex = $counter % count($itemstocks);
+
+            $itemprice = $itemprices[$adjustedIndex];
+            $itemstock = $itemstocks[$adjustedIndex];
+
+            echo $itemprice;
+            echo $itemstock;
+
+            $stmt = $pdo->prepare("INSERT INTO itemprice (itemid, variant, size, price, stock) VALUES (:itemid, :variant, :size, :price, :stock)");
+            $stmt->bindParam(':itemid', $lastInsertedId);
+            $stmt->bindParam(':variant', $variant);
+            $stmt->bindParam(':size', $size); 
+            $stmt->bindParam(':price', $itemprice); 
+            $stmt->bindParam(':stock', $itemstock); 
+            $stmt->execute();
+            
+            $counter++;
+        }
+        echo "<br>";
+        echo "<br>";
     }
-    header('location: ../superadmin/store.php');
+
+
+    header('location: ../store/menus.php');
 } catch(PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
