@@ -3,5 +3,6 @@
 <script src="../vendor/dataTable-1.13.6/datatables.min.js"></script>
 <script src="../vendor/pdfmake-0.2.7/pdfmake.min.js"></script>
 <script src="../vendor/pdfmake-0.2.7/vfs_fonts.js"></script>
-<script src="https://code.responsivevoice.org/responsivevoice.js"></script>
+<script src="../vendor/chart.js"></script>
+<script src="../vendor/responsivevoice.js"></script>
 

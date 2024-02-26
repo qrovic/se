@@ -158,13 +158,16 @@ function updateCartCount() {
                                 $cartCount.text(Math.ceil(now));
                             },
                             complete: function () {
+                                document.getElementById('addtocartsound').play();
                                 $cartCount.addClass('show-animation');
                                 setTimeout(function () {
                                     $cartCount.removeClass('show-animation');
                                 }, 700);
                             }
                         });
+                        
                 }
+
             }
         },
         error: function (error) {
@@ -173,7 +176,7 @@ function updateCartCount() {
     });
 }
 updateCartCount();
-setInterval(updateCartCount, 1000);
+setInterval(updateCartCount, 500);
 
 
 
