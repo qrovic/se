@@ -133,6 +133,7 @@ function closeModals() {
     $('.modal').modal('hide');
 }
 
+countercount=0;
 function updateCartCount() {
     $.ajax({
         url: '../database/countcart.php',
@@ -158,7 +159,9 @@ function updateCartCount() {
                                 $cartCount.text(Math.ceil(now));
                             },
                             complete: function () {
-                                document.getElementById('addtocartsound').play();
+                                if (countercount > 1) {
+                                    document.getElementById('addtocartsound').play();
+                                }
                                 $cartCount.addClass('show-animation');
                                 setTimeout(function () {
                                     $cartCount.removeClass('show-animation');
@@ -174,6 +177,7 @@ function updateCartCount() {
             console.error('Error fetching cart count:', error);
         }
     });
+    countercount=countercount+1;
 }
 updateCartCount();
 setInterval(updateCartCount, 500);

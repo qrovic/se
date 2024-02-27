@@ -1840,6 +1840,120 @@ td.price span{
     min-height: 25lvh;
     min-width: 18%;
 }
+
+/*index*/
+body.index{
+    background-color:#009c51 !important;
+    min-width: 100% !important;
+    min-height: 100lvh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.indexorder,.indexlogin{
+    border: 20px solid;
+    border-radius: 50%;
+    min-width: 60lvh;
+    min-height: 60lvh;
+    display: flex;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    align-items: center;
+    box-shadow: 0 5px 10px rgba(58, 72, 70, 0.384), 10px 16px 32px 0px #022915d8;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.indexorder:hover, .indexlogin:hover { 
+
+    transform: scale(1.1); 
+
+}
+.indexorder,.indexlogin{
+    font-size: 15rem;
+}
+.indexholder{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.indexfont{
+    font-size: 2rem !important;
+    font-weight: 700;
+}
+/*kioskindex*/
+.indexkiosk{
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    background-color: #02BF63;
+}
+.indextop{
+    background-color:#02BF63;
+    height: 80lvh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.indexwelcome{
+    font-size: 4rem !important;
+    color: white;
+    font-weight: 900;
+    letter-spacing: 8px;
+}
+.indextap{
+    font-size: 3rem;
+    color: white;
+    font-weight: 600;
+}
+
+@keyframes breathe {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(1.1);
+      
+      opacity: 1;
+    }
+  }
+  
+  .indextap {
+    animation: breathe 1s infinite ease-in-out;
+  }
+  
+.indexkiosk {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    opacity: 1;
+    transition: opacity 1s;
+
+}
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.fadeOut {
+    animation: fadeOut 1s forwards;
+}
+
 @media (orientation: portrait) {
     .modalbody{
         max-height: 100lvh !important;
@@ -1898,5 +2012,58 @@ td.price span{
     .menumodal{
         max-width: 60% !important;
     }
+}
+
+
+@media screen and (max-width: 767px) {
+    .menusearch{
+        flex-direction: column !important;
+    }
+    .categories{
+        justify-content: start;
+    }
+    .categories ul{
+        padding-left: 2lvw !important;
+    }
+    #searchforms, input.menusearch{
+        width: 100% !important;
+        margin-right: 2lvw;
+    }
+    .storeitem{
+        width: 100%;
+        margin-right: 10px;
+        flex-direction: row;
+        min-height: 5px !important;
+        padding-right: 10px !important;
+        box-shadow:  none !important;
+        border: 0px !important;
+        border-bottom: 1px solid lightgray!important;
+        border-radius: 0px !important;
+        margin-bottom: 5px !important;
+    }
+    .storeitem:last-child{
+        border-bottom: 0px !important;
+    }
+    .itemlogo{
+        width: 30% !important;
+        max-height: 100px !important;
+        object-fit:cover !important;
+        min-height: 10px !important;
+        border-radius: 20px !important;
+    }
+    .storeitems{
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+    .categoryitem{
+        padding-top: 20px !important;
+        margin-bottom: 0px !important;
+        margin-top: 0px !important;
+    }
+    .categoryitem:not(:first-child) {
+        border-top: 10px solid rgba(211, 211, 211, 0.199) !important;
+        
+    }    
+
 }
 

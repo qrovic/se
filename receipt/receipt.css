@@ -10,6 +10,10 @@ resibo.css
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.foodparklogo{
+    min-width: 150px;
+    min-height: 150px;
+}
 .centered {
     text-align: center;
     align-content: center;
@@ -19,6 +23,12 @@ resibo.css
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     font-style: italic;
+}
+.total-per-store{
+    font-weight: 600;
+}
+.store-name{
+    font-weight: 600;
 }
 .ordernumber{
     font-size: 10rem;
@@ -47,6 +57,7 @@ resibo.css
     width: 350px;
     max-width: 350px;
     margin: 10px auto; 
+    padding-top: 10px;
 }
 
 .ticketheader .head-number {

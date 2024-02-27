@@ -19,7 +19,7 @@
     <div class="receipt-container"></div>
         <div class="receipt-borderline">
             <div class="ticketheader">
-                <img src="../resources/foodparklogo.png" alt="Logo">
+                <img class="foodparklogo" src="../resources/foodparklogo.png" alt="Logo">
                 <p class="head-number">Order Number:</p>
                 
                 <div class="number-counter">
@@ -37,6 +37,7 @@
             <?php 
             foreach($cartstores AS $cartstore){
                 include("../database/fetchcartdetails.php");
+                $totalperstore = 0;
                 ?>
                 <div class="Stores">
                     <p class="store">Store</p>
@@ -49,6 +50,7 @@
                         
                         
                         include('../database/fetchcartdetails.php');
+                        $totalperstore += $cartdetail['quantity'] * $cartdetail['itemprice'];
                         
                     ?>
                 <div class="Items">
@@ -61,16 +63,16 @@
                     <p class="partial_price"><?php echo "₱ ".($cartdetail['quantity']*$cartdetail['itemprice']);?></p>
                 </div>
                 <?php } ?>
-                <?php } ?>
+                
                 <div class="TPS">
                     <p class="total-per-store">Total per store:</p>
                 </div>
-
+                
                 <div class="TPS-stats">
                     <p class="store-name"><?php echo $cartstore['cartstorename'];?></p>
-                    <p class="total-in-store">74 php</p>
+                    <p class="total-in-store"><?php echo "₱ ".$totalperstore;?></p>
                 </div>
-
+                <?php } ?>
                 <div class="Total-amount">
                     <p class="sum-total">Total Amount: <?php echo $cartdetail['quantity']+$cartdetail['quantity'];?></p>
                 </div>
