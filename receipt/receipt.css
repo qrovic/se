@@ -35,6 +35,7 @@ resibo.css
     margin-bottom: 0;
     line-height:normal;
     font-weight: 700;
+    margin-top: 0 !important;
 }
 
 .number-counter {

@@ -81,7 +81,7 @@
                             
                         ?>
                             <div class="modal fade" id="<?php echo str_replace(' ', '', $nope['item_name']); ?>" data-currentmenuid="<?php echo $nope['item_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog menumodal">
+                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable menumodal">
                                     <div class="modal-content menumodalcontent">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel"><p class="menuitemname"><?php echo $nope['item_name'];?></p></h5>

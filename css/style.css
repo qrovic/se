@@ -114,6 +114,7 @@ label.login-label{
     font-weight:900 !important;
 }
 /*Super admin*/
+
 .superadminstorelogo{
     
     border-radius: 50%;
@@ -131,7 +132,7 @@ label.login-label{
 }
 /*edit store modal*/
 .editinput{
-    background-color: rgb(228, 228, 228) !important;
+    background-color: rgba(228, 228, 228, 0.521) !important;
 }
 /*overview superadmin*/
 .storestat{
@@ -179,10 +180,11 @@ label.login-label{
     color:#007F41 !important;
 }
 .monthlyproducttxt{
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     color:#007F41;
-    font-weight: 700;
+    font-weight: 800;
     text-align: center;
+    margin-bottom: 0px !important;
 }
 .stafftxt{
     font-size: 1.6rem;
@@ -200,8 +202,8 @@ label.login-label{
 .filteroverview{
     display: flex;
     flex-direction: row;
-    justify-content:end;
-    margin-bottom: 10px;
+    justify-content:space-between;
+    width: 100%;
     
 }
 .monthlyproducttxt{
@@ -223,14 +225,29 @@ label.login-label{
     margin-right:5px;
 }
 .salestxt{
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: #007F41;
-    font-weight: 700;
+    font-weight: 800;
     text-align: center;
-    margin-bottom: 0 !important;
+    margin-bottom: 20px !important;
     margin-top: 20px;
     width: 100%;
     align-items: center;
+}
+.printpdf{
+    box-shadow: 0 2px 4px rgba(58, 72, 70, 0.1), 0 4px 8px 0px #77777760;
+    margin-left: 20px;
+}
+.excelpdf{
+    margin-left: 20px;
+    box-shadow: 0 2px 4px rgba(58, 72, 70, 0.1), 0 2px 4px 0px #7777772f;
+    border-color: rgb(201, 201, 201) !important;
+}
+.saleshead{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-bottom: 10px;
 }
 .itemperiod{
     display: flex;
@@ -302,7 +319,7 @@ label.login-label{
 }
 .superadmintxt{
     font-size: 2rem;
-    font-weight: 600;
+    font-weight: 7 00;
     margin: 20px 0px 0px 30px;
     color: #007F41;
     margin-bottom: 40px;
@@ -318,7 +335,8 @@ label.login-label{
 }
 
 .accountstext{
-    color: #02BF63;
+    
+    color:#007F41;
     font-weight: 800;
     font-size: 2em;
     text-align: center;
@@ -332,26 +350,32 @@ label.login-label{
 .accountsdiv{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     flex-wrap: wrap;
-    overflow-y: scroll;
-    height: 65lvh;
-    padding-right: 5lvw;
+    overflow-y: auto;
+    height: 70lvh;
+    padding-right: 1lvw;
     
 }
 .acoountdiv{
     display: flex;
+   
     flex-direction: row;
     cursor: pointer;
     align-items: center;
-    width: 40%;
+    width: 28%;
     max-height: 30%;
+    margin-right: 60px;
     height: 27%;
     background-color: #02BF63;
     border-radius: 30px;
     margin-bottom: 30px;
     box-shadow: 0 2px 4px rgba(58, 72, 70, 0.1), 0 8px 16px 0px #03412260;
 }
+
+
+
+
+
 
 .accountlogo{
     width: lvh;
@@ -370,6 +394,7 @@ label.login-label{
     margin-right: 5px;
     width: 100%;
     text-align: center;
+    padding-right: 5px;
 }
 .storename
 {
@@ -385,16 +410,23 @@ label.login-label{
     display: flex;
     justify-content: end;
     align-items: center;
+    margin-bottom: 30px;
+    
 }
 #add-store{
-    background-color: #02BF63;
+    background-color: #00a153;
     border-color: #02BF63;
-    width: 12lvw;
-    height:8lvh;
-    margin-right: 20px;
-    border-radius: 20px;
+    width: 180px;
+    height: 80px;
+    position: fixed;
+    bottom: 20px;
+    right: 0px;
+    
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
     font-size: 1.2rem;
     font-weight: 700;
+    margin-bottom: 20px;
 }
 .modal-dialog {
     max-width: 60% !important;
@@ -402,7 +434,7 @@ label.login-label{
 }
 .menumodal{
     max-width: 50% !important;
-    max-height: 50lvh !important;
+    max-height: 60lvh !important;
 }
 .modal-content1{
     border-radius: 20px !important;
@@ -520,6 +552,18 @@ label{
     background-color:#02BF63 !important;
     border-color: #02BF63 !important;
 }
+.greenbtn:hover{
+    background-color:#00a153 !important;
+    border-color: #00a153 !important;
+}
+.graybtn{
+    background-color: #dc3545;
+    border-color: #dc3545 !important;
+}
+.graybtn:hover{
+    background-color: #ee182d;
+    border-color: #ee182d !important;
+}
 .uploadbtn{
     display: flex;
     flex-direction: column;
@@ -566,8 +610,9 @@ label{
 }
 .kioskstorelogo{
     width: 8lvh;
-  
+    box-shadow: 0 2px 4px rgba(58, 72, 70, 0.1), 0 2px 4px 0px #1f1f1f60;
     margin: 10px 0 10px 30px;
+    border-radius: 50%;
    
 }
 .down{
@@ -630,6 +675,7 @@ input.searchstores{
     background-color: rgba(207, 207, 207, 0.452);
     border-color: white;
     padding-left: 20px;
+    border: 0;
 }
 .kiosksearch{
     margin-top: 4lvh;
@@ -661,6 +707,7 @@ input.searchstores{
 
    display: flex;
    flex-direction: row;
+   border: 0;
    justify-content: space-between;
 }
 .menusearch form{
@@ -708,7 +755,7 @@ input.menusearch{
     justify-content: space-between;
     flex-wrap: nowrap;
     overflow-y: scroll;
-    max-height: calc(95lvh - 53px - 100px - 45px);
+    max-height: 68lvh;
     padding-right: 20px;
     width: 100%;
     max-width: 100lvw;
@@ -800,12 +847,13 @@ a{
 .menumodalpic{
     height: 40lvh;
     width: 100%;
-    object-fit: contain;
+    object-fit:cover;
     
 }
 .menumodalcontent{
     padding: 0lvh 0lvw !important;
     border-radius: 20px;
+    min-height: 95lvh !important;
 }
 .itemmenuprice{
     font-weight: 400 !important;
@@ -821,20 +869,21 @@ a{
     font-size: 1.5rem;
 }
 .menuitemname{
-    font-size: 2rem;
+    font-size: 1.7rem;
     font-weight: 700;
     margin-bottom: 0;
 }
 .modalbody{
-    max-height: 90lvh !important;
+    max-height: 100lvh !important;
     margin:0px !important;
     padding:0px !important;
+    overflow-y: hidden;
 }
 .menumodalbody{
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
-    max-height: 70lvh;
+    max-height: 69lvh;
     margin: 0 0 0 20px !important;
     padding-right: 20px !important;
 }
@@ -900,6 +949,10 @@ a{
     transform: scale(1.03); 
     background-color:#29da5e15;
 }
+input.quantity{
+    text-align: center;
+    max-width: 40px !important;
+}
 .quantityInput{
     min-width: 25px;
     display: flex;
@@ -922,20 +975,20 @@ a{
     align-items: center;
     display: flex;
     justify-content: center;
+    
 }
+
 .quantitybutton{
-    /*min-width: 30px !important;
-    max-height: 30px;
-    max-width: 30px;
-    width: 30px;
-    height: 30px;
-    min-height: 30px !important;
-    min-height: 30px !important;
+    min-height: 30px;
+    min-width: 30px;
     border-radius: 50%;
     background-color: transparent;
     text-align: center;
     font-size: 1.1rem;
-    border: gray 1px solid;*/
+    border: gray 1px solid;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 .quantitybutton p{
     margin-bottom: 0px;
@@ -1238,7 +1291,7 @@ input.varietytxtheader::placeholder {
     text-align: center;
     font-size: 2.1rem;
     font-weight: 800;
-    margin-top: 30px;
+    margin-top: 20px;
     color:#007F41;
     margin-bottom: 0px;
 }
@@ -1303,9 +1356,7 @@ td>input{
     height: 300px;
     animation: spin 1s linear infinite;
 }
-td.itemquantity input{
-    max-width: 100px !important;
-}
+
 /*logo animation */
 @keyframes spin {
     0% { transform: rotate(0deg); }
@@ -1505,6 +1556,18 @@ td.itemquantity input{
 .cartitemname{
     font-weight: 600;
     font-size: 1rem;
+    margin-bottom: 0 !important;
+}
+.cartfooterdelete{
+    justify-content: space-between !important;
+}
+.cartdelete{
+    width: auto !important;
+    border-radius: 20px;
+}
+.cartdeletemodal{
+    align-items: center;
+    justify-content: center !important;
 }
 .totalinputmodal,.totalprice{
     min-width: 70px; /* Set the minimum width to 100 pixels, adjust as needed */
@@ -1699,15 +1762,18 @@ td.price span{
 .addstaffbtn{
     background-color:#00b35c !important;
     border-color: #00b35c !important;
-    border-radius: 30px;
+    border-radius: 20px;
     width: 14%;
     margin-bottom: 30px;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(58, 72, 70, 0.1), 0 4px 8px 0px #77777760;
+    
 }
 .overviewstaffsheader{
     display: flex;
     justify-content: space-between;
     flex-direction: row;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 /*add staff*/
@@ -1802,6 +1868,11 @@ td.price span{
     flex-direction: row;
     justify-content: space-between;
 }
+.uppersettingsuperadmin{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 .leftupper{
     display: flex;
     justify-content: space-between;
@@ -1853,7 +1924,7 @@ body.index{
     align-items: center;
 }
 .indexorder,.indexlogin{
-    border: 20px solid;
+    border: 10px solid;
     border-radius: 50%;
     min-width: 60lvh;
     min-height: 60lvh;
@@ -1861,12 +1932,17 @@ body.index{
     justify-content: center;
     transition: transform 0.3s ease;
     align-items: center;
-    box-shadow: 0 5px 10px rgba(58, 72, 70, 0.384), 10px 16px 32px 0px #022915d8;
+    box-shadow: 0 5px 10px rgba(93, 121, 116, 0.384), 10px 16px 32px 0px #0d5f36d8;
     margin-bottom: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    color: white !important;
+}
+.indexorder i,.indexlogin i{
+    color: white !important;
+    
 }
 .indexorder:hover, .indexlogin:hover { 
 
@@ -1884,7 +1960,8 @@ body.index{
 }
 .indexfont{
     font-size: 2rem !important;
-    font-weight: 700;
+    font-weight: 800;
+    color: white;
 }
 /*kioskindex*/
 .indexkiosk{
@@ -1959,7 +2036,7 @@ body.index{
         max-height: 100lvh !important;
     }
     .storename p{
-        font-size: 1.5rem !important;
+        font-size: 1.5rem;
     }
     .kioskstore{
         width: 30%;
@@ -2011,6 +2088,9 @@ body.index{
     }
     .menumodal{
         max-width: 60% !important;
+    }
+    .menumodalbody{
+        max-height: 100lvh;
     }
 }
 
@@ -2064,6 +2144,46 @@ body.index{
         border-top: 10px solid rgba(211, 211, 211, 0.199) !important;
         
     }    
-
+    .index{
+        flex-direction: column !important;
+    }
+    .indexorder,.indexlogin{
+        min-width: 30lvh;
+        min-height: 20lvh;
+        font-size: 10rem !important;
+    }
+    .indexwelcome{
+        font-size: 2rem !important;
+        letter-spacing: 8px;
+    }
+    .indexwelcome {
+        
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+    }
+    span.indexwelcome{
+        letter-spacing: 2px;
+    }
+    .indextap{
+        font-size: 1.5rem;
+    }
+    /*stores mobile*/
+    .kioskstores{
+        padding-right: 0;
+    }
+    .kioskstore{
+        width: 45%;
+        margin-bottom: 20px;
+    }
+    .storename p{
+        font-size: 1rem !important;
+    }
+    .menumodal{
+        max-width: unset !important;
+    }
+    .menuitemname{
+        font-size: 1.5rem !important;
+    }
 }
 

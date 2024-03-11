@@ -27,7 +27,7 @@ try {
         foreach ($Popular as $populars) {
             $itemid = $populars['item_id'];
             
-            $stmt_check = $pdo->prepare("SELECT COUNT(*) FROM popular WHERE itemid = :itemid AND DATE(date) = CURDATE()");
+            $stmt_check = $pdo->prepare("SELECT COUNT(*) FROM popular WHERE itemid = :itemid");
             $stmt_check->bindParam(':itemid', $itemid);
             $stmt_check->execute();
             $count = $stmt_check->fetchColumn();

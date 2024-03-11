@@ -15,5 +15,5 @@
     }
 
     session_destroy();
-    header('Location: ../kiosk/stores.php');
+    header('Location: ../kiosk/type.php');
 ?>

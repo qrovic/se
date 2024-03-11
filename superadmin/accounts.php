@@ -20,19 +20,19 @@
                 Add Store
             </button>
         </div>
-        <div class="accountsdiv" onclick="examplemodal">
+        <div class="accountsdiv">
             <?php
             if ($storewowner) {
                 foreach ($storewowner as $storewowners) {
                     ?>
-                    <div class="acoountdiv" data-bs-toggle="modal" data-bs-target="#<?php echo str_replace(' ', '', $storewowners['name']); ?>">
+                    <div class="acoountdiv" data-bs-toggle="modal" data-bs-target="#a<?php echo str_replace(' ', '', $storewowners['name']); ?>">
                         <img class="accountlogo" src="<?php echo "../resources/" . $storewowners['pic']; ?>" onerror="this.src='../resources/noimg.png'";>
                         <div class="storename">
                             <p class="accountname"><?php echo $storewowners['name'];?></p>
                         </div>
                     </div>
                     <!-- Modal -->
-                    <div class="modal fade" id="<?php echo str_replace(' ', '', $storewowners['name']); ?>" tabindex="-1" aria-labelledby="" aria-hidden="true">
+                    <div class="modal fade" id="a<?php echo str_replace(' ', '', $storewowners['name']); ?>" tabindex="-1" aria-labelledby="" aria-hidden="true">
                         <div class="modal-dialog">
                                 
                             <div class="modal-content modal-content1">
@@ -48,7 +48,7 @@
                                         
                                     <div class="addacclogo" style="background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('<?php echo "../resources/" . $storewowners['pic']; ?>'); background-position: center; background-size: cover;">
                                         <label for="file" class="btn uploadbtn"><i class='bx bx-upload'></i>Upload</label>
-                                        <input id="file" name="storepic" hidden type="file" onchange="previewimg(this);">
+                                        <input id="file" name="storepicedit" type="file" onchange="previewimg(this);">
                                     </div>
 
                                         <div class="storeinfo">
@@ -91,7 +91,7 @@
                                             
                                             <div class="labelinput">
                                                 <label for="" class="form-label">Email</label>
-                                                <input type="email" name="owneremail" class="form-control editinput" id="" <?php echo $storewowners['email'];?>>
+                                                <input type="email" name="owneremail" class="form-control editinput" id="" value=<?php echo $storewowners['email'];?>>
                                             </div>
                                             <div class="labelinput labelinputright">
                                                 <label for="" class="form-label">Password</label>
@@ -105,7 +105,7 @@
                                         </form>
                                         <form action="../database/deletestore.php" method="POST">
                                             <input type="text" name="storeid" value="<?php echo $storewowners['storeid'];?>" hidden>
-                                            <button type="submit" class="btn btn-secondary greenbtn">Delete</button>
+                                            <button type="submit" class="btn btn-secondary graybtn">Delete</button>
                                         </form>
                                     </div>
                                 
@@ -142,7 +142,7 @@
                     <div class="addacclogo" style="background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(''); background-position: center; background-size: cover;">
                             
                             <label for="file" class="btn uploadbtn"><i class='bx bx-upload'></i>Upload</label>
-                            <input id="file" name="storepic" type="file" onchange="previewimg(this);">
+                            <input id="file" name="storepicadd" type="file" onchange="previewimg(this);">
                             
                         </div>
                         <div class="storeinfo">

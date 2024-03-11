@@ -8,7 +8,7 @@
     if (!isset($_SESSION['storestoreid'])){
         header('Location:../login/login.php');
     }
-    require_once("../database/newcustomer.php");
+    include_once("../database/newcustomer.php");
     require_once('../database/popular.php');
 ?>
 <div class="left">
@@ -18,7 +18,7 @@
             $storename=$_SESSION['storename'];
             ?>
             
-        <img class="superadminstorelogo" src="../resources/<?php echo $storedeet['pic'];?>" alt="hhee">
+        <img class="superadminstorelogo" src="../resources/foodparklogo.png" alt="hhee">
         <?php } ?>
         <div class="options">
             <ul class="options">

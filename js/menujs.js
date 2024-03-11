@@ -224,7 +224,7 @@ $(document).ready(function() {
             if (varietyRadio || sizeRadio) {
                 menuModalBody.animate({
                     scrollTop: menuModalBody[0].scrollHeight
-                }, 500);
+                }, 1000);
             }
         }
     }

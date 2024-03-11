@@ -26,6 +26,7 @@
         <div class="productrank">
        <br>
         <p class="stafftxt">Staffs</p>
+        <button type="button" class="btn btn-primary addstaffbtn" data-bs-toggle="modal" data-bs-target="#addstaffstore">Add Staff</button>
         <div class="overviewstaffsheader">
             <div class="filteroverview">
                 <div class="categoryfilter">
@@ -39,9 +40,22 @@
                         <option value="Cook">Cook</option>
                     </select>
                 </div>
-            
+                <div class="d-flex justify-content-between">
+                    <button id="pdfButton" class="btn btn-primary excelpdf" style="background-color: white; color: black; border-color: gray;"><i class='bx bxs-file-pdf'></i>PDF</button>
+                    <button id="excelButton" class="btn btn-primary excelpdf" style="background-color: white; color: black; border-color: gray;"><i class='bx bxs-spreadsheet'></i>Excel</button>
+                    <button id="printButton" class="btn btn-primary excelpdf" style="background-color: white; color: black; border-color: gray;"><i class='bx bxs-printer'></i>Print</button>
+                </div>
+
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                        <label class="" for="search" >Search:</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="searchstaff" class="form-control" id="searchstaff">
+                    </div>
+                </div>
             </div>
-            <button type="button" class="btn btn-primary addstaffbtn" data-bs-toggle="modal" data-bs-target="#addstaffstore">Add Staff</button>
+            
         </div>
         
 
@@ -269,7 +283,13 @@
             pagingType: 'simple',
             language: {
             info: '' 
-        }
+        },
+        buttons: [
+            'copy',
+            'excel',
+            'pdf',
+            'print'
+        ]
         });
 
         $('#role').on('change', function() {
@@ -278,6 +298,22 @@
 
             dataTable.columns(3).search(role).draw();
         });
+        $('#searchstaff').on('keyup', function () {
+            dataTable.search(this.value).draw();
+        });
+        $('#pdfButton').on('click', function() {
+            dataTable.buttons('.buttons-pdf').trigger();
+        });
+
+        $('#excelButton').on('click', function() {
+            dataTable.buttons('.buttons-excel').trigger();
+        });
+
+        $('#printButton').on('click', function() {
+            dataTable.buttons('.buttons-print').trigger();
+        });
+
+        $('.dataTables_filter').addClass('d-none');
     });
 </script>
 <script>

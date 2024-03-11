@@ -3,7 +3,6 @@ require_once("config.php");
 
 $storename = trim($_POST['storename']);
 $storedescription = $_POST['storedescription'];
-$storestatus = trim($_POST['storestatus']);
 $ownerfname = trim($_POST['ownerfname']); 
 $ownermname = trim($_POST['ownermname']); 
 $ownerlname = trim($_POST['ownerlname']); 
@@ -11,11 +10,12 @@ $ownercontact = trim($_POST['ownercontact']);
 $owneremail = trim($_POST['owneremail']); 
 $ownerpassword = trim($_POST['ownerpassword']);
 
-$storepic = $_FILES['storepic']['name'];
-if (isset($_FILES["storepic"]) && $_FILES["storepic"]["error"] == 0) {
+$storepic = $_FILES['storepicadd']['name'];
+
+if (isset($_FILES["storepicadd"]) && $_FILES["storepicadd"]["error"] == 0) {
     $destinationFolder = "../resources/";
-    $tempName = $_FILES["storepic"]["tmp_name"];
-    $destinationPath = $destinationFolder . $_FILES["storepic"]["name"];
+    $tempName = $_FILES["storepicadd"]["tmp_name"];
+    $destinationPath = $destinationFolder . $_FILES["storepicadd"]["name"];
     if (move_uploaded_file($tempName, $destinationPath)) {
         echo "okiiiii";
     } else {
@@ -46,7 +46,7 @@ try {
     $stmt->bindParam(':ownerpassword', $hashedpassword);
     $stmt->execute();
 
-    header('location: ../superadmin/accounts.php');
+    //header('location: ../superadmin/accounts.php');
 } catch(PDOException $e) {
     echo "Error: " . $e->getMessage();
 }

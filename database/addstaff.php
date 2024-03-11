@@ -10,7 +10,12 @@ $contactno = trim($_POST['contactno']);
 $role = trim($_POST['role']);
 $email = trim($_POST['email']);
 $password = $_POST['password'];
-$storeid = $_SESSION['storestoreid'];
+if ($_POST['storestoreid']){
+    $storeid = $_POST['storestoreid'];
+}else{
+    $storeid = $_SESSION['storestoreid'];
+}
+
 
 $hashedpassword = password_hash($password, PASSWORD_DEFAULT);
 
@@ -27,7 +32,11 @@ try {
     $stmt->execute();
 
     $_SESSION['msg']="addstaff";
-    header('location: ../store/staffs.php');
+    if ($_POST['storestoreid']){
+        header('location: ../store/staffs.php');
+    }else{
+        header('location: ../superadmin/staffs.php');
+    }
 } catch(PDOException $e) {
     echo "Error: " . $e->getMessage();
 }

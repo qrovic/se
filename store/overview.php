@@ -17,6 +17,15 @@
         require_once('../include/sidebarstore.php');
 
     ?>
+    <?php
+        if ($_SESSION['role']){
+            if ($_SESSION['role'] != 'Owner'){
+                header('Location: ../store/cashier.php');
+            }
+        }
+    ?>
+
+
     <div class="right">
         <div class="storeinfooverview">
             <div class="storeoverview">
@@ -60,7 +69,7 @@
             <div class="categoryfilter">
                 <label class="labeloverview" for="category" >Category:</label>
                 <select name="category" id="category" class="form-select">
-                   
+                    <option value="">All Categories</option>
                     <option value="drinks">Drinks</option>
                     <option value="meals">Meals</option>
                     <option value="combos">Combo</option>
@@ -111,7 +120,7 @@
         var dataTable = $('#dataTable').DataTable({
            
             lengthChange: false,  
-            pageLength: 5,  
+            pageLength: 3,  
             pagingType: 'simple',
             language: {
             info: ''

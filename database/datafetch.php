@@ -17,7 +17,7 @@ $stmt->execute();
 $storewowner = $stmt->fetchAll();
 
 #fetch superadmin staff
-$sqlsuperadminstaffs = "SELECT store.name AS staffstorename, staff.id AS staffid, staff.storeid AS staffstoreid, staff.fname as stafffname, staff.lname as stafflname,staff.mname as staffmname, staff.contactno AS staffcontactno, staff.email as staffemail, staff.password as staffpassword, staff.role as staffrole FROM store right JOIN staff ON store.id=staff.storeid";
+$sqlsuperadminstaffs = "SELECT store.name AS staffstorename, staff.storeid AS storeid, staff.id AS staffid, staff.storeid AS staffstoreid, staff.fname as stafffname, staff.lname as stafflname,staff.mname as staffmname, staff.contactno AS staffcontactno, staff.email as staffemail, staff.password as staffpassword, staff.role as staffrole FROM store right JOIN staff ON store.id=staff.storeid";
 $stmt = $pdo->prepare($sqlsuperadminstaffs); 
 $stmt->execute();  
 $superadminstaffs = $stmt->fetchAll();

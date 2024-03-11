@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="receipt.css">
-    <title>Test Receipt</title>
+    <title>Receipt</title>
 </head>
 <body>
     <?php
@@ -31,13 +31,17 @@
             </div>
 
             <div class="customer-info ">
-                <p class="cutomer_number">Cashier: <span class="cashiername">Rouel</span><p>
+                <p class="cutomer_number">Order type: <span class="cashiername"><?php echo $_SESSION['type'];?></span><p>
                 
             </div>
+            
             <?php 
+            
             foreach($cartstores AS $cartstore){
                 include("../database/fetchcartdetails.php");
                 $totalperstore = 0;
+                $store=$cartstore['cartstorename'];
+                $$store=0;
                 ?>
                 <div class="Stores">
                     <p class="store">Store</p>
@@ -51,8 +55,9 @@
                         
                         include('../database/fetchcartdetails.php');
                         $totalperstore += $cartdetail['quantity'] * $cartdetail['itemprice'];
-                        
+                        $$store+=$cartdetail['quantity'] * $cartdetail['itemprice'];
                     ?>
+                    
                 <div class="Items">
                     <p class="item-description"><?php echo $cartdetail['itemname'] . ' '. $cartdetail['itemvariant'] . ' ' . $cartdetail['itemsize'];?></p>
                 </div>
@@ -62,19 +67,36 @@
                     <p class="price"><?php echo "₱ ".$cartdetail['itemprice']?></p>
                     <p class="partial_price"><?php echo "₱ ".($cartdetail['quantity']*$cartdetail['itemprice']);?></p>
                 </div>
+                
                 <?php } ?>
                 
+                
+                
+                
+                <!--<div class="TPS-stats">
+                    <p >Total</p>
+                    <p class="total-in-store"><?php echo "₱ ".$totalperstore;?></p>
+                </div>-->
+                <?php } ?>
                 <div class="TPS">
                     <p class="total-per-store">Total per store:</p>
                 </div>
+                <?php $totalamount=0;?>
+                <?php foreach($cartstores AS $cartstore){?>
+                    <div class="TPS-stats">
+                    <p ><?php echo $cartstore['cartstorename'];?></p>
+                    <p class="total-in-store"><?php echo "₱ ".${$cartstore['cartstorename']};?></p>
+                    
+                    </div>
+                    
+                   
+                <?php 
                 
-                <div class="TPS-stats">
-                    <p class="store-name"><?php echo $cartstore['cartstorename'];?></p>
-                    <p class="total-in-store"><?php echo "₱ ".$totalperstore;?></p>
-                </div>
-                <?php } ?>
+                $totalamount+=${$cartstore['cartstorename']};
+                }
+                ?>
                 <div class="Total-amount">
-                    <p class="sum-total">Total Amount: <?php echo $cartdetail['quantity']+$cartdetail['quantity'];?></p>
+                    <p class="sum-total">Total Amount: <?php echo "₱ ".$totalamount;?></p>
                 </div>
                 
                 <div class="ticketfooter">
@@ -84,7 +106,8 @@
 
         </div>
     </div>
-    <button id="btnPrint" class="hidden-print">Print</button>
+    <button id="btnPrint" onclick="printPageInBackground()"class="hidden-print">Print</button>
+    
     <script>
         // Get current date and time
         var currentDate = new Date();
@@ -111,5 +134,20 @@
         document.querySelector(".timestamp").innerHTML = "" + timestampStr;
     </script>
     <script src="receipt.js"></script>
+    <script>
+        function printPageInBackground() {
+            var iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = 'receipt.php';
+            document.body.appendChild(iframe);
+
+            iframe.onload = function() {
+                iframe.contentWindow.print();
+                setTimeout(function() {
+                    document.body.removeChild(iframe);
+                }, 1000);
+            };
+        }
+    </script>
 </body>
 </html>

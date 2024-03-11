@@ -16,7 +16,7 @@
         require_once('../include/sidebar.php');
     ?>
     <div class="right">
-            <p class="superadmintxt">Welcome, <?php echo $_SESSION['name'];?></p>
+            <p class="superadmintxt">Welcome, <?php echo $_SESSION['name'];?>!</p>
         <div class="storestat">
             <div class="stores">
                 <p class="storenumber"><?php if($onlinestorescount){ echo $onlinestorescount;}else{ echo 0;}?></p>

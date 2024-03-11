@@ -23,7 +23,7 @@
     }
 ?>
 <body class="storebody">
-    
+    <audio id="addtocartsound" src="../resources/addtocart.mp3"></audio>
     <div class="header">
         <img class="kioskstorelogo" src="../resources/foodparklogo.png" alt="hhee" onclick="window.location.href='stores.php'">
         <p class="orderidtxt"><?php echo 'Order Number: ' . $_SESSION['orderid'];?></p>

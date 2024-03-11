@@ -16,8 +16,28 @@
 <body class="storebody">
     <div class="header">
         <img class="kioskstorelogo" src="../resources/foodparklogo.png" alt="hhee" onclick="window.location.href='stores.php'">
-        <a class="canceltxt" href="./cancel.php"><?php echo "Cancel order";?></a>
+        <a class="canceltxt" href="#" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">Cancel order</a>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to cancel this order?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="./cancel.php" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <?php
     if ($totalcartcount<1) {
         ?>
@@ -31,12 +51,12 @@
     <?php
     if ($totalcartcount>0) {
         ?>
-        <p class="receipttext">Receipt</p>
+        <p class="receipttext">Order Overview</p>
         <?php
     }?>
     <div class="storemenus cartdiv">
         
-        <form action="../database/checkout.php" method="POST">
+        <form id="checkout" action="../database/checkout.php" method="POST">
         <?php
             
             foreach($cartstores AS $cartstore){
@@ -47,11 +67,12 @@
                 <thead><p class="cartstorename"><?php echo $cartstore['cartstorename']; ?></p>
                     <tr>
                         <th>Item</th>
-                        <th>Size</th>
-                        <th>Variety</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
+                        <th style="text-align: center;">Size</th>
+                        <th style="text-align: center;">Variety</th>
+                        <th style="text-align: center;">Price</th>
+                        <th style="text-align: center;">Quantity</th>
+                        <th style="text-align: center;">Total</th>
+                        <th style="text-align: center;"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,13 +91,13 @@
                         <input type="number" name="storeid[]" id="" value="<?php echo $cartstoreids;?>" hidden>
                         <input type="number" name="orderid" id="" value="<?php echo $_SESSION['orderid'];?>" hidden>
                         
-                        <td class="itemnamecart">
+                        <td class="itemnamecart" style="max-width: 200px; overflow: hidden; min-width: 200px; text-overflow: ellipsis; white-space: nowrap;">
                         <input type="text" class="itemid" name="itemid[]" value="<?php echo $cartdetail['itemid'];?>" id="" hidden>
                             <input type="text" class="itempriceid" name="itempriceid[]" value="<?php echo $cartdetail['itempriceid'];?>" id="" hidden>
                             <p class="cartitemname"><?php echo $cartdetail['itemname'];?></p>
                         </td>
                         
-                        <td class="itemvariant">    
+                        <td class="itemvariant" style="max-width: 50px; overflow: hidden; min-width: 50px; text-overflow: ellipsis; white-space: nowrap;">    
                             
                             <select name="itemvariant[]" class="item-variant" id="">
                                 
@@ -89,8 +110,8 @@
                                 ?> 
                             </select>                 
                         </td>
-                        <td class="cartitemsize">
-                            <select name="itemsize[]" class="item-size" id="">
+                        <td class="cartitemsize" style="align-items:center; text-align:center; max-width: 50px; overflow: hidden; min-width: 50px; text-overflow: ellipsis; white-space: nowrap;">
+                            <select name="itemsize[]" class="item-size" id="" style="text-align: center;">
                                 
                                 <?php foreach($itemsizes AS $itemsize){
                                     
@@ -101,20 +122,46 @@
                                 ?> 
                             </select>     
                         </td>
-                        <td class="itemprice">
-                            <span class="itemmenuprice"><?php echo "₱" . $cartdetail['itemprice'];?></span>
+                        <td class="itemprice" style="text-align: center;">
+                            <span style="text-align: center;" class="itemmenuprice"><?php echo "₱" . $cartdetail['itemprice'];?></span>
                             <input type="text" name="itemprice[]" value="<?php echo $cartdetail['itemprice'];?>" id="" hidden>
                             
                         </td>
-                        <td class="itemquantity">
+                        <td class="itemquantity" style="text-align: center;">
                         
                             <!--<button class="quantitybutton" onclick="decreaseQuantity(this)" type="button"><p class="quantitybtn">-</p></button>-->
-                            <input type="text" name="quantity[]" class="quantity" value="<?php echo $cartdetail['quantity'];?>">
+                            <input type="text" name="quantity[]" class="quantity" value="<?php echo $cartdetail['quantity'];?>" style="max-width: 20px; overflow: hidden; min-width: 20px; text-overflow: ellipsis; white-space: nowrap; text-align:center;">
                             <!--<button class="quantitybutton" onclick="increaseQuantity(this)" type="button"><p class="quantitybtn">+</p></button>-->
                 
                         </td>
-                        <td class="total total-price"><span class="totalprice"><?php echo "₱ ".($cartdetail['quantity']*$cartdetail['itemprice']);?></span></td>
+                        <td class="total total-price" style="text-align: center;"><span style="text-align: center;" class="totalprice"><?php echo "₱ ".($cartdetail['quantity']*$cartdetail['itemprice']);?></span></td>
+                        <td class="notranktxt" style="text-align: center;">
+                            <button type="button" data-bs-toggle="modal" style="border: none; background: none; padding: 0; cursor: pointer;" data-bs-target="#deleteModal<?php echo $cartdetail['itempriceid'] . $_SESSION['orderid']; ?>">
+                            <i class="bx bxs-x-circle text-danger fs-4"></i>
+
+
+                            </button>
+                        </td>
                     </tr>
+                    <div class="modal fade" id="deleteModal<?php echo $cartdetail['itempriceid'] . $_SESSION['orderid']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                        <div class="cartdeletemodal modal-dialog modal-dialog-centered" style="max-width: 300px;">
+                            <div class="modal-content cartdelete">
+                                <div class="modal-body">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <i class="bx bxs-trash-alt text-danger fs-4"></i>
+                                        <h5 class="modal-title ms-2" id="deleteModalLabel">Confirm Delete</h5>
+                                    </div>
+                                    <p class="text-center mt-3">Are you sure you want to delete this item?</p>
+                                </div>
+                                <div class="cartfooterdelete modal-footer d-flex justify-content-center">
+                                    <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-danger" onclick="deleteCartItem('<?php echo $cartdetail['itempriceid']; ?>')">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <?php
                     }
                     ?>
@@ -127,14 +174,17 @@
             <?php
             if ($totalcartcount>0) {
             ?>
+            </form>
             <div class="cartfooter">
+                
             <button type="button" class="cancelbtn btn btn-primary cartfooterbtn" onclick="window.location.href='../kiosk/menu.php'">Order more</button>
-            <button type="submit" class="btn btn-primary cartfooterbtn">Checkout</button>
+            <button class="btn btn-primary cartfooterbtn" type="submit" onclick="printPageInBackground(); setTimeout(function() { document.getElementById('checkout').submit(); }, 5000);">Checkout</button>
             </div>
             <?php
             }
             ?>
-        </form>
+        
+        
     </div>
     <script src="../js/menujs.js"></script>     
     <script>
@@ -218,6 +268,40 @@
         });
     });
 });
-</script>                
+</script>
+<script>
+    function deleteCartItem(itempriceid) {
+    $.ajax({
+        url: '../database/deletecart.php',
+        method: 'POST',
+        data: {
+            deletecartitempriceid: itempriceid,
+            deletecartorderid: '<?php echo $_SESSION['orderid']; ?>'
+        },
+        success: function(response) {
+            // Check if deletion was successful
+            if (response == 'success') {
+                location.reload();
+            }
+        }
+    });
+}
+
+</script>
+<script>
+        function printPageInBackground() {
+            var iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = '../receipt/receipt.php';
+            document.body.appendChild(iframe);
+
+            iframe.onload = function() {
+                iframe.contentWindow.print();
+                setTimeout(function() {
+                    document.body.removeChild(iframe);
+                }, 1000);
+            };
+        }
+    </script>
 </body>
 </html>
