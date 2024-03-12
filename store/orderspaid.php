@@ -5,10 +5,18 @@
     <?php
         $currentpage='orders';
         require_once('../include/sidebarstore.php');
+
+        if ($_SESSION['role']){
+            if ($_SESSION['role'] != 'Server' && $_SESSION['role'] != 'Cook'){
+                header('Location: ../store/overview.php');
+            }            
+        }
     ?>
+    
+    
     <div class="right storeright">
         <div class="notif">
-            <audio id="notifsound" src="../resources/notif.mp3"></audio>
+            <audio id="notifsound" src="../resources/incomingorder.mp3"></audio>
             <div class="toast align-items-center text-white bg-primary border-0 position-fixed top-0 end-0" style="margin-top: 1.5rem !important; margin-right: 1.5rem !important;" role="alert" aria-live="assertive" aria-atomic="true" id="myToast">
                 <div class="d-flex">
                     <div class="toast-body">
@@ -38,7 +46,7 @@
         </div>
         
         <p class="orderqueuetxt">Serving</p>
-        <div class="container mt-4">
+        <div class="container divorderspaid mt-4">
             <table class="table tablestore table-max-height">
                 <thead>
                     <tr>
@@ -60,7 +68,7 @@
     <script>
         $(document).ready(function() {
             setInterval(function() {
-                var storestoreid = <?php echo $storestoreid; ?>;
+                var storestoreid = <?php echo $_SESSION['storestoreid']; ?>;
 
                 $.ajax({
                     type: 'POST',
@@ -70,7 +78,7 @@
                     success: function(response) {
                         $('.orderpeningnum').text(response.ordertoservecount);
                         $('.orderservednum').text(response.orderservedcount);
-                        $('.neworderid').text(response.neworderid);
+                        $('.neworderid').text(response.neworderidpaid);
                     },
                     error: function(xhr, status, error) {
                         console.error('AJAX error:', status, error);

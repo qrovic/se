@@ -19,8 +19,9 @@
     ?>
     <?php
         if ($_SESSION['role']){
-            if ($_SESSION['role'] != 'Owner'){
-                header('Location: ../store/cashier.php');
+            if ($_SESSION['role'] != 'Owner' && $_SESSION['role'] != 'Manager') {
+                header('Location: ../store/orders.php');
+                exit(); 
             }
         }
     ?>

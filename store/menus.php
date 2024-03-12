@@ -25,12 +25,17 @@
         <div class="productrank">
        <br>
         <p class="stafftxt">Menus</p>
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-primary addstaffbtn" onclick="window.location.href='../store/additemcopy.php'">Add Menu</button>
+        </div>
+
         <div class="overviewstaffsheader">
             <div class="filteroverview">
                 <div class="categoryfilter">
                     <label class="labeloverview" for="role" >Category:</label>
                     <select name="role" id="role" class="form-select">
                         <option value="">All Categories</option>
+                        <option value="Populars">Populars</option>
                         <option value="Drinks">Drinks</option>
                         <option value="Meals">Meals</option>
                         <option value="Snacks">Snacks</option>
@@ -38,9 +43,23 @@
                         <option value="Items">Items</option>
                     </select>
                 </div>
+                <div class="d-flex justify-content-between">
+                    <button id="pdfButton" class="btn btn-primary excelpdf" style="background-color: white; color: black; border-color: gray;"><i class='bx bxs-file-pdf'></i>PDF</button>
+                    <button id="excelButton" class="btn btn-primary excelpdf" style="background-color: white; color: black; border-color: gray;"><i class='bx bxs-spreadsheet'></i>Excel</button>
+                    <button id="printButton" class="btn btn-primary excelpdf" style="background-color: white; color: black; border-color: gray;"><i class='bx bxs-printer'></i>Print</button>
+                </div>
+
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                        <label class="" for="search" >Search:</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="searchstaff" class="form-control" id="searchstaff">
+                    </div>
+                </div>
             
             </div>
-            <button type="button" class="btn btn-primary addstaffbtn" onclick="window.location.href='../store/additemcopy.php'">Add Menu</button>
+           
         </div>
         
 
@@ -51,6 +70,7 @@
                 <th class="rankhead">ID</th>
                 <th>Item Name</th>
                 <th>Category</th>
+                <th>Status</th>
                 <th>Action</th>
                
                 
@@ -66,14 +86,27 @@
                         <td class="ranktxt"><?php echo $rank ?></td>
                         <td class="notranktxt"><?php if (isset($storeitem['name'])){echo $storeitem['name'];}?></td>
                         <td class="notranktxt"><?php if (isset($storeitem['category'])){echo $storeitem['category'];}?></td>
+                        <td class="notranktxt"><?php if (isset($storeitem['status'])){echo $storeitem['status'];}?></td>
                         <td class="notranktxt">
                             
-                            <form action="../database/deleteitem.php" method="post" style="display: inline;">
-                                <input type="hidden" name="editstoreid" value="<?php echo $storeitem['id']; ?>">
-                                <button type="submit" style="border: none; background: none; padding: 0; cursor: pointer;">
-                                    <i class='bx bxs-trash-alt'></i>
-                                </button>
-                            </form>
+                      
+                            <?php if ($storeitem['status']=='Active'){ ?>
+                                <form action="../database/deleteitem.php" method="post" style="display: inline;">
+                                    <input type="hidden" name="editstoreid" value="<?php echo $storeitem['id'];?>">
+                                    <button type="submit" data-bs-toggle="modal" style="border: none; background: none; padding: 0; cursor: pointer;">
+                                        <i class='bx bx-toggle-right'></i>
+                                    </button>
+                                </form>
+                            <?php }else{ ?>
+                                <form action="../database/deleteitem.php" method="post" style="display: inline;">
+                                    <input type="hidden" name="editstoreid" value="<?php echo $storeitem['id'];?>">
+                                    <button type="submit" data-bs-toggle="modal" style="border: none; background: none; padding: 0; cursor: pointer;">
+                                        <i class='bx bx-toggle-left'></i>
+                                    </button>
+                                </form>
+                            <?php } ?>
+                                
+                           
                             <form action="../store/editmenu.php" method="post" style="display: inline;">
                                 <input type="hidden" name="editstoreid" value="<?php echo $storeitem['id']; ?>">
                                 <button type="submit" style="border: none; background: none; padding: 0; cursor: pointer;">
@@ -90,6 +123,28 @@
                         
 
                         </tr>
+                        <div class="modal fade" id="deleteModal<?php echo $storeitem['id'];?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel">Confirm Switch</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to switch this item?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <form action="../database/deleteitem.php" method="post" style="display: inline;">
+                                            <input type="hidden" name="editstoreid" value="<?php echo $storeitem['id'];?>">
+                                            <button type="submit" class="btn btn-danger" style="cursor: pointer;">
+                                                Switch
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <?php
                         $rank=$rank+1;
                         
@@ -192,15 +247,37 @@
             pagingType: 'simple',
             language: {
             info: '' 
-        }
+        },
+        buttons: [
+            'copy',
+            'excel',
+            'pdf',
+            'print'
+        ]
         });
 
         $('#role').on('change', function() {
             var role = $('#role').val();
 
 
-            dataTable.columns(3).search(role).draw();
+            dataTable.columns(2).search(role).draw();
         });
+        $('#searchstaff').on('keyup', function () {
+            dataTable.search(this.value).draw();
+        });
+        $('#pdfButton').on('click', function() {
+            dataTable.buttons('.buttons-pdf').trigger();
+        });
+
+        $('#excelButton').on('click', function() {
+            dataTable.buttons('.buttons-excel').trigger();
+        });
+
+        $('#printButton').on('click', function() {
+            dataTable.buttons('.buttons-print').trigger();
+        });
+
+        $('.dataTables_filter').addClass('d-none');
     });
 </script>
 

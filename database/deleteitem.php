@@ -1,24 +1,28 @@
 <?php
 require_once('../database/config.php');
 
+
 try {
     if (isset($_POST['editstoreid'])) {
         $itemid = $_POST['editstoreid'];
+        $stmt = $pdo->prepare("SELECT status FROM item WHERE id = :itemid");
+        $stmt->bindParam(':itemid', $itemid);
+        $stmt->execute();
+        $currentStatus = $stmt->fetchColumn();
 
-        $sqlitemprice = "DELETE FROM itemprice WHERE itemid = :itemid";
-        $stmtitemprice = $pdo->prepare($sqlitemprice);
-        $stmtitemprice->bindParam(':itemid', $itemid, PDO::PARAM_INT);
+       
+        $newStatus = ($currentStatus == 'Active') ? 'Inactive' : 'Active';
+
+       
+        $stmt = $pdo->prepare("UPDATE item SET status = :status WHERE id = :itemid");
+        $stmt->bindParam(':status', $newStatus);
+        $stmt->bindParam(':itemid', $itemid);
+        $stmt->execute();
         
-        $sqlitem = "DELETE FROM item WHERE id = :itemid";
-        $stmtitem = $pdo->prepare($sqlitem);
-        $stmtitem->bindParam(':itemid', $itemid, PDO::PARAM_INT);
-
-        $stmtitemprice->execute();
-
-        if ($stmtitem->execute()) {
+        if ($stmt->execute()) {
             header('location: ../store/menus.php');
         } else {
-            echo "Error deleting record from store table";
+            echo "Error editing record from store table";
         }
     } else {
         echo "storeid not provided";

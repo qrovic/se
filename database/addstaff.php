@@ -33,9 +33,10 @@ try {
 
     $_SESSION['msg']="addstaff";
     if ($_POST['storestoreid']){
-        header('location: ../store/staffs.php');
-    }else{
         header('location: ../superadmin/staffs.php');
+    }else{
+        header('location: ../store/staffs.php');
+        
     }
 } catch(PDOException $e) {
     echo "Error: " . $e->getMessage();

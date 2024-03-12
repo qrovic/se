@@ -31,13 +31,13 @@ try {
             $stmt_check->bindParam(':itemid', $itemid);
             $stmt_check->execute();
             $count = $stmt_check->fetchColumn();
-        
+            
             if ($count == 0) {
                 $stmt_insert = $pdo->prepare("INSERT INTO popular (itemid) VALUES (:itemid)");
                 $stmt_insert->bindParam(':itemid', $itemid);
                 $stmt_insert->execute();
             }
-            $stmt_update = $pdo->prepare("UPDATE item SET category='Popular' WHERE id = :itemid");
+            $stmt_update = $pdo->prepare("UPDATE item SET category='Populars' WHERE id = :itemid");
             $stmt_update->bindParam(':itemid', $itemid);
             $stmt_update->execute();
         }

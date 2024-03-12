@@ -12,6 +12,13 @@ if ($_SESSION['role'] !== 'Superadmin') {
 
 ?>
 <div class="left">
+<?php foreach ($superdeets AS $storedeet){ 
+            $_SESSION['storename']=$storedeet['name']; 
+            $_SESSION['storeid']=$storedeet['id']; 
+            $storename=$_SESSION['storename'];
+}
+            ?>
+            
         <img class="superadminstorelogo" src="../resources/foodparklogo.png" alt="hhee">
         <div class="options">
             <ul class="options">
@@ -28,9 +35,10 @@ if ($_SESSION['role'] !== 'Superadmin') {
                 <li class="options">
                     <a class="<?php if ($currentpage==='sales'){ echo 'active';}?>" href="sales.php">Sales</a>
                 </li>
-                <li class="options">
+
+                <!--<li class="options">
                     <a class="<?php if ($currentpage==='settings'){ echo 'active';}?>" href="settings.php">Settings</a>
-                </li>
+                </li>-->
                 <li class="options logout">
                     <a href="../database/logout.php">Logout</a>
                 </li>

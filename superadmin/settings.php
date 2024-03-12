@@ -14,6 +14,11 @@
     <div class="right storeright">
         <p class="stafftxt">Settings</p>
         <div class="setting">
+            <?php if ($settingerror){ ?>
+                <div class="alert alert-danger" role="alert">
+                Wrong Old Password!
+                </div>
+            <?php } ?>
             <div class="formsetting">
                 <div class="uppersettingsuperadmin">
                     <label class="form-label labeltxt" for="storedetails">Owner Personal Information</label>

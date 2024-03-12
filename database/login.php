@@ -22,6 +22,12 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         $role = $user['role'];
         $name = $user['fname'];
 
+        $_SESSION['fname']=$user['fname'];
+        $_SESSION['mname']=$user['mname'];
+        $_SESSION['lname']=$user['lname'];
+        $_SESSION['email']=$user['email'];
+        $_SESSION['contactno']=$user['contactno'];
+
         if (!isset($_SESSION['role'])){
             $_SESSION['role']=$role;
         }
@@ -32,6 +38,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         if (!isset($_SESSION['storeid'])){
             $_SESSION['storestoreid']=$storeid;
         }
+        
         if ($role=='Superadmin'){
             header('Location: ../superadmin/overview.php');
         }else{

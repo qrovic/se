@@ -26,7 +26,10 @@
         <div class="productrank">
        <br>
         <p class="stafftxt">Staffs</p>
-        <button type="button" class="btn btn-primary addstaffbtn" data-bs-toggle="modal" data-bs-target="#addstaffstore">Add Staff</button>
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-primary addstaffbtn" data-bs-toggle="modal" data-bs-target="#addstaffstore">Add Staff</button>
+        </div>
+
         <div class="overviewstaffsheader">
             <div class="filteroverview">
                 <div class="categoryfilter">
@@ -68,7 +71,6 @@
                 <th>Contact no</th>
                 <th>Role</th>
                 <th>Action</th>
-               
                 
                 </tr>
             </thead>
@@ -83,15 +85,45 @@
                         <td class="notranktxt"><?php if (isset($storestaffs['stafffname'])){echo $storestaffs['stafffname'];}?></td>
                         <td class="notranktxt"><?php if (isset($storestaffs['staffcontactno'])){echo $storestaffs['staffcontactno'];}?></td>
                         <td class="notranktxt"><?php if (isset($storestaffs['staffrole'])){echo $storestaffs['staffrole'];}?></td>
+                       
                         <td class="notranktxt">
-                        <form action="../database/deletestaff.php" method="post" style="display: inline;">
-                            <input type="hidden" name="editstaffid" value="<?php echo $storestaffs['staffid']; ?>">
-                            <button type="submit" style="border: none; background: none; padding: 0; cursor: pointer;">
-                                <i class='bx bxs-trash-alt'></i>
-                            </button>
-                        </form>
-                        <i class='bx bxs-edit-alt' data-bs-toggle="modal" data-bs-target="#addstaffstore<?php echo $storestaffs['staffid'];?>"></i></td>
+                            <?php if ($storestaffs['staffrole']!='Manager' && $storestaffs['staffrole']!='Owner'){?>
+                                <button type="button" data-bs-toggle="modal" style="border: none; background: none; padding: 0; cursor: pointer;" data-bs-target="#deleteModal<?php echo $storestaffs['staffid'];?>">
+                                <i class='bx bxs-trash-alt' class="boxshadow"></i>
+                                </button>
+                                <i class='bx bxs-edit-alt' class="boxshadow" data-bs-toggle="modal" style="border: none; background: none; padding: 0; cursor: pointer;" data-bs-target="#addstaffstore<?php echo $storestaffs['staffid'];?>"></i>
+                            <?php } ?>
+                            <?php if ($storestaffs['staffrole']=='Manager' || $storestaffs['staffrole']=='Owner'){?>
+                                <button type="button" data-bs-toggle="modal" style="border: none; background: none; padding: 0; cursor: pointer;" data-bs-target="#viewmodal<?php echo $storestaffs['staffid'];?>">
+                                <i class='bx bx-show' class="boxshadow"></i>
+                                </button>
+                            <?php } ?>  
+                        </td>
+                            
+                        
                         </tr>
+                        <div class="modal fade" id="deleteModal<?php echo $storestaffs['staffid'];?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to delete this item?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <form action="../database/deletestaff.php" method="post" style="display: inline;">
+                                            <input type="hidden" name="editstaffid" value="<?php echo $storestaffs['staffid'];?>">
+                                            <button type="submit" class="btn btn-danger" style="cursor: pointer;">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="modal modaledit fade" id="addstaffstore<?php echo $storestaffs['staffid'];?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog addstaffmodaldialog">
                                 <div class="modal-content addstaffmodalcontent">
@@ -159,6 +191,73 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary addstaffsubmit">Save changes</button>
+                                </div>
+                                </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal modaledit fade" id="viewmodal<?php echo $storestaffs['staffid'];?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog addstaffmodaldialog">
+                                <div class="modal-content addstaffmodalcontent">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add Staff</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form action="../database/updatestaff.php" method="POST" class="needs-validation" novalidate>
+                                <div class="modal-body addstaffmodalbody">
+                                    
+                                        <p class="formtxt">Personal Information</p>
+                                        <div class="persoinfo">
+                                            <div class="addstaffinput">
+                                                <label class="form-label" for="fname">First Name </label>
+                                                <input class="form-control" type="text" name="fname" id="" value=<?php echo $storestaffs['stafffname'];?> readonly>
+                                                <div class="invalid-feedback">Please enter a valid first name.</div>
+                                            </div>
+                                            <div class="addstaffinput">
+                                                <label class="form-label"  for="mname">Middle Name <span class="optional">(Optional)</span></label>
+                                                <input class="form-control" type="text" name="mname" id="" readonly value=<?php echo $storestaffs['staffmname'];?> >
+                                                
+                                            </div>
+                                            <div class="addstaffinput">
+                                                <label class="form-label" for="lname">Last Name</label>
+                                                <input class="form-control" type="text" name="lname" id="" value=<?php echo $storestaffs['stafflname'];?> readonly>
+                                                <div class="invalid-feedback">Please enter a valid last name.</div>
+                                            </div>
+                                            <div class="addstaffinput">
+                                                <label class="form-label" for="contactno">Contact Number</label>
+                                                <input class="form-control" type="number" name="contactno" id="" value=<?php echo $storestaffs['staffcontactno'];?> readonly>
+                                                <div class="invalid-feedback">Please enter a valid contact number.</div>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                        <label class="form-label" for="role">Role</label>
+                                        <select name="role" id="role" class="form-select" disabled>
+                                            <option value="Cashier" <?php if($storestaffs['staffrole']=='Cashier'){ echo 'selected';}?>>Cashier</option>
+                                            <option value="Manager" <?php if($storestaffs['staffrole']=='Manager'){ echo 'selected';}?>>Manager</option>
+                                            <option value="Cook" <?php if($storestaffs['staffrole']=='Cook'){ echo 'selected';}?>>Cook</option>
+                                            <option value="Server" <?php if($storestaffs['staffrole']=='Server'){ echo 'selected';}?>>Server</option>
+                                            <option value="Server" <?php if($storestaffs['staffrole']=='Owner'){ echo 'selected';}?>>Owner</option>
+                                        </select>
+                                        <br>
+                                        
+                                        <p class="formtxt">Login Credentials</p>
+                                        <div class="logincred">
+                                            <div class="addstaffinput">
+                                                <label class="form-label" for="email">Email Address</label>
+                                                <input class="form-control" type="email" name="email" id="" value=<?php echo $storestaffs['staffemail']; ?> readonly>
+                                                <div class="invalid-feedback">Please enter a valid email address.</div>
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                        
+                                        
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                     
                                 </div>
                                 </form>
                                 </div>

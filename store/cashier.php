@@ -9,6 +9,13 @@
         require_once('../include/sidebarstore.php');
 
     ?>
+    <?php
+        if ($_SESSION['role']){
+            if ($_SESSION['role'] != 'Cashier'){
+                header('Location: ../store/orderspaid.php');
+            }
+        }
+    ?>
     
     <div class="right"> 
         <div class="header headercashier">
@@ -55,7 +62,7 @@
                     $item = $category['category'];
                     ?>
                     <div class="categoryitem">
-                        <script>console.log('<?php echo $item;?>')</script>
+                        
                         <section id="<?php echo $category['category']; ?>">
                         <div class="categoryname">
                             <p><?php echo $category['category']; ?></p>

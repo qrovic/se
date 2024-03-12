@@ -63,7 +63,7 @@ if (isset($_SESSION['storestoreid'])){
 if (isset($_SESSION['storestoreid'])){
     $storeid=$_SESSION['storestoreid'];
 
-    $sqlsalecount = "SELECT SUM(quantity) FROM orders JOIN orderitems ON orderitems.customerid=orders.id WHERE orders.storeid=:storeid";
+    $sqlsalecount = "SELECT SUM(orderitems.quantity) FROM orders RIGHT JOIN orderitems ON orderitems.customerid=orders.id WHERE orders.storeid=:storeid AND orderitems.status='collect'";
     $stmt = $pdo->prepare($sqlsalecount); 
     $stmt->bindParam(':storeid', $storeid, PDO::PARAM_INT);
     $stmt->execute();  
@@ -240,6 +240,8 @@ if (isset($_SESSION['storename'])) {
     $stmtcategories->bindParam(':storename', $storename, PDO::PARAM_STR);
     $stmtcategories->execute();
     $categories = $stmtcategories->fetchAll();
+    
+    
 
     $sqldrinks = "SELECT item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN store ON item.storeid = store.id WHERE category='Drinks' AND store.name=:storename";
     $stmtdrinks = $pdo->prepare($sqldrinks);
@@ -247,36 +249,35 @@ if (isset($_SESSION['storename'])) {
     $stmtdrinks->execute();
     $Drinks = $stmtdrinks->fetchAll();
 
-    $sqlmeals = "SELECT item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN store ON item.storeid = store.id WHERE category='Meals' AND store.name=:storename";
+    $sqlmeals = "SELECT item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN store ON item.storeid = store.id WHERE category='Meals' AND store.name=:storename AND store.status='Active'";
     $stmtmeals = $pdo->prepare($sqlmeals);
     $stmtmeals->bindParam(':storename', $storename, PDO::PARAM_STR);
     $stmtmeals->execute();
     $Meals = $stmtmeals->fetchAll();
 
-    $sqlsnacks = "SELECT item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN store ON item.storeid = store.id WHERE category='Snacks' AND store.name=:storename";
+    $sqlsnacks = "SELECT item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN store ON item.storeid = store.id WHERE category='Snacks' AND store.name=:storename AND store.status='Active'";
     $stmtsnacks = $pdo->prepare($sqlsnacks);
     $stmtsnacks->bindParam(':storename', $storename, PDO::PARAM_STR);
     $stmtsnacks->execute();
     $Snacks = $stmtsnacks->fetchAll();
 
-    $sqldesserts = "SELECT item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN store ON item.storeid = store.id WHERE category='Desserts' AND store.name=:storename";
+    $sqldesserts = "SELECT item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN store ON item.storeid = store.id WHERE category='Desserts' AND store.name=:storename AND store.status='Active'";
     $stmtdesserts = $pdo->prepare($sqldesserts);
     $stmtdesserts->bindParam(':storename', $storename, PDO::PARAM_STR);
     $stmtdesserts->execute();
     $Desserts = $stmtdesserts->fetchAll();
 
-    $sqlcombos = "SELECT item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN popular ON popular.itemid=item.id JOIN store ON item.storeid = store.id WHERE category='Combos' AND store.name=:storename";
+    $sqlcombos = "SELECT item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN store ON item.storeid = store.id WHERE category='Combos' AND store.name=:storename AND store.status='Active'";
     $stmtcombos = $pdo->prepare($sqlcombos);
     $stmtcombos->bindParam(':storename', $storename, PDO::PARAM_STR);
     $stmtcombos->execute();
     $Combos = $stmtcombos->fetchAll();
 
-    $sqlpopular = "SELECT item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN popular ON popular.itemid=item.id JOIN store ON item.storeid = store.id WHERE category='Popular' AND store.name=:storename";
-    $stmtpopular = $pdo->prepare($sqlpopular);
-    $stmtpopular->bindParam(':storename', $storename, PDO::PARAM_STR);
-    $stmtpopular->execute();
-    $Popular = $stmtpopular->fetchAll();
-    
+    $sqlpopulars = "SELECT item.name AS item_name, item.id AS item_id, store.name AS store_name, item.pic AS item_pic, store.pic AS store_pic FROM item JOIN store ON item.storeid = store.id WHERE category='Populars' AND store.name=:storename AND store.status='Active'";
+    $stmtpopulars = $pdo->prepare($sqlpopulars);
+    $stmtpopulars->bindParam(':storename', $storename, PDO::PARAM_STR);
+    $stmtpopulars->execute();
+    $Populars = $stmtpopulars->fetchAll();
 }
 
 #fetch all stores with items and are active
@@ -320,7 +321,7 @@ $topproduct = $stmt->fetchAll();
 if (isset($_SESSION['storestoreid'])){
     $storeid=$_SESSION['storestoreid'];
 
-    $sqlstoretopproduct = "SELECT item.name AS itemname, item.category AS itemcategory, store.name AS storename, SUM(orderitems.quantity) AS totalquantity, SUM(orderitems.quantity * itemprice.price) AS total_sales FROM item LEFT JOIN itemprice ON item.id=itemprice.itemid LEFT JOIN store ON store.id=item.storeid LEFT JOIN orderitems ON orderitems.itempriceid=itemprice.id WHERE orderitems.quantity > 0 AND store.id=:storeid GROUP BY itemname, itemcategory, storename ORDER BY totalquantity DESC";
+    $sqlstoretopproduct = "SELECT item.name AS itemname, item.category AS itemcategory, store.name AS storename, SUM(orderitems.quantity) AS totalquantity, SUM(orderitems.quantity * itemprice.price) AS total_sales FROM item LEFT JOIN itemprice ON item.id=itemprice.itemid LEFT JOIN store ON store.id=item.storeid LEFT JOIN orderitems ON orderitems.itempriceid=itemprice.id WHERE orderitems.quantity > 0 AND orderitems.status='collect' AND store.id=:storeid GROUP BY itemname, itemcategory, storename ORDER BY totalquantity DESC";
     $stmt = $pdo->prepare($sqlstoretopproduct);
     $stmt->bindParam(':storeid', $storeid , PDO::PARAM_STR);
     $stmt->execute();
@@ -395,6 +396,17 @@ if (isset($_SESSION['storestoreid'])){
     $stmt->execute();  
     $storedeets = $stmt->fetchAll();
 }
+
+if (isset($_SESSION['name'])){
+    $name=$_SESSION['name'];
+
+    $sqlsuper = "SELECT * FROM store JOIN staff WHERE staff.fname=:name LIMIT 1";
+    $stmt = $pdo->prepare($sqlsuper); 
+    $stmt->bindParam(':name', $name, PDO::PARAM_INT);
+    $stmt->execute();  
+    $superdeets = $stmt->fetchAll();
+}
+
 
 //edit store
 if (isset($_POST['editstoreid'])){

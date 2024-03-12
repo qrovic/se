@@ -11,17 +11,17 @@
         
         <a class="canceltxt storecartcancel" href="./cancel.php"><?php echo "Cancel order";?></a>
         <?php
-        if ($totalcartcount<1) {
+        if (!$totalcartcount) {
             ?>
             <div class="nocart">
                 <p class="receipttext">You haven't added anything yet in your cart</p>
-                <button type="button" class="nocartbtn cancelbtn btn btn-primary cartfooterbtn" onclick="window.location.href='../kiosk/menu.php'">Browse</button>
+                <button type="button" class="nocartbtn cancelbtn btn btn-primary cartfooterbtn" onclick="window.location.href='../store/cashier.php'">Browse</button>
 
             </div>
             <?php
         }?>
         <?php
-        if ($totalcartcount>0) {
+        if ($totalcartcount) {
             ?>
             <p class="receipttext">Receipt</p>
             <?php

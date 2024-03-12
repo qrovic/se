@@ -5,6 +5,12 @@
     <?php
         $currentpage='payment';
         require_once('../include/sidebarstore.php');
+
+        if ($_SESSION['role']){
+            if ($_SESSION['role'] != 'Cashier'){
+                header('Location: ../store/orderspaid.php');
+            }
+        }
     ?>
     <div class="right storeright">
         <div class="notif">

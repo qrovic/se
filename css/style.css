@@ -560,6 +560,7 @@ label{
     background-color: #dc3545;
     border-color: #dc3545 !important;
 }
+
 .graybtn:hover{
     background-color: #ee182d;
     border-color: #ee182d !important;
@@ -883,7 +884,7 @@ a{
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
-    max-height: 69lvh;
+    max-height: 68lvh;
     margin: 0 0 0 20px !important;
     padding-right: 20px !important;
 }
@@ -1528,6 +1529,10 @@ td>input{
     background-color: gray !important;
     border-color: gray !important;
 }
+.divorderspaid {
+    max-height: 100lvh !important;
+    overflow-y: scroll;
+}
 .cashdiv{
     display: flex;
 
@@ -1619,7 +1624,7 @@ td>input{
     margin-right: 10px;
 }
 .storeright{
-    padding: 20px 50px 20px 50px;
+    padding: 20px 50px 0px 50px;
 }
 .container.mt-4{
     margin-top: 0px !important;
@@ -1769,13 +1774,18 @@ td.price span{
     box-shadow: 0 2px 4px rgba(58, 72, 70, 0.1), 0 4px 8px 0px #77777760;
     
 }
+.boxshadow{
+    box-shadow: 0 2px 4px rgba(58, 72, 70, 0.1), 0 2px 4px 0px #7777772f;
+}
 .overviewstaffsheader{
     display: flex;
     justify-content: space-between;
     flex-direction: row;
     margin-bottom: 10px;
 }
-
+.settingbtn{
+    margin-top: 20px;
+}
 /*add staff*/
 
 .addstaffmodaldialog{

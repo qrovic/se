@@ -1,7 +1,7 @@
 <?php
 require_once("config.php");
 
-$storeid = ($_POST['storeid']);
+$storeid = ($_SESSION['storeid']);
 $itemname = $_POST['itemname'];
 $itemsizes = ($_POST['itemsizes2']);
 $itemvariants = ($_POST['itemvariants2']); 
@@ -11,7 +11,7 @@ $itemstocks = ($_POST['itemstocks']);
 $itemprices = ($_POST['itemprices']); 
 
 
-
+echo $storeid;
 try {
     $stmt = $pdo->prepare("INSERT INTO item (storeid, name, category, pic, permcategory) VALUES (:storeid, :name, :category, :pic, :category)");
     $stmt->bindParam(':storeid', $storeid);

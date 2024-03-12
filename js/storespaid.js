@@ -103,7 +103,7 @@ function updateModal() {
                                             </div>
                                         </div>
                                     <div class="modalfooter">
-                                        <button type="submit" class="btn btn-primary paybtn closebtn" id="">
+                                        <button type="button" class="btn btn-primary paybtn closebtn" data-bs-dismiss="modal">
                                             Close
                                         </button>
                                         

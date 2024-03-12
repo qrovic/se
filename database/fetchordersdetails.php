@@ -50,7 +50,7 @@ if (isset($_SESSION['storestoreid'])) {
     $stmt->execute();
     $storeorders = $stmt->fetchAll();
 
-    $sqlstoreorders = "SELECT orderitems.customerid AS customerid,SUM(itemprice.price * orderitems.quantity) AS totalprice, DATE_FORMAT(MAX(orderitems.datetime), '%H:%i') AS ordertime FROM orderitems JOIN itemprice ON itemprice.id = orderitems.itempriceid JOIN item ON itemprice.itemid = item.id WHERE storeid = :storestoreid and status='paid' GROUP BY orderitems.customerid";
+    $sqlstoreorders = "SELECT orderitems.customerid AS customerid,SUM(itemprice.price * orderitems.quantity) AS totalprice, DATE_FORMAT(MAX(orderitems.datetime), '%h:%i %p') AS ordertime FROM orderitems JOIN itemprice ON itemprice.id = orderitems.itempriceid JOIN item ON itemprice.itemid = item.id WHERE storeid = :storestoreid and status='paid' GROUP BY orderitems.customerid";
     $stmt = $pdo->prepare($sqlstoreorders);
     $stmt->bindParam(':storestoreid', $storestoreid, PDO::PARAM_STR);
     $stmt->execute();
@@ -61,6 +61,12 @@ if (isset($_SESSION['storestoreid'])) {
     $stmt->bindParam(':storestoreid', $storestoreid, PDO::PARAM_STR);
     $stmt->execute();
     $customerstoreorder = $stmt->fetchAll();
+
+    $sqlneworderidpaid = "SELECT MAX(DISTINCT orderitems.customerid) AS neworderid FROM orderitems LEFT JOIN itemprice ON orderitems.itempriceid = itemprice.id JOIN item ON itemprice.itemid = item.id WHERE orderitems.status = 'paid' AND item.storeid = :storestoreid";
+    $stmt = $pdo->prepare($sqlneworderidpaid);
+    $stmt->bindParam(':storestoreid', $storestoreid, PDO::PARAM_STR);
+    $stmt->execute();
+    $neworderidpaid = $stmt->fetchColumn();
 
     $sqlneworderid = "SELECT MAX(DISTINCT orderitems.customerid) AS neworderid FROM orderitems LEFT JOIN itemprice ON orderitems.itempriceid = itemprice.id JOIN item ON itemprice.itemid = item.id WHERE orderitems.status = 'to_pay' AND item.storeid = :storestoreid";
     $stmt = $pdo->prepare($sqlneworderid);
@@ -80,7 +86,7 @@ if (isset($_SESSION['storestoreid'])) {
     $stmt->execute();
     $storequeuecollect = $stmt->fetchAll();
     
-    echo json_encode(['ordertoservecount' => $ordertoservecount,'orderservedcount' => $orderservedcount,'ordertopaycount' => $ordertopaycount, 'orderpaidcount' => $orderpaidcount, 'customerstoreorder' => $customerstoreorder, 'storeorders' => $storeorders, 'storeorderspaid' => $storeorderspaid, 'neworderid' => $neworderid, 'storequeuepreparing' => $storequeuepreparing, 'storequeuecollect' => $storequeuecollect]);
+    echo json_encode(['ordertoservecount' => $ordertoservecount,'orderservedcount' => $orderservedcount,'ordertopaycount' => $ordertopaycount, 'orderpaidcount' => $orderpaidcount, 'customerstoreorder' => $customerstoreorder, 'storeorders' => $storeorders, 'storeorderspaid' => $storeorderspaid, 'neworderid' => $neworderid, 'neworderidpaid' => $neworderidpaid, 'storequeuepreparing' => $storequeuepreparing, 'storequeuecollect' => $storequeuecollect]);
 } else {
     echo json_encode(['error' => 'Session storestoreid not set']);
 }

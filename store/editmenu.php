@@ -9,7 +9,7 @@
     ?>
     <div class="right">
         <div class="">
-            <form class="addstore" action="../store/additem2.php" method="POST" enctype="multipart/form-data">
+            <form class="addstore" action="../store/edititem2.php" method="POST" enctype="multipart/form-data">
             <div class="storedetails additemstore">
             <?php 
                 foreach($edititem AS $edititems){
@@ -19,9 +19,11 @@
                     <div class="addstoreinput additeminput">
                         <input type="number" name="storeid" id="" value=<?php echo $editstoreid;?> hidden>
                     </div>
-                    <div class="addacclogo additemlogo" style="background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), background-position: center; background-size: cover;">
+                    <div class="addacclogo additemlogo" style="background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('<?php echo "../resources/" . $edititems['pic']; ?>'); background-position: center; background-size: cover;">
                         <label for="file" class="btn uploadbtn"><i class='bx bx-upload'></i>Upload</label>
-                        <input id="file" hidden name="itempic" type="file" onchange="previewimg(this);">
+                        <input id="file" hidden name="itempic" type="file" onchange="previewimg(this);" value="<?php echo "../resources/" . $edititems['pic']; ?>">
+                        <input type="text" name="itempicbackup" id="" value="<?php echo $edititems['pic']; ?>" hidden>
+                        <input type="text" name="storeitemid" id="" value="<?php echo $edititems['id']; ?>" hidden>
                     </div>
                     <div class="addstoreinput additeminput">
                         <label class="form-label" for="itemname">Product Name:</label>
@@ -41,12 +43,12 @@
             </div>
             <div class="ownerdetails additemvariant" id="ownerdetails">
             
-                <p class="itemdetailstxt">Variations and Sizing</p>
+                <p class="itemdetailstxt">Add Variations and Sizing</p>
                 
                 <label class="form-label" for="categories">Select Variation</label><br>
                 <div id="varietiesContainer">
                     <div class="form-check checkbox">
-                        <input class="form-check-input" type="checkbox" name="itemvariants[]" value="hot" id="hotCheckbox">
+                        <input class="form-check-input" type="checkbox" name="itemvariants[]" value="hot" id="hotCheckbox" checked>
                         <label class="form-check-label" for="hotCheckbox">Hot</label>
                     </div>
                     <div class="form-check checkbox">

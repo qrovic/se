@@ -222,7 +222,7 @@
                     <p class="formtxt">Personal Information</p>
                     <div class="persoinfo">
                         <div class="addstaffinput">
-                            <label class="form-label" for="fname">First Name </label>
+                            <label class="form-label" for="fname">First Name</label>
                             <input class="form-control" type="text" name="fname" id="fname" required>
                             <div class="invalid-feedback">Please enter a valid first name.</div>
                         </div>
